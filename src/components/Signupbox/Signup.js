@@ -24,11 +24,11 @@ function Signup() {
   
               
 
-              {/* <img
+              <img
                     src="https://e1.pxfuel.com/desktop-wallpaper/476/446/desktop-wallpaper-batman-logo-yellow-dark-hero-art-iphone-batman-black-logo-android.jpg"
                     alt="logo"
-                    className="w-[80px] h-[160px]"
-                  /> */}
+                    className="w-[80px] h-[120px]"
+                  />
 
               <h2 style={{fontSize:'20px'}} className="fw-bold text-uppercase">Signup</h2>
               <p className="text-white-50">New users can register here...</p>
@@ -51,21 +51,6 @@ function Signup() {
                 </div>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center' , width:'100%'}}>
-                <i className="fa fa-user-circle icon" style={{ fontSize: '30px', color: '#9a9a9a', paddingTop: '5%',paddingRight:'2.5%' }}></i>
-                <div style={{paddingLeft:'2%'}} className="form__group field form__group-icon">
-                  <input type="text" className="form__field" placeholder="username" name="username" id="username" required />
-                  <label htmlFor="username" className="form__label">Username</label>
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', alignItems: 'center' , width:'100%'}}>
-                <i className="fa fa-mobile icon" style={{ fontSize: '30px', color: '#9a9a9a', paddingTop: '5%',paddingRight:'4%' }}></i>
-                <div style={{paddingLeft:'2%'}} className="form__group field form__group-icon">
-                  <input type="text" className="form__field" placeholder="mobile" name="mobile" id="mobile" required />
-                  <label htmlFor="mobile" className="form__label">Mobile</label>
-                </div>
-              </div>
 
               <div style={{ display: 'flex', alignItems: 'center' , width:'100%'}}>
                 <i className="fa fa-envelope icon" style={{ fontSize: '30px', color: '#9a9a9a', paddingTop: '5%',paddingRight:'2.5%' }}></i>
@@ -74,8 +59,6 @@ function Signup() {
                   <label htmlFor="email" className="form__label">Email</label>
                 </div>
               </div>
-
-
 
 
               <div style={{ display: 'flex', alignItems: 'center' , width:'100%'}}>
@@ -94,7 +77,20 @@ function Signup() {
                 </div>
               </div>
 
+               <div style={{ display: 'flex', alignItems: 'center' , width:'100%',marginTop:'7%'}}>
+              <select
+                    className="select select-bordered w-full max-w-xs"
+                    style={{ backgroundColor: "#000000", color: "#ffc700" }}
+                  >
+                    <option disabled selected>
+                      Select Your Gender
+                    </option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                  </select>
 
+              </div>
 
 
               <MDBBtn outline className='mx-2 px-5' style={{backgroundColor:"#FFC700",color:'#000000', border:"none",marginBottom:'6%',margin:'5%'}} size='lg'>
