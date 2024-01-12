@@ -25,7 +25,7 @@ axiosInstance.interceptors.response.use(
             originalRequest._retry = true;
 
             return axiosInstance
-                .post('token/refresh/', {refresh: localStorage.getItem('refreshToken')})
+                .post('api/token/refresh/', {refresh: localStorage.getItem('refreshToken')})
                 .then((res) => {
                     const {accessToken, refreshToken} = res.data;
 
