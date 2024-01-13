@@ -14,12 +14,12 @@ from 'mdb-react-ui-kit';
 
 function App() {
   return (
-    <MDBContainer fluid style={{backgroundColor:'#131313',height:'100vh'}}>
+    <MDBContainer fluid style={{backgroundImage:'url("https://getwallpapers.com/wallpaper/full/b/f/e/1488318-beautiful-batman-art-wallpaper-1920x1080-1080p.jpg")',height:'100vh'}}>
 
       <MDBRow className='d-flex justify-content-center align-items-center h-100'>
         <MDBCol col='12'>
 
-          <MDBCard className='text-white my-5 mx-auto' style={{borderRadius: '1rem', maxWidth: '500px',height:'700px',backgroundColor:'#000000'}}>
+          <MDBCard className='text-white my-5 mx-auto' style={{borderRadius: '1rem',border: '1px solid #9a9a9a', maxWidth: '500px',height:'700px',backgroundColor:'#000000'}}>
             <MDBCardBody className='p-5 d-flex flex-column align-items-center mx-auto w-100'style={{marginTop:'-5%'}}>
            <div className='h-90 flex flex-col items-center'>
            <img
