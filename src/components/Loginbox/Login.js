@@ -1,8 +1,8 @@
 import React,{useState}from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-// import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
-// import { jwtDecode } from "jwt-decode";
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { setAccessToken, setUser } from '../../Redux/UserSlice';
@@ -146,16 +146,52 @@ const handleLogin = (event) => {
 </div>
 {passwordError && <p className="error-message">{passwordError}</p>}
 
-              <p style={{marginTop:'2%'}}className="small mb-3 pb-lg-2" ><a style={{fontSize:'18px'}} class="text-white-50" href="#!">Forgot password?</a></p>
-              <MDBBtn outline onClick={handleLogin} className='mx-2 px-5' style={{backgroundColor:"#FFC700",color:'#000000', border:"none",marginTop:'3%'}} size='lg'>
+              <p style={{marginTop:'2%'}}className="small mb-2 pb-lg-2" ><a style={{fontSize:'18px'}} class="text-white-50" href="#!">Forgot password?</a></p>
+              <MDBBtn outline onClick={handleLogin} className='mb-2 mt-2 px-10' style={{backgroundColor:"#FFC700",color:'#000000', border:"none",marginTop:'3%'}} size='lg'>
                 Login
               </MDBBtn>
-                
-                <MDBBtn tag='a'  className='m-3' style={{ color: 'blue',backgroundColor:'#000000',marginBottom:'10%',}}>
-                  <MDBIcon fab icon='google' size="lg"/>
-                </MDBBtn>
-            
-              <p className="mb-0">Don't have an account? <a style={{fontSize:'20px'}} href="#!" class="text-white-50 fw-bold">Sign Up</a></p>
+
+               <GoogleOAuthProvider clientId="863926768719-05krrpimr8g0ietobt4rfgh03fmi88ri.apps.googleusercontent.com">
+                <GoogleLogin
+                    onSuccess={credentialResponse => {
+                      const decoded = jwtDecode(credentialResponse.credential);
+                      console.log(decoded);
+
+                      axios
+        .post(`${baseURL}/api/authentication/googleauth/`, {
+          email: decoded.email,
+          name: decoded.given_name,
+        }, { withCredentials: true })
+        .then((response) => {
+          localStorage.setItem('accessToken', response.data.access);
+          localStorage.setItem('refreshToken', response.data.refresh);
+          console.log("response.data", response.data);
+          console.log(response.data);
+          dispatch(setAccessToken(response.data.data));
+          dispatch(setUser(response.data.user));
+          
+
+          // Redirect to the desired page after successful login
+          toast.success('Login Successful');
+          navigator('/home');
+        })
+        .catch((error) => {
+          if (error.code === 'ERR_BAD_REQUEST') {
+            // Unauthorized: Invalid credentials
+              setEmailError(error.response.data.password || 'Bad Credentials!!!');
+          } else {
+            // Other errors
+            console.error('Login error:', error);
+          }
+        });
+                    }}
+                    onError={() => {
+                      console.log('Login Failed');
+                    }}
+                  />
+            </GoogleOAuthProvider>
+            {emailError && <p className="error-message">{emailError}</p>}
+              <p className="mt-5">Don't have an account? <a href="#!" className="text-white-50 fw-bold">Sign Up</a></p>
 
             </MDBCardBody>
           </MDBCard>
