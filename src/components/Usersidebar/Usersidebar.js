@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import "./Usersidebar.css";
 import { TbLogout } from "react-icons/tb";
 import { CiHome } from "react-icons/ci";
@@ -7,8 +7,14 @@ import { GiEgyptianProfile } from "react-icons/gi";
 import { HiOutlineSpeakerphone } from "react-icons/hi";
 import { SiYourtraveldottv } from "react-icons/si";
 import { MdOutlineContactMail } from "react-icons/md";
+import CreatepostModal from '../Createpost/CreatepostModal'
 
 const Usersidebar = () => {
+   const [modalIsOpen, setModalIsOpen] = useState(false)
+
+ const toggleModal = () => {
+    setModalIsOpen(!modalIsOpen)
+ }
   return (
     <>
       <body>
@@ -235,6 +241,16 @@ const Usersidebar = () => {
                   <h6 style={{ paddingTop: "9%", fontSize: "20px" }}>Logout</h6>
                 </a>
               </div>
+
+
+
+      <div className="" onClick={toggleModal}>
+        Create a new post
+      </div>
+      <CreatepostModal isOpen={modalIsOpen} toggle={toggleModal} />
+
+
+
             </ul>
           </div>
           {/* <!-- /#sidebar-wrapper --> */}
