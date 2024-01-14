@@ -1,5 +1,11 @@
-import React from 'react';
+import React,{useState} from 'react';
+import axios from 'axios';
+import {useNavigate} from 'react-router-dom'
+import {setAdminAccessToken, setAdminUser} from '../../Redux/AdminSlice'
 import  './Adminlogin.css'
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { baseURL } from '../../api/api';
 import {
   MDBBtn,
   MDBContainer,
@@ -13,6 +19,74 @@ import {
 from 'mdb-react-ui-kit';
 
 function Adminlogin() {
+
+    const navigator = useNavigate();
+    const dispatch = useDispatch();
+
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+
+
+    const changeEmail = (event) =>{
+        setEmail(event.target.value);
+        setEmailError('');
+    };
+
+
+    const changePassword = (event) =>{
+        setPassword(event.target.value);
+        setPasswordError('');
+    };
+
+    const handleAdminLogin = (event) =>{
+        event.preventDefault();
+
+        if(email.trim() === '' || password.trim() === ''){
+            if(email.trim() === ''){
+                setEmailError('Email is required');
+            }
+            if(password.trim() === ''){
+                setPasswordError('Password is required');
+            }
+        }else{
+            axios.post(`${baseURL}/api/adminlogin/`, {
+                email: email,
+                password: password
+            })
+            .then((response)=>{
+                console.log('RESPONSE DATA:', response.data)
+                localStorage.setItem('accessToken', response.data.access);
+                localStorage.setItem('refreshToken', response.data.refresh);
+                console.log(response.data);
+                dispatch(setAdminAccessToken(response.data.access));
+                dispatch(setAdminUser(response.data.user));
+                toast.success('Admin Login Successful');
+                navigator('/admindashboard');
+            })
+            .catch((error)=>{
+                if(error.code === 'ERR_BAD_REQUEST'){
+                    setEmailError(error.response.data.password || 'Bad Credentials!!!');
+                }else{
+                    console.error('Admin Login Error:', error);
+                }
+            });
+        }
+    };
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <MDBContainer fluid style={{backgroundColor:'#131313',height:'100vh'}}>
 
@@ -28,19 +102,22 @@ function Adminlogin() {
 <div style={{ display: 'flex', alignItems: 'center' , width:'100%'}}>
   <i className="fa fa-envelope icon" style={{ fontSize: '30px', color: '#9a9a9a', paddingTop: '5%',paddingRight:'2.5%' }}></i>
   <div style={{paddingLeft:'2%'}} className="form__group field form__group-icon">
-    <input type="email" className="form__field" placeholder="Email" name="email" id="email" required />
+    <input type="email" value={email} onChange={changeEmail} className="form__field" placeholder="Email" name="email" id="email" required />
     <label htmlFor="email" className="form__label">Email</label>
   </div>
 </div>
+{emailError && <p className={'error-message'}>{emailError}</p>}
+
+
 <div style={{ display: 'flex', alignItems: 'center' , width:'100%'}}>
   <i className="fa fa-key icon" style={{ fontSize: '30px', color: '#9a9a9a', paddingTop: '5%',paddingRight:'2.5%' }}></i>
   <div style={{paddingLeft:'2%'}} className="form__group field form__group-icon">
-    <input type="password" className="form__field" placeholder="password" name="password" id="password" required />
+    <input type="password" value={password} onChange={changePassword} className="form__field" placeholder="password" name="password" id="password" required />
     <label htmlFor="password" className="form__label">Password</label>
   </div>
 </div>
 
-              <MDBBtn outline className='mx-2 px-5' style={{backgroundColor:"#FFC700",color:'#000000', border:"none",marginTop:'10%'}} size='lg'>
+              <MDBBtn outline className='mx-2 px-5' onClick={handleAdminLogin} style={{backgroundColor:"#FFC700",color:'#000000', border:"none",marginTop:'10%'}} size='lg'>
                 Admin Login
               </MDBBtn>
 
