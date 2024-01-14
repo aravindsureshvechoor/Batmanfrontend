@@ -231,7 +231,7 @@ const Usersidebar = () => {
                     }}
                   />
                 </a>
-                <a href="#" style={{ marginTop: "16%", paddingLeft: "3%" }}>
+                <a href="#" style={{ marginTop: "16%", paddingLeft: "3%" }} onClick={() => window.location.href = '/'}>
                   <h6 style={{ paddingTop: "9%", fontSize: "20px" }}>Logout</h6>
                 </a>
               </div>
