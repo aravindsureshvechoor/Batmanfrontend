@@ -1,23 +1,23 @@
 import React,{useState} from 'react'
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import axios from 'axios';
 
 const CreatepostModal = ({ isOpen, toggle }) => {
 
     const [selectedFileName, setSelectedFileName] = useState('');
+    const [caption, setCaption] = useState('');
+
+    const handleCaptionChange = (event) => {
+    const value = event.target.value;
+    setCaption(value);
+  };
 
     const handleFileChange = (event) => {
-      const selectedFile = event.target.files[0];
-      setSelectedFileName(selectedFile ? selectedFile.name : '');
-      // Now you can do something with the selected file, like saving it to local storage
-      console.log('Selected file:', selectedFile);
-    };
-
-
-
-
-
-
-
+    const selectedFile = event.target.files[0];
+    setSelectedFileName(selectedFile ? selectedFile.name : '');
+    // Now you can do something with the selected file, like saving it to local storage
+    console.log('Selected file:', selectedFile);
+  };
 
 
 
@@ -32,7 +32,8 @@ const CreatepostModal = ({ isOpen, toggle }) => {
   <ModalHeader toggle={toggle} style={{ background: '#131313', color: '#ffc700' }}>Create a new post</ModalHeader>
   <ModalBody style={{background:"#131313"}}>
     <div className="editor mx-auto w-10/12 flex flex-col text-gray-300 border border-black-800 p-4 shadow-lg max-w-2xl" style={{ background: '#131313', color: '#ffc700' }}>
-      <input className="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none" spellCheck="false" placeholder="Write something about this post" type="text" style={{ background: '#131313', color: '#ffc700' }} />
+      <input className="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none"    value={caption}
+        onChange={handleCaptionChange} spellCheck="false" placeholder="Write something about this post" type="text" style={{ background: '#131313', color: '#ffc700' }} />
       {/* Icons */}
       <div className="icons flex text-gray-500 m-2">
 
