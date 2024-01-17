@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   adminUser: null,
+  adminRefreshToken: null,
   adminAccessToken: null,
   isAdminAuthenticated: false,
 };
@@ -13,15 +14,19 @@ const adminSlice = createSlice({
   reducers: {
     setAdminAccessToken(state, action) {
       state.adminAccessToken = action.payload.accessToken;
-      localStorage.setItem('accessToken', action.payload.accessToken);
+      state.adminRefreshToken = action.payload.refreshToken;
+      localStorage.setItem('adminaccessToken', action.payload.accessToken);
+      localStorage.setItem('adminrefreshToken', action.payload.refreshToken);
+
     },
     setAdminUser(state, action) {
-      state.adminUser = action.payload;
-      state.isAdminAuthenticated = !!action.payload;
+      state.adminUser = action.payload.user;
+      state.isAdminAuthenticated = !!action.payload.user;
     },
     clearAdminAuth(state) {
       state.adminUser = null;
       state.adminAccessToken = null;
+      state.adminRefreshToken = null;
       state.isAdminAuthenticated = false;
     },
   },

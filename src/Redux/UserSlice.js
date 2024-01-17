@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   user: null,
   accessToken: null,
+  refreshToken: null,
   isAuthenticated: false,
 };
 
@@ -11,8 +12,10 @@ const UserSlice = createSlice({
   initialState,
   reducers: {
     setAccessToken(state, action) {
-      state.accessToken = action.payload.accessToken;
-      localStorage.setItem('accessToken', action.payload.accessToken);
+      state.accessToken = action.payload.useraccessToken;
+      state.refreshToken = action.payload.userrefreshToken
+      localStorage.setItem('useraccessToken', action.payload.useraccessToken);
+      localStorage.setItem('userrefreshToken', action.payload.userrefreshToken);
     },
     setUser(state, action) {
       state.user = action.payload;
@@ -23,6 +26,7 @@ const UserSlice = createSlice({
     clearAuth(state) {
       state.user = null;
       state.accessToken = null;
+      state.refreshToken = null;
       state.isAuthenticated = false;
     },
   },

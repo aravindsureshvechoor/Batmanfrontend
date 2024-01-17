@@ -57,12 +57,12 @@ function Adminlogin() {
                 password: password
             })
             .then((response)=>{
-                console.log('RESPONSE DATA:', response.data)
-                localStorage.setItem('accessToken', response.data.access);
-                localStorage.setItem('refreshToken', response.data.refresh);
+                // console.log('RESPONSE DATA:', response.data)
+                // localStorage.setItem('adminaccessToken', response.data.access);
+                // localStorage.setItem('adminrefreshToken', response.data.refresh);
                 console.log(response.data);
-                dispatch(setAdminAccessToken(response.data.access));
-                dispatch(setAdminUser(response.data.user));
+                dispatch(setAdminAccessToken({ accessToken: response.data.access,refreshToken:response.data.refresh }));
+                dispatch(setAdminUser({ user: response.data.user }));
                 toast.success('Admin Login Successful');
                 navigator('/admindashboard');
             })

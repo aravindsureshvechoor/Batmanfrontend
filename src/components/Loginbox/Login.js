@@ -70,20 +70,19 @@ const handleLogin = (event) => {
         setPasswordError('Password is required');
       }
     } else {
-      console.log('##########################',email)
-          console.log('##########################',password)
+      // console.log('##########################',email)
+          // console.log('##########################',password)
       axios
         .post(`${baseURL}/api/authentication/userlogin/`, {
           email: email,
           password: password,
         }, { withCredentials: true })
         .then((response) => {
-          console.log('RESPOSNE DATA:',response.data)
-          localStorage.setItem('accessToken', response.data.access);
-          localStorage.setItem('refreshToken', response.data.refresh);
-          console.log("response.data", response.data);
-          console.log(response.data);
-          dispatch(setAccessToken(response.data.data));
+          console.log('RESPOSNE DATA:',response.data.data.refresh)
+          // localStorage.setItem('accessToken', response.data.access);
+          // localStorage.setItem('refreshToken', response.data.refresh);
+          
+          dispatch(setAccessToken({useraccessToken:response.data.data.access,userrefreshToken:response.data.data.refresh}));
           dispatch(setUser(response.data.user));
           
 
@@ -163,11 +162,11 @@ const handleLogin = (event) => {
           name: decoded.given_name,
         }, { withCredentials: true })
         .then((response) => {
-          localStorage.setItem('accessToken', response.data.access);
-          localStorage.setItem('refreshToken', response.data.refresh);
-          console.log("response.data", response.data);
-          console.log(response.data);
-          dispatch(setAccessToken(response.data.data));
+          console.log('RESPOSNE DATA:',response.data.data.refresh)
+          // localStorage.setItem('accessToken', response.data.access);
+          // localStorage.setItem('refreshToken', response.data.refresh);
+          
+          dispatch(setAccessToken({useraccessToken:response.data.data.access,userrefreshToken:response.data.data.refresh}));
           dispatch(setUser(response.data.user));
           
 

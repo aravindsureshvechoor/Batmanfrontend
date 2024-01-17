@@ -20,14 +20,14 @@ const Usersidebar = () => {
       <body>
         <div id="wrapper" className="xl:block hidden">
           {/* <!-- Sidebar --> */}
-          <div id="sidebar-wrapper" style={{ width: "45vh" }}>
+          <div id="sidebar-wrapper" style={{ width: "40vh" }}>
             <ul className="sidebar-nav">
               <li className="sidebar-brand">
                 {/* <a href="#" style={{ fontSize: "30px", width: "45vh" }}> */}
                   <img
                     src="https://e1.pxfuel.com/desktop-wallpaper/476/446/desktop-wallpaper-batman-logo-yellow-dark-hero-art-iphone-batman-black-logo-android.jpg"
                     alt="logo"
-                    className="w-[100px] h-[200px] pt-1 ml-[145px] pb-14 custom-scale-130"
+                    className="w-[100px] h-[200px] pt-1 ml-[125px] pb-14 custom-scale-80"
                   />
                 {/* </a> */}
               </li>
@@ -51,7 +51,7 @@ const Usersidebar = () => {
                 <a
                   href="#"
                   style={{
-                    fontSize: "28px",
+                    fontSize: "24px",
                     marginTop: "1%",
                     width: "45vh",
                     paddingTop: "5%",
@@ -81,7 +81,7 @@ const Usersidebar = () => {
                 <a
                   href="#"
                   style={{
-                    fontSize: "28px",
+                    fontSize: "24px",
                     marginTop: "1%",
                     width: "45vh",
                     paddingTop: "5%",
@@ -111,7 +111,7 @@ const Usersidebar = () => {
                 <a
                   href="#"
                   style={{
-                    fontSize: "28px",
+                    fontSize: "24px",
                     marginTop: "1%",
                     width: "45vh",
                     paddingTop: "5%",
@@ -141,7 +141,7 @@ const Usersidebar = () => {
                 <a
                   href="#"
                   style={{
-                    fontSize: "28px",
+                    fontSize: "24px",
                     marginTop: "1%",
                     width: "45vh",
                     paddingTop: "5%",
@@ -171,7 +171,7 @@ const Usersidebar = () => {
                 <a
                   href="#"
                   style={{
-                    fontSize: "28px",
+                    fontSize: "24px",
                     marginTop: "1%",
                     width: "45vh",
                     paddingTop: "5%",
@@ -202,7 +202,7 @@ const Usersidebar = () => {
                 <a
                   href="#"
                   style={{
-                    fontSize: "28px",
+                    fontSize: "24px",
                     marginTop: "1%",
                     width: "45vh",
                     paddingTop: "5%",

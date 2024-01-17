@@ -9,9 +9,10 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (accessToken) {
-        config.headers['Authorization'] = `Bearer ${accessToken}`;
+    const useraccessToken = localStorage.getItem('useraccessToken');
+    console.log(useraccessToken,'AAAAAAAAACCCCCCCCEEEEEEEESSSSSSSSSSSSSSSS')
+    if (useraccessToken) {
+        config.headers['Authorization'] = `Bearer ${useraccessToken}`;
     }
     return config;
 });
@@ -25,14 +26,14 @@ axiosInstance.interceptors.response.use(
             originalRequest._retry = true;
 
             return axiosInstance
-                .post('api/token/refresh/', {refresh: localStorage.getItem('refreshToken')})
+                .post('api/token/refresh/', {refresh: localStorage.getItem('userrefreshToken')})
                 .then((res) => {
-                    const {accessToken, refreshToken} = res.data;
+                    const {useraccessToken, userrefreshToken} = res.data;
 
-                    localStorage.setItem('accessToken', accessToken);
-                    localStorage.setItem('refreshToken', refreshToken);
+                    localStorage.setItem('useraccessToken', useraccessToken);
+                    localStorage.setItem('userrefreshToken', userrefreshToken);
 
-                    originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+                    originalRequest.headers['Authorization'] = `Bearer ${useraccessToken}`;
                     return axiosInstance(originalRequest);
                 })
                 .catch((error) => {

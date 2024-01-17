@@ -1,11 +1,13 @@
 import React,{useState} from 'react'
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import axios from 'axios';
+import { baseURL } from '../../api/api';
 
 const CreatepostModal = ({ isOpen, toggle }) => {
 
     const [selectedFileName, setSelectedFileName] = useState('');
     const [caption, setCaption] = useState('');
+    const [selectedFile,setSelectedFile] = useState(null)
 
     const handleCaptionChange = (event) => {
     const value = event.target.value;
@@ -13,17 +15,49 @@ const CreatepostModal = ({ isOpen, toggle }) => {
   };
 
     const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
-    setSelectedFileName(selectedFile ? selectedFile.name : '');
+    const file = event.target.files[0];
+
+    // Update selected file
+    setSelectedFile(file);
+
+    // Update selected file name
+    setSelectedFileName(file ? file.name : '');
+
     // Now you can do something with the selected file, like saving it to local storage
-    console.log('Selected file:', selectedFile);
-  };
+    console.log('Selected file:', file);
+};
 
 
 
+  const handleSubmit = async () => {
+  try {
+    const formData = new FormData();
+    formData.append('post_img', selectedFile); // Assuming 'selectedFile' is the file state
+    formData.append('caption', caption); // Assuming 'caption' is the caption state
+
+    // Make a POST request using Axios
+    const accessToken = localStorage.getItem('useraccessToken');
+
+    const response = await axios.post(`${baseURL}/api/posts/create/`, formData, {
+    headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'multipart/form-data', // Ensure the correct content type for FormData
+    },
+});
 
 
+    // Handle the response from the server
+    console.log('Response from server:', response.data);
 
+    // Optionally, you can perform additional actions after a successful submission
+    // For example, clear the form or redirect the user
+    setCaption('');
+    setSelectedFileName('');
+  } catch (error) {
+    // Handle errors
+    console.error('Error:', error);
+  }
+};
 
 
 
@@ -82,7 +116,7 @@ const CreatepostModal = ({ isOpen, toggle }) => {
       {/* Buttons */}
       <div className="buttons flex">
         {/* <div className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 ml-auto" style={{ background: '#131313', color: '#ffc700' }} onClick={toggle}>Cancel</div> */}
-        <div className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500" style={{ background: '#ffc700', color: '#131313' }}>Post</div>
+        <div onClick={handleSubmit} className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500" style={{ background: '#ffc700', color: '#131313' }}>Post</div>
       </div>
     </div>
   </ModalBody>
