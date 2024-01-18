@@ -82,7 +82,7 @@ const handleLogin = (event) => {
           // localStorage.setItem('accessToken', response.data.access);
           // localStorage.setItem('refreshToken', response.data.refresh);
           
-          dispatch(setAccessToken({useraccessToken:response.data.data.access,userrefreshToken:response.data.data.refresh}));
+          dispatch(setAccessToken({accessToken:response.data.data.access,refreshToken:response.data.data.refresh}));
           dispatch(setUser(response.data.user));
           
 

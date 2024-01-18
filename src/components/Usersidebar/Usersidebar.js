@@ -8,6 +8,8 @@ import { HiOutlineSpeakerphone } from "react-icons/hi";
 import { SiYourtraveldottv } from "react-icons/si";
 import { MdOutlineContactMail } from "react-icons/md";
 import CreatepostModal from '../Createpost/CreatepostModal'
+import axios from 'axios';
+import { baseURL } from '../../api/api';
 
 const Usersidebar = () => {
    const [modalIsOpen, setModalIsOpen] = useState(false)
@@ -15,6 +17,23 @@ const Usersidebar = () => {
  const toggleModal = () => {
     setModalIsOpen(!modalIsOpen)
  }
+
+ const handleLogout = async () => {
+    try {
+      // Make a POST request to your Django backend logout endpoint
+      const response = await axios.post(`${baseURL}/api/authentication/userlogout/`);
+
+      // Assuming your backend returns a success message
+      if (response.data.message === 'Logged out successfully') {
+        // Handle any client-side tasks on successful logout, e.g., redirecting to login page
+        console.log('Logged out successfully');
+      }
+    } catch (error) {
+      // Handle errors, e.g., network issues, server errors
+      console.error('Logout error:', error);
+    }
+  };
+  
   return (
     <>
       <body>
@@ -37,7 +56,7 @@ const Usersidebar = () => {
                   alignItems: "center",
                   paddingTop: "3%",
                   paddingLeft: "5%",
-                  width: "45vh",
+                  width: "40vh",
                   marginTop: "28%",
                 }}
               >
@@ -53,7 +72,7 @@ const Usersidebar = () => {
                   style={{
                     fontSize: "24px",
                     marginTop: "1%",
-                    width: "45vh",
+                    width: "40vh",
                     paddingTop: "5%",
                     height: "7vh",
                   }}
@@ -68,7 +87,7 @@ const Usersidebar = () => {
                   alignItems: "center",
                   paddingTop: "3%",
                   paddingLeft: "5%",
-                  width: "45vh",
+                  width: "40vh",
                 }}
               >
                 <GiEgyptianProfile
@@ -83,7 +102,7 @@ const Usersidebar = () => {
                   style={{
                     fontSize: "24px",
                     marginTop: "1%",
-                    width: "45vh",
+                    width: "40vh",
                     paddingTop: "5%",
                     height: "7vh",
                   }}
@@ -98,7 +117,7 @@ const Usersidebar = () => {
                   alignItems: "center",
                   paddingTop: "3%",
                   paddingLeft: "5%",
-                  width: "45vh",
+                  width: "40vh",
                 }}
               >
                 <HiOutlineSpeakerphone
@@ -113,7 +132,7 @@ const Usersidebar = () => {
                   style={{
                     fontSize: "24px",
                     marginTop: "1%",
-                    width: "45vh",
+                    width: "40vh",
                     paddingTop: "5%",
                     height: "7vh",
                   }}
@@ -128,7 +147,7 @@ const Usersidebar = () => {
                   alignItems: "center",
                   paddingTop: "3%",
                   paddingLeft: "5%",
-                  width: "45vh",
+                  width: "40vh",
                 }}
               >
                 <MdOutlineContactMail
@@ -143,7 +162,7 @@ const Usersidebar = () => {
                   style={{
                     fontSize: "24px",
                     marginTop: "1%",
-                    width: "45vh",
+                    width: "40vh",
                     paddingTop: "5%",
                     height: "7vh",
                   }}
@@ -158,7 +177,7 @@ const Usersidebar = () => {
                   alignItems: "center",
                   paddingTop: "3%",
                   paddingLeft: "5%",
-                  width: "45vh",
+                  width: "40vh",
                 }}
               >
                 <GiBinoculars
@@ -173,7 +192,7 @@ const Usersidebar = () => {
                   style={{
                     fontSize: "24px",
                     marginTop: "1%",
-                    width: "45vh",
+                    width: "40vh",
                     paddingTop: "5%",
                     height: "7vh",
                   }}
@@ -188,7 +207,7 @@ const Usersidebar = () => {
                   alignItems: "center",
                   paddingTop: "3%",
                   paddingLeft: "5%",
-                  width: "45vh",
+                  width: "40vh",
                   marginBottom: "35%",
                 }}
               >
@@ -204,7 +223,7 @@ const Usersidebar = () => {
                   style={{
                     fontSize: "24px",
                     marginTop: "1%",
-                    width: "45vh",
+                    width: "40vh",
                     paddingTop: "5%",
                     height: "7vh",
                   }}
@@ -216,7 +235,7 @@ const Usersidebar = () => {
               <hr
                 style={{
                   backgroundColor: "#ffc700",
-                  width: "45vh",
+                  width: "40vh",
                   height: "5px",
                   border: "none",
                 }}

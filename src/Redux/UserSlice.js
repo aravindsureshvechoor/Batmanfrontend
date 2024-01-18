@@ -12,10 +12,10 @@ const UserSlice = createSlice({
   initialState,
   reducers: {
     setAccessToken(state, action) {
-      state.accessToken = action.payload.useraccessToken;
-      state.refreshToken = action.payload.userrefreshToken
-      localStorage.setItem('useraccessToken', action.payload.useraccessToken);
-      localStorage.setItem('userrefreshToken', action.payload.userrefreshToken);
+      state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken
+      localStorage.setItem('accessToken', action.payload.accessToken);
+      localStorage.setItem('refreshToken', action.payload.refreshToken);
     },
     setUser(state, action) {
       state.user = action.payload;

@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import axios from 'axios';
-import { baseURL } from '../../api/api';
+import axiosInstance, { baseURL } from '../../api/api';
 
 const CreatepostModal = ({ isOpen, toggle }) => {
 
@@ -36,14 +36,9 @@ const CreatepostModal = ({ isOpen, toggle }) => {
     formData.append('caption', caption); // Assuming 'caption' is the caption state
 
     // Make a POST request using Axios
-    const accessToken = localStorage.getItem('useraccessToken');
+    const accessToken = localStorage.getItem('accessToken');
 
-    const response = await axios.post(`${baseURL}/api/posts/create/`, formData, {
-    headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'multipart/form-data', // Ensure the correct content type for FormData
-    },
-});
+    const response = await axiosInstance.post(`${baseURL}/api/posts/create/`, formData);
 
 
     // Handle the response from the server

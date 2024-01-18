@@ -57,9 +57,7 @@ function Adminlogin() {
                 password: password
             })
             .then((response)=>{
-                // console.log('RESPONSE DATA:', response.data)
-                // localStorage.setItem('adminaccessToken', response.data.access);
-                // localStorage.setItem('adminrefreshToken', response.data.refresh);
+                
                 console.log(response.data);
                 dispatch(setAdminAccessToken({ accessToken: response.data.access,refreshToken:response.data.refresh }));
                 dispatch(setAdminUser({ user: response.data.user }));
