@@ -7,9 +7,12 @@ import { GiEgyptianProfile } from "react-icons/gi";
 import { HiOutlineSpeakerphone } from "react-icons/hi";
 import { SiYourtraveldottv } from "react-icons/si";
 import { MdOutlineContactMail } from "react-icons/md";
-import CreatepostModal from '../Createpost/CreatepostModal'
-import axios from 'axios';
-import { baseURL } from '../../api/api';
+import CreatepostModal from '../Createpost/CreatepostModal';
+import {useDispatch} from 'react-redux';
+import { clearAuth } from '../../Redux/UserSlice';
+// import axios from 'axios';
+// import { baseURL } from '../../api/api';
+
 
 const Usersidebar = () => {
    const [modalIsOpen, setModalIsOpen] = useState(false)
@@ -18,21 +21,20 @@ const Usersidebar = () => {
     setModalIsOpen(!modalIsOpen)
  }
 
- const handleLogout = async () => {
-    try {
-      // Make a POST request to your Django backend logout endpoint
-      const response = await axios.post(`${baseURL}/api/authentication/userlogout/`);
 
-      // Assuming your backend returns a success message
-      if (response.data.message === 'Logged out successfully') {
-        // Handle any client-side tasks on successful logout, e.g., redirecting to login page
-        console.log('Logged out successfully');
-      }
-    } catch (error) {
-      // Handle errors, e.g., network issues, server errors
-      console.error('Logout error:', error);
-    }
+
+// const navigate = useNavigate()
+
+const dispatch = useDispatch();
+
+  const logout = () => {
+    dispatch(clearAuth());
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    // Perform other logout-related tasks, e.g., navigating the user to the login page
+    window.location.href = '/';
   };
+
   
   return (
     <>
@@ -256,7 +258,7 @@ const Usersidebar = () => {
                     }}
                   />
                 </a>
-                <a href="#" style={{ marginTop: "16%", paddingLeft: "3%" }} onClick={() => window.location.href = '/'}>
+                <a href="#" style={{ marginTop: "16%", paddingLeft: "3%" }} onClick={() => { logout(); window.location.href = '/'; }}>
                   <h6 style={{ paddingTop: "9%", fontSize: "20px" }}>Logout</h6>
                 </a>
               </div>

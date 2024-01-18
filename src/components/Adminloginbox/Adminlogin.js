@@ -61,7 +61,7 @@ function Adminlogin() {
                 console.log(response.data);
                 dispatch(setAdminAccessToken({ accessToken: response.data.access,refreshToken:response.data.refresh }));
                 dispatch(setAdminUser({ user: response.data.user }));
-                toast.success('Admin Login Successful');
+                toast.success('Admin Login Successful');  
                 navigator('/admindashboard');
             })
             .catch((error)=>{
