@@ -1,6 +1,5 @@
 import React,{useState} from 'react'
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
-import axios from 'axios';
 import axiosInstance, { baseURL } from '../../api/api';
 
 const CreatepostModal = ({ isOpen, toggle }) => {

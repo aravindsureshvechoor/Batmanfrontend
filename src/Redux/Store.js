@@ -4,16 +4,21 @@ import { persistReducer, persistStore } from "redux-persist";
 import userReducer from './UserSlice';
 import adminReducer from './AdminSlice';
 
-const persistConfig={
-  key:'root',
-  storage
-}
+const userPersistConfig = {
+  key: 'user',
+  storage,
+};
+
+const adminPersistConfig = {
+  key: 'admin',
+  storage,
+};
 
 
 export const store = configureStore({
   reducer: {
-    user: persistReducer(persistConfig,userReducer),
-    admin: persistReducer(persistConfig,adminReducer),
+    user: persistReducer(userPersistConfig, userReducer),
+    admin: persistReducer(adminPersistConfig, adminReducer),
     // Other reducers if necessary
   },
   // Other configurations if needed
