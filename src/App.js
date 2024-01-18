@@ -5,6 +5,7 @@ import Adminlogin from "./components/Adminloginbox/Adminlogin";
 import Userhome from "./components/Userhome/Userhome";
 import Userprofile from "./components/Userprofile/Userprofile";
 import AdminDash from "./components/Admindashboard/AdminDash";
+import Otp from "./components/Otp/Otp";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/home" element={<Userhome />} />
         <Route path="/userprofile" element={<Userprofile/>} />
         <Route path="/admindashboard" element={<AdminDash/>} />
+        <Route path="/otp" element={<Otp/>} />
       </Routes>
     </Router>
   );
