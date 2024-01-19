@@ -33,7 +33,10 @@ function Signup() {
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
     const [genderError, setGenderError] = useState('');
 
-
+    const handleSignInClick = () => {
+    // Use the navigate function to go to the '/' route
+    navigator('/');
+  };
 
     const changeFirstname = (event) => {
       setFirstname(event.target.value);
@@ -228,7 +231,7 @@ function Signup() {
               <MDBBtn outline onClick={handleSubmit} className='mx-2 px-5' style={{backgroundColor:"#FFC700",color:'#000000', border:"none",marginBottom:'6%',margin:'5%'}} size='lg'>
                 <h6 style={{marginTop:'10%'}}>Signup</h6>
               </MDBBtn>
-              <p className="mb-0">Already have an account? <a style={{fontSize:'20px'}} href="#!" class="text-white-50 fw-bold">Sign In</a></p>
+              <p className="mb-0">Already have an account? <a style={{fontSize:'20px'}} href="#!" onClick={handleSignInClick} class="text-white-50 fw-bold">Sign In</a></p>
 
             </MDBCardBody>
           </MDBCard>,

@@ -22,6 +22,11 @@ import { baseURL } from '../../api/api';
 
 function UserLogin() {
 
+  
+
+  
+
+
 
   const navigator = useNavigate();
   const dispatch = useDispatch();
@@ -31,7 +36,10 @@ function UserLogin() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
-
+  const handleSignUpClick = () => {
+    // Use the navigate function to go to the '/signup' route
+    navigator('/signup');
+  };
 
   const changeEmail = (event) => {
       const emailValue = event.target.value;
@@ -190,7 +198,7 @@ const handleLogin = (event) => {
                   />
             </GoogleOAuthProvider>
             {emailError && <p className="error-message">{emailError}</p>}
-              <p className="mt-5">Don't have an account? <a href="#!" className="text-white-50 fw-bold">Sign Up</a></p>
+              <p className="mt-5">Don't have an account? <a onClick={handleSignUpClick} style={{cursor:"pointer"}} className="text-white-50 fw-bold">Sign Up</a></p>
 
             </MDBCardBody>
           </MDBCard>

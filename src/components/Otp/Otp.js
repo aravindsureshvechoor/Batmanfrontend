@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const Otp = () => {
 const navigate = useNavigate()
 const email = localStorage.getItem('usermail');
+
 console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&',email)
 const [Otp,setOtp] = useState('')
 const changeOtp = (event) => {
@@ -22,7 +23,9 @@ const changeOtp = (event) => {
 
             console.log(response.data);
             // Handle successful response (e.g., redirect or show a success message)
+            localStorage.removeItem('usermail');
             navigate('/')
+
         } catch (error) {
             console.error(error.response.data);
             // Handle error (e.g., display an error message to the user)
