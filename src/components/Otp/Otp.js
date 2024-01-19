@@ -1,13 +1,33 @@
 import React,{useState} from 'react'
+import { baseURL } from '../../api/api';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Otp = () => {
-
+const navigate = useNavigate()
+const email = localStorage.getItem('usermail');
+console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&',email)
 const [Otp,setOtp] = useState('')
 const changeOtp = (event) => {
+   
     setOtp(event.target.value);
   };
 
+ const handleSubmit = async (event) => {
+        event.preventDefault();
 
+        try {
+            // Make the Axios POST request
+            const response = await axios.post(`${baseURL}/api/authentication/verifyotp/`,{Otp,email});
+
+            console.log(response.data);
+            // Handle successful response (e.g., redirect or show a success message)
+            navigate('/')
+        } catch (error) {
+            console.error(error.response.data);
+            // Handle error (e.g., display an error message to the user)
+        }
+    };
 
   return (
     <>
@@ -38,7 +58,7 @@ const changeOtp = (event) => {
 
             <div class="flex flex-col space-y-5">
               <div>
-                <button className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-yellow-400 border-none text-black text-sm shadow-sm">
+                <button onClick={handleSubmit} className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-yellow-400 border-none text-black text-sm shadow-sm">
                   Verify Account
                 </button>
               </div>

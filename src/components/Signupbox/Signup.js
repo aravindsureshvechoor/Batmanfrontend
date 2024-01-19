@@ -121,11 +121,11 @@ function Signup() {
               password: password,
               gender:gender,
           }).then((response) => {
-              localStorage.setItem('accessToken', response.data.access);
-              localStorage.setItem('refreshToken', response.data.refresh);
-              console.log(response.data)
-              const user = response.data.user;
-              navigator('/');
+              // console.log(response.data.email)
+              const usermail = response.data.email;
+              localStorage.setItem('usermail',usermail)
+              navigator('/otp');
+
           }).catch((error) =>{
               if (error.code === 'ERR_BAD_REQUEST'){
                   setEmailError(error.response.data.email ? error.response.data.email : '')
