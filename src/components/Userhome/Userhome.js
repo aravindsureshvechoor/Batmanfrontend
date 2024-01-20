@@ -6,9 +6,6 @@ const Userhome = () => {
     <>
       <Usersidebar />
       <Userpost />
-      <Userpost />
-      <Userpost />
-      <Userpost />
     </>
   );
 };
