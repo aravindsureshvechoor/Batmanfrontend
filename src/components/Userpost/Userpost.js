@@ -28,14 +28,14 @@ const Userpost = () => {
   return (
     <>
      {posts.map(post => (
-      <div className="w-[300px] sm:w-[660px] lg:w-[900px] xl:w-[1000px]  xl:ml-[500px] ml-20  pb-5 mt-4 bg-black text-white p-[20px] m-[10px] rounded-lg xl:h-[800px] sm:h-[650px] lg:h-[750px] h-[420px] ">
+      <div className="w-[300px] sm:w-[660px] lg:w-[900px] xl:w-[1000px]  xl:ml-[500px] ml-20  pb-5 mt-5 bg-black text-white px-[10px]  m-[10px] rounded-lg xl:h-[800px] sm:h-[650px] lg:h-[750px] h-[400px] ">
         <div className="flex justify-between items-center">
-          {/* <img
+          <img
             src="https://i.insider.com/648090713973bf001961daa1?width=1136&format=jpeg"
             alt="User Profile"
-            className="w-[60px] h-[60px] rounded-full  "
-          /> */}
-          <span className="text-lg font-bold text-9a9a9a text-left xl:pr-[750px] lg:pr-[700px] mt-[15px] ">
+            className="w-[60px] h-[60px] rounded-full mt-4 "
+          />
+          <span className="text-lg font-bold text-9a9a9a text-left xl:pr-[800px] mt-4 lg:pr-[700px]">
             {post.author_first_name}
           </span>
           <a href="#" className="zoom-button text-yellow-500">
@@ -43,18 +43,23 @@ const Userpost = () => {
           </a>
         </div>
 
-        <h5 className="xl:ml-20 ml-5 xl:mt-0 mt-3 text-lg font-serif">
+        <h5 className="xl:ml-20 ml-5 xl:mt-0 mt-2  text-lg font-serif">
           {post.caption}
         </h5>
-        <img
+
+        
+        {/* <img
           // src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRdI-Nv-Uy-uBJJkIKQmdWhEFG6oy4lPIoBha2LOaMputUjw5-Ltnn3-SQqhymuDZtcQDaxS0wbUXf2Ko0"
           src={`http://localhost:8000/${post.post_img}`}
           alt="Post"
           className="w-[900px] lg:w-[800px] xl:w-[900px] max-h-[1000px] object-cover lg:ml-[30px] ml:[0px] rounded-8 mb-3 mt-3"
-        />
+        /> */}
+   
+<img className="2xl:h-[600px] h-full w-full object-cover transform scale-90" src={`http://localhost:8000/${post.post_img}`}  alt="image description"/>
+
 
         <div className="flex justify-between">
-          <div className="flex text-xl">
+          <div className="flex text-xl pb-12">
             <a href="#">
               {" "}
               <SlLike className=" zoom-button w-7 h-7 text-yellow-300 xl:ml-10 ml:4" />

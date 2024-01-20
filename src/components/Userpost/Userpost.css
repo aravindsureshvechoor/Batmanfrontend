@@ -31,7 +31,7 @@
   color: #9a9a9a;
 }
 
-.post-image {
+/* .post-image {
   width: 90%;
   max-height: 1000px;
   object-fit: cover;
@@ -39,7 +39,7 @@
   margin-top: 10px;
   border-radius: 8px;
   margin-bottom: 10px;
-}
+} */
 
 .post-actions {
   display: flex;
