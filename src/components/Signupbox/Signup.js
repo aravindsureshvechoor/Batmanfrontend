@@ -216,11 +216,11 @@ function Signup() {
                     value={gender}
                     onChange={changeGender}
                   >
-                    <option disabled selected>
+                    <option className='text-white'>
                       Select Your Gender
                     </option>
                     <option>Male</option>
-                    <option>Female</option>
+                    <option>Female</option> 
                     <option>Other</option>
                   </select>
 

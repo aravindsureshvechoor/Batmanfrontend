@@ -265,8 +265,8 @@ const dispatch = useDispatch();
 
 
 
-      <div className="" onClick={toggleModal}>
-        Create a new post
+      <div className="ml-10 mt-10 text-yellow-400 text-xl" style={{cursor:"pointer"}} onClick={toggleModal}>
+        + Add Post
       </div>
       <CreatepostModal isOpen={modalIsOpen} toggle={toggleModal} />
 
