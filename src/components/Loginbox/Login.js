@@ -185,6 +185,7 @@ const handleLogin = (event) => {
         .catch((error) => {
           if (error.code === 'ERR_BAD_REQUEST') {
             // Unauthorized: Invalid credentials
+            console.log(error.response.data)
               setEmailError(error.response.data.password || 'Bad Credentials!!!');
           } else {
             // Other errors
