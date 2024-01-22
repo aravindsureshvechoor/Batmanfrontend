@@ -1,9 +1,35 @@
 import React,{useState,useEffect} from 'react'
 import axiosInstance, { baseURL } from '../../api/api';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
 const Adminuserdash = () => {
+
+    const blockUser = async (userId) => {
+      try {
+        // Replace 'yourApiEndpoint' with the actual API endpoint for blocking a user
+        await axiosInstance.post(`${baseURL}/api/blockuser/${userId}/`);
+        console.log(`User ${userId} blocked successfully.`);
+        // Add any additional logic you want to perform after blocking the user
+        toast.success(`User ${userId} blocked successfully`);
+      } catch (error) {
+        console.error('Error blocking user:', error);
+      }
+    };
+
+const unblockUser = async (userId) => {
+      try {
+        // Replace 'yourApiEndpoint' with the actual API endpoint for unblocking a user
+        await axiosInstance.post(`${baseURL}/api/unblockuser/${userId}/`);
+        console.log(`unblocked successfully.`);
+        // Add any additional logic you want to perform after unblocking the user
+        toast.success(`unblocked successfully`);
+      } catch (error) {
+        console.error('Error unblocking user:', error);
+      }
+    };
     
     const [userdata,setUserData] = useState(null);
 
@@ -45,12 +71,19 @@ const Adminuserdash = () => {
             <td class="px-6 py-4 text-sm text-white whitespace-nowrap">{user.last_name}</td>
             <td class="px-6 py-4 text-sm text-white whitespace-nowrap">{user.email}</td>
             <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Block
-                </button>
-                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+
+        
+                <button onClick={() => unblockUser(user.id)} class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                     Unblock
+                    <ToastContainer />
                 </button>
+
+
+                <button onClick={() => blockUser(user.id)} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Block
+                    <ToastContainer />
+                </button>
+
             </td>
         </tr>
     </tbody>
