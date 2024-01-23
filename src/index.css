@@ -14,6 +14,7 @@ body {
   background-color: #131313;
   max-height:auto;
   min-height:100vh;
+  padding-bottom:2%;
  }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

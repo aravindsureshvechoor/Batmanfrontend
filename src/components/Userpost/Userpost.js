@@ -4,17 +4,17 @@ import "./Userpost.css";
 import { SlLike } from "react-icons/sl";
 import { TfiComment } from "react-icons/tfi";
 import { MdOutlineSaveAlt } from "react-icons/md";
-import { CiShare1 } from "react-icons/ci";
-import Icon from '@mdi/react';
-import { mdiThumbUp } from '@mdi/js';
+// import { CiShare1 } from "react-icons/ci";
+// import Icon from '@mdi/react';
+// import { mdiThumbUp } from '@mdi/js';
 import { useSelector } from "react-redux";
 
 const Userpost = () => {
   const [posts,setPosts] = useState([]);
-  const [postId, setPostId] = useState(null);  
+  const [postId, setPostId] = useState(null); 
   const user = useSelector((state) => state.user);
 
-  console.log(user.user.id,"##################################")
+  // console.log(user.user.id,"##################################")
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -61,8 +61,8 @@ const likePostApi = async (postId, fetchData) => {
         return {
           ...post,
           likes: isLiked
-            ? post.likes.filter((likeUserId) => likeUserId !== user.user.id)
-            : [...post.likes, user.user.id],
+            ? post.likes.filter((likeUserId) => likeUserId !== user.id)
+            : [...post.likes, user.id],
           total_likes: isLiked
             ? post.total_likes - 1
             : post.total_likes + 1,
@@ -118,7 +118,7 @@ const likePostApi = async (postId, fetchData) => {
         <div className="flex justify-between">
           <div className="flex text-xl pb-12">
 
-            {post.likes.includes(user.user.id)?
+            {post.likes.includes(user.id)?
             
             (<a href="#">
               
