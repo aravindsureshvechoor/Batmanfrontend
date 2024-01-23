@@ -4,12 +4,27 @@ import "./Userpost.css";
 import { SlLike } from "react-icons/sl";
 import { TfiComment } from "react-icons/tfi";
 import { MdOutlineSaveAlt } from "react-icons/md";
+import Usercommentbox from "../Usercommentbox/Usercommentbox";
 // import { CiShare1 } from "react-icons/ci";
 // import Icon from '@mdi/react';
 // import { mdiThumbUp } from '@mdi/js';
 import { useSelector } from "react-redux";
 
 const Userpost = () => {
+
+const [modalIsOpen, setModalIsOpen] = useState(false)
+
+ const toggleModal = () => {
+    setModalIsOpen(!modalIsOpen)
+ }
+
+
+
+
+
+
+
+
   const [posts,setPosts] = useState([]);
   const [postId, setPostId] = useState(null); 
   const user = useSelector((state) => state.user);
@@ -136,7 +151,8 @@ const likePostApi = async (postId, fetchData) => {
             }
 
             <a href="#" className=" zoom-button xl:ml-8 ml-0">
-              <TfiComment className=" w-7 h-7 text-gray-400 ml-5 " />
+              <TfiComment onClick={toggleModal} className=" w-7 h-7 text-gray-400 ml-5 " />
+              <Usercommentbox isOpen={modalIsOpen} toggle={toggleModal} />
               <h6 className="ml-6 mt-2  text-gray-400 ">21</h6>
             </a>
             {/* <a href="#" className=" zoom-button xl:ml-8 ml-0">

@@ -70,7 +70,7 @@ const dispatch = useDispatch();
                   }}
                 />
                 <a
-                  href="#"
+                  href="/home"
                   style={{
                     fontSize: "24px",
                     marginTop: "1%",
@@ -100,7 +100,7 @@ const dispatch = useDispatch();
                   }}
                 />
                 <a
-                  href="#"
+                  href="/userprofile"
                   style={{
                     fontSize: "24px",
                     marginTop: "1%",
