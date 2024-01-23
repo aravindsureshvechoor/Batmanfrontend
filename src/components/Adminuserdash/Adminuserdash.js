@@ -48,12 +48,12 @@ const unblockUser = async (userId) => {
     fetchUserData();
   }, []);
 
-
+console.log("User Data : ", userdata)
 
 
   return (
     <>
-    { userdata&& userdata.map(user => (
+    
     <table class="min-w-[1500px] ml-[390px] mt-12 bg-white rounded-md shadow overflow-hidden">
     <thead class="bg-gray-50">
         <tr>
@@ -61,34 +61,42 @@ const unblockUser = async (userId) => {
             <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-black uppercase">First Name</th>
             <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-black uppercase">Last Name</th>
             <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-black uppercase">Email</th>
+
+            {/* <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-black uppercase">Status</th> */}
+
             <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-black uppercase">Action</th>
         </tr>
     </thead>
     <tbody>
+      { userdata&& userdata.map(user => (
         <tr style={{backgroundColor:"#000000"}}>
             <td class="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">{user.id}</td>
             <td class="px-6 py-4 text-sm text-white whitespace-nowrap">{user.first_name}</td>
             <td class="px-6 py-4 text-sm text-white whitespace-nowrap">{user.last_name}</td>
             <td class="px-6 py-4 text-sm text-white whitespace-nowrap">{user.email}</td>
+
+            {/* <td class="px-6 py-4 text-sm text-white whitespace-nowrap">{user.is_blocked}</td> */}
+
             <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
 
-        
-                <button onClick={() => unblockUser(user.id)} class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+        { user.is_blocked?
+                (<button onClick={() => unblockUser(user.id)} class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                     Unblock
                     <ToastContainer />
-                </button>
+                </button>):
 
 
-                <button onClick={() => blockUser(user.id)} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                (<button onClick={() => blockUser(user.id)} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Block
                     <ToastContainer />
-                </button>
+                </button>)}
 
             </td>
         </tr>
+        ))}
     </tbody>
 </table>   
-))}
+
     </>
   )
 }

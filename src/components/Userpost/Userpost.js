@@ -5,16 +5,22 @@ import { SlLike } from "react-icons/sl";
 import { TfiComment } from "react-icons/tfi";
 import { MdOutlineSaveAlt } from "react-icons/md";
 import { CiShare1 } from "react-icons/ci";
+import Icon from '@mdi/react';
+import { mdiThumbUp } from '@mdi/js';
+import { useSelector } from "react-redux";
 
 const Userpost = () => {
-  const [posts,setPosts] = useState([])
+  const [posts,setPosts] = useState([]);
+  const [postId, setPostId] = useState(null);  
+  const user = useSelector((state) => state.user);
 
+  console.log(user.user.id,"##################################")
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Assuming you have an axios instance named axiosInstance
         const response = await axiosInstance.get(`${baseURL}/api/posts/get/`);
-
+        console.log("POSTS : ", response.data)
         setPosts(response.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -24,6 +30,57 @@ const Userpost = () => {
     // Fetch posts when the component mounts
     fetchData();
   }, []);
+
+
+// this function is for the likestatemanagement
+const likePostApi = async (postId, fetchData) => {
+  try {
+    // const accessToken = localStorage.getItem('access_token');
+    let body = {}
+    const response = await axiosInstance.post(`${baseURL}/api/posts/like/${postId}/`,body);
+    if (response.status === 200) {
+      console.log('Post like toggled successfully');
+      if (fetchData) {
+        fetchData(); 
+      }
+    } else {
+      console.log(response.error);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+/////////////////////////////////////////////////////////
+  const handleToggleLikePost = async (postId, isLiked) => {
+  try {
+    await likePostApi(postId);
+
+    // Update the like count for the specific post
+    const updatedPosts = posts.map((post) => {
+      if (post.id === postId) {
+        return {
+          ...post,
+          likes: isLiked
+            ? post.likes.filter((likeUserId) => likeUserId !== user.user.id)
+            : [...post.likes, user.user.id],
+          total_likes: isLiked
+            ? post.total_likes - 1
+            : post.total_likes + 1,
+        };
+      }
+      return post;
+    });
+
+    // Set the updated posts state
+    setPosts(updatedPosts);
+  } catch (error) {
+    console.error("Error toggling like:", error);
+  }
+};
+
+
+
+
 
   return (
     <>
@@ -60,20 +117,37 @@ const Userpost = () => {
 
         <div className="flex justify-between">
           <div className="flex text-xl pb-12">
-            <a href="#">
-              {" "}
-              <SlLike className=" zoom-button w-7 h-7 text-yellow-300 xl:ml-10 ml:4" />
-            </a>
+
+            {post.likes.includes(user.user.id)?
+            
+            (<a href="#">
+              
+              <SlLike  className=" zoom-button w-7 h-7 text-yellow-500 xl:ml-10 ml:4" onClick={() => handleToggleLikePost(post.id, true)}/>
+              <h6 className="ml-11 mt-2 text-gray-400">{post.total_likes}</h6>
+            </a>)
+            :
+
+            (<a href="#">
+              
+              <SlLike  className=" zoom-button w-7 h-7 text-gray-400 xl:ml-10 ml:4" onClick={() => handleToggleLikePost(post.id, false)}/>
+              <h6 className="ml-11 mt-2 text-gray-400">{post.total_likes}</h6>
+              
+            </a>)
+            }
+
             <a href="#" className=" zoom-button xl:ml-8 ml-0">
-              <TfiComment className=" w-7 h-7 text-yellow-300 ml-5 " />
+              <TfiComment className=" w-7 h-7 text-gray-400 ml-5 " />
+              <h6 className="ml-6 mt-2  text-gray-400 ">21</h6>
             </a>
-            <a href="#" className=" zoom-button xl:ml-8 ml-0">
+            {/* <a href="#" className=" zoom-button xl:ml-8 ml-0">
               <CiShare1 className=" w-7 h-7 text-yellow-300 ml-5  mb-1" />
-            </a>
+              <h6 className="ml-7 mt-2  text-gray-400 ">21</h6>
+            </a> */}
           </div>
 
           <span className="text-sm xl:mt-4 mt-2 text-gray-500">
             {post.created_at}
+            
           </span>
         </div>
       </div>
