@@ -6,6 +6,7 @@ import Userhome from "./components/Userhome/Userhome";
 import Userprofile from "./components/Userprofile/Userprofile";
 import AdminDash from "./components/Admindashboard/AdminDash";
 import Otp from "./components/Otp/Otp";
+import Postcommentsection from "./components/Postcommentsection/Postcommentsection";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/userprofile" element={<Userprofile/>} />
         <Route path="/admindashboard" element={<AdminDash/>} />
         <Route path="/otp" element={<Otp/>} />
+        <Route path="/comment/:postid" element={<Postcommentsection/>} />
       </Routes>
     </Router>
   );
