@@ -33,6 +33,7 @@ const Postcommentsection = () => {
 
 
   const [posts,setPosts] = useState([]);
+  const [comments,setComments] = useState([]);
 
   // console.log(user.user.id,"##################################")
   useEffect(() => {
@@ -44,6 +45,22 @@ const Postcommentsection = () => {
         setPosts(response.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
+      }
+    };
+
+    // Fetch posts when the component mounts
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Assuming you have an axios instance named axiosInstance
+        const response = await axiosInstance.get(`${baseURL}/api/posts/retrievecomments/${postid}/`);
+        console.log("COMMENTS : ", response.data)
+        setComments(response.data);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
       }
     };
 
@@ -71,10 +88,10 @@ const Postcommentsection = () => {
 <img className="2xl:h-[600px] h-full w-full object-cover transform scale-90" src={`http://localhost:8000/${posts.post_img}`}  alt="image description"/>
         
         
-        <div className="flex items-center">
+        {/* <div className="flex items-center">
         <SlLike  className="ml-14 zoom-button w-10 h-10 text-yellow-500"/>
         <h6 className="ml-3 text-gray-400">{posts.total_likes}</h6>
-        </div>
+        </div> */}
         </div>
 
 
@@ -89,19 +106,19 @@ const Postcommentsection = () => {
     {/* //////////////////////////////// COMMENTBOX //////////////////////////////////// */}
 
 
-<div className="comment-container w-[800px]">
+<div className="comment-container h-[900px] w-[800px] mt-[50px] mr-[60px]"style={{ backgroundColor: '#000000' }}>
             {/* Display Comments */}
-            
+            {comments.map(c => (
               <div key='id' className="comment">
                 <div className="comment-content">
                   <div className="comment-user">
                     <div>
-                      <h3 className="font-bold text-sm">Aravind</h3>
+                      <h3 className="font-bold text-xl ml-5 mt-3">{c.user_first_name}:</h3>
                       
                     </div>
                   </div>
                   
-                  <p className="text-gray-600 mt-2">Good Pic</p>
+                  <p className="text-yellow-600 mt-2 text-lg ml-10">{c.body}</p>
                   
                   
                   {/* <button className="text-right text-blue-500">Reply</button> */}
@@ -125,7 +142,7 @@ const Postcommentsection = () => {
                     ))}
                   </div>
                 )} */}
-              </div>
+              </div>))}
             
 
             {/* Comment Input */}

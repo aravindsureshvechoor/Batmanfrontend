@@ -140,7 +140,7 @@ const likePostApi = async (postId, fetchData) => {
             }
 
             <a href={`/comment/${post.id}`} className=" zoom-button xl:ml-8 ml-0">
-              <TfiComment onClick='#' className=" w-7 h-7 text-gray-400 ml-5 " />
+              <TfiComment className=" w-7 h-7 text-gray-400 ml-5 " />
               <h6 className="ml-6 mt-2  text-gray-400 ">21</h6>
             </a>
             {/* <a href="#" className=" zoom-button xl:ml-8 ml-0">
