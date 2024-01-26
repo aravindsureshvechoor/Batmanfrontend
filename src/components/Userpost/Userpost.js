@@ -24,10 +24,10 @@ const Userpost = () => {
       try {
         // Assuming you have an axios instance named axiosInstance
         const response = await axiosInstance.get(`${baseURL}/api/posts/get/`);
-        console.log("POSTS : ", response.data)
+        // console.log("POSTS : ", response.data)
         setPosts(response.data);
       } catch (error) {
-        console.error("Error fetching posts:", error);
+        // console.error("Error fetching posts:", error);
       }
     };
 
@@ -54,7 +54,7 @@ const likePostApi = async (postId, fetchData) => {
     console.error(error);
   }
 };
-console.log("uuuuuuuuuuuussssssssssseeeeeerrrrrrr",user)
+
 /////////////////////////////////////////////////////////
  const handleToggleLikePost = async (postId, isLiked) => {
   try {

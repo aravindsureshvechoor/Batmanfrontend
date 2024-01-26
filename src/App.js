@@ -7,6 +7,7 @@ import Userprofile from "./components/Userprofile/Userprofile";
 import AdminDash from "./components/Admindashboard/AdminDash";
 import Otp from "./components/Otp/Otp";
 import Postcommentsection from "./components/Postcommentsection/Postcommentsection";
+import UserStatusChecker from "./components/Userstatus";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
@@ -15,6 +16,7 @@ function App() {
     
     <Router>
       <ToastContainer/>
+      <UserStatusChecker/>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
