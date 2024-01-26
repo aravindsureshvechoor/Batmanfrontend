@@ -17,8 +17,8 @@ const Userpost = () => {
   const [posts,setPosts] = useState([]);
   const [postId, setPostId] = useState(null); 
   const user = useSelector((state) => state.user);
+  
 
-  // console.log(user.user.id,"##################################")
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -54,19 +54,18 @@ const likePostApi = async (postId, fetchData) => {
     console.error(error);
   }
 };
+console.log("uuuuuuuuuuuussssssssssseeeeeerrrrrrr",user)
 /////////////////////////////////////////////////////////
-  const handleToggleLikePost = async (postId, isLiked) => {
+ const handleToggleLikePost = async (postId, isLiked) => {
   try {
-    await likePostApi(postId);
-
-    // Update the like count for the specific post
+    // Update the like count for the specific post locally
     const updatedPosts = posts.map((post) => {
       if (post.id === postId) {
         return {
           ...post,
           likes: isLiked
-            ? post.likes.filter((likeUserId) => likeUserId !== user.id)
-            : [...post.likes, user.id],
+            ? post.likes.filter((likeUserId) => likeUserId !== user.user.id)
+            : [...post.likes, user.user.id],
           total_likes: isLiked
             ? post.total_likes - 1
             : post.total_likes + 1,
@@ -75,12 +74,18 @@ const likePostApi = async (postId, fetchData) => {
       return post;
     });
 
-    // Set the updated posts state
+    // Update the UI with the locally modified data
+    // This will make the button toggle instantly
     setPosts(updatedPosts);
+
+    // Send the like/unlike request to the server
+    await likePostApi(postId);
+
   } catch (error) {
-    console.error("Error toggling like:", error);
+    console.error(error);
   }
 };
+
 
 
 
@@ -122,7 +127,7 @@ const likePostApi = async (postId, fetchData) => {
         <div className="flex justify-between">
           <div className="flex text-xl pb-12">
 
-            {post.likes.includes(user.id)?
+            {user.user && post.likes.includes(user.user.id)?
             
             (<a href="#">
               
@@ -141,12 +146,8 @@ const likePostApi = async (postId, fetchData) => {
 
             <a href={`/comment/${post.id}`} className=" zoom-button xl:ml-8 ml-0">
               <TfiComment className=" w-7 h-7 text-gray-400 ml-5 " />
-              <h6 className="ml-6 mt-2  text-gray-400 ">21</h6>
+              <h6 className="ml-6 mt-2  text-gray-400 ">0</h6>
             </a>
-            {/* <a href="#" className=" zoom-button xl:ml-8 ml-0">
-              <CiShare1 className=" w-7 h-7 text-yellow-300 ml-5  mb-1" />
-              <h6 className="ml-7 mt-2  text-gray-400 ">21</h6>
-            </a> */}
           </div>
 
           <span className="text-sm xl:mt-4 mt-2 text-gray-500">

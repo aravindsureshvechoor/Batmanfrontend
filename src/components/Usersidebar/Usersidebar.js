@@ -31,7 +31,6 @@ const dispatch = useDispatch();
     dispatch(clearAuth());
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    // Perform other logout-related tasks, e.g., navigating the user to the login page
     window.location.href = '/';
   };
 
