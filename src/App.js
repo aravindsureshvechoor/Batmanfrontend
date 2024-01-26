@@ -8,10 +8,13 @@ import AdminDash from "./components/Admindashboard/AdminDash";
 import Otp from "./components/Otp/Otp";
 import Postcommentsection from "./components/Postcommentsection/Postcommentsection";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
+    
     <Router>
+      <ToastContainer/>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

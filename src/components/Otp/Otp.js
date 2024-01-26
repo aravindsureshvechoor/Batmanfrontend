@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import { baseURL } from '../../api/api';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Otp = () => {
 const navigate = useNavigate()
@@ -20,14 +21,17 @@ const changeOtp = (event) => {
         try {
             // Make the Axios POST request
             const response = await axios.post(`${baseURL}/api/authentication/verifyotp/`,{Otp,email});
-
+            toast.success(response.data.detail)
             console.log(response.data);
+            
             // Handle successful response (e.g., redirect or show a success message)
             localStorage.removeItem('usermail');
             navigate('/')
 
         } catch (error) {
-            console.error(error.response.data);
+            console.log(error.response.data);
+            toast.error(error.response.data.detail)
+            navigate('/')
             // Handle error (e.g., display an error message to the user)
         }
     };
