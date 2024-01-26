@@ -78,8 +78,7 @@ const handleLogin = (event) => {
         setPasswordError('Password is required');
       }
     } else {
-      // console.log('##########################',email)
-          // console.log('##########################',password)
+      
       axios
         .post(`${baseURL}/api/authentication/userlogin/`, {
           email: email,
@@ -99,10 +98,24 @@ const handleLogin = (event) => {
           navigator('/home');
         })
         .catch((error) => {
-          if (error.code === 'ERR_BAD_REQUEST') {
+          console.log(error.response.data)
+          if (error.response.status === 'ERR_BAD_REQUEST') {
             // Unauthorized: Invalid credentials
-              setPasswordError(error.response.data.password || 'Bad Credentials!!!');
-          } else {
+              toast.error(error.response.data.password)
+          } 
+          else if (error.response.data && error.response.data.Blocked) {
+    
+            toast.error(error.response.data.Blocked);
+          } 
+          else if (error.response.data && error.response.data["No active"]) {
+            
+            toast.error(error.response.data["No active"]);
+          } 
+          else if (error.response.data && error.response.data.Invalid) {
+           
+            toast.error(error.response.data.Invalid);}
+          
+          else {
             // Other errors
             console.error('Login error:', error);
           }
