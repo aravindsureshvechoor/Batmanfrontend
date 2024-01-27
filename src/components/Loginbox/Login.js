@@ -5,6 +5,7 @@ import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from "jwt-decode";
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
+import Spinner from '../Spinner';
 import { setAccessToken, setUser } from '../../Redux/UserSlice';
 import  './Login.css'
 import {
@@ -26,7 +27,7 @@ function UserLogin() {
 
   
 
-
+  const [loading,setLoading] = useState(false)
 
   const navigator = useNavigate();
   const dispatch = useDispatch();
@@ -79,6 +80,7 @@ const handleLogin = (event) => {
       }
     } else {
       
+      setLoading(true)
       axios
         .post(`${baseURL}/api/authentication/userlogin/`, {
           email: email,
@@ -88,7 +90,7 @@ const handleLogin = (event) => {
           console.log('RESPOSNE DATA:',response.data.data.refresh)
           // localStorage.setItem('accessToken', response.data.access);
           // localStorage.setItem('refreshToken', response.data.refresh);
-          
+          setLoading(false)
           dispatch(setAccessToken({accessToken:response.data.data.access,refreshToken:response.data.data.refresh}));
           dispatch(setUser(response.data.user));
           
@@ -119,11 +121,17 @@ const handleLogin = (event) => {
             // Other errors
             console.error('Login error:', error);
           }
+        })
+        .finally(() => {
+          setLoading(false); // Set loading back to false after the request is completed (success or error)
         });
     }
     };
 
 
+if(loading){
+  return <Spinner></Spinner>
+}
 
   return (
     <MDBContainer fluid style={{backgroundImage:'url("https://getwallpapers.com/wallpaper/full/b/f/e/1488318-beautiful-batman-art-wallpaper-1920x1080-1080p.jpg")',height:'100vh'}}>

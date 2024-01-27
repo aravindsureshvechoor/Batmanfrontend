@@ -8,6 +8,7 @@ import AdminDash from "./components/Admindashboard/AdminDash";
 import Otp from "./components/Otp/Otp";
 import Postcommentsection from "./components/Postcommentsection/Postcommentsection";
 import UserStatusChecker from "./components/Userstatus";
+import Spinner from "./components/Spinner";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/admindashboard" element={<AdminDash/>} />
         <Route path="/otp" element={<Otp/>} />
         <Route path="/comment/:postid" element={<Postcommentsection/>} />
+        <Route path="/spinner" element={<Spinner />} />
       </Routes>
     </Router>
   );
