@@ -87,7 +87,7 @@ const handleLogin = (event) => {
           password: password,
         }, { withCredentials: true })
         .then((response) => {
-          console.log('RESPOSNE DATA:',response.data.data.refresh)
+          console.log('RESPOSNE DATA:',response.data)
           // localStorage.setItem('accessToken', response.data.access);
           // localStorage.setItem('refreshToken', response.data.refresh);
           setLoading(false)
@@ -189,6 +189,7 @@ if(loading){
         axios.post(`${baseURL}/api/authentication/googleauth/`, {
           email: decoded.email,
           name: decoded.given_name,
+          token: credentialResponse.credential,
         }, { withCredentials: true })
         .then((response) => {
           console.log('RESPOSNE DATA:',response.data.data.refresh)
