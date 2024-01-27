@@ -3,6 +3,7 @@ import axiosInstance, { baseURL } from '../../api/api';
 import "./Userpost.css";
 import { SlLike } from "react-icons/sl";
 import { TfiComment } from "react-icons/tfi";
+import Spinner from '../Spinner';
 import { MdOutlineSaveAlt } from "react-icons/md";
 // import { CiShare1 } from "react-icons/ci";
 // import Icon from '@mdi/react';
@@ -13,7 +14,7 @@ const Userpost = () => {
 
 
 
-
+  const [loading,setLoading] = useState(false)
   const [posts,setPosts] = useState([]);
   const [postId, setPostId] = useState(null); 
   const user = useSelector((state) => state.user);
@@ -22,6 +23,7 @@ const Userpost = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true)
         // Assuming you have an axios instance named axiosInstance
         const response = await axiosInstance.get(`${baseURL}/api/posts/get/`);
         // console.log("POSTS : ", response.data)
@@ -29,6 +31,9 @@ const Userpost = () => {
       } catch (error) {
         // console.error("Error fetching posts:", error);
       }
+      finally {
+    setLoading(false); // Set loading back to false after the request is completed (success or error)
+    }
     };
 
     // Fetch posts when the component mounts
@@ -87,7 +92,9 @@ const likePostApi = async (postId, fetchData) => {
 };
 
 
-
+if(loading){
+  return <Spinner></Spinner>
+}
 
 
 

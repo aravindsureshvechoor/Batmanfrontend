@@ -185,8 +185,8 @@ if(loading){
                       const decoded = jwtDecode(credentialResponse.credential);
                       console.log(decoded);
 
-                      axios
-        .post(`${baseURL}/api/authentication/googleauth/`, {
+        setLoading(true)            
+        axios.post(`${baseURL}/api/authentication/googleauth/`, {
           email: decoded.email,
           name: decoded.given_name,
         }, { withCredentials: true })
@@ -194,11 +194,10 @@ if(loading){
           console.log('RESPOSNE DATA:',response.data.data.refresh)
           // localStorage.setItem('accessToken', response.data.access);
           // localStorage.setItem('refreshToken', response.data.refresh);
-          
           dispatch(setAccessToken({accessToken:response.data.data.access,refreshToken:response.data.data.refresh}));
           dispatch(setUser(response.data.user));
           
-
+          setLoading(false)
           // Redirect to the desired page after successful login
           toast.success('Login Successful');
           navigator('/home');
@@ -212,11 +211,17 @@ if(loading){
             // Other errors
             console.error('Login error:', error);
           }
-        });
+        })
+        .finally(() => {
+      setLoading(false); // Set loading back to false after the request is completed (success or error)
+      });
+        
+        
                     }}
                     onError={() => {
                       console.log('Login Failed');
                     }}
+              
                   />
             </GoogleOAuthProvider>
             {emailError && <p className="error-message">{emailError}</p>}

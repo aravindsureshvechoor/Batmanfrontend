@@ -3,10 +3,12 @@ import { useParams } from 'react-router-dom';
 import axiosInstance from '../../api/api';
 import { baseURL } from '../../api/api';
 import { SlLike } from "react-icons/sl";
+import Spinner from '../Spinner'
 
 
 const Postcommentsection = () => {
 
+  const [loading,setLoading] = useState(false)
   const params = useParams();
   const postid = params.postid
   const [comment,setComment] = useState('')
@@ -39,13 +41,16 @@ const Postcommentsection = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true)
         // Assuming you have an axios instance named axiosInstance
         const response = await axiosInstance.get(`${baseURL}/api/posts/singlepostforcomment/${postid}/`);
         console.log("POSTS : ", response.data)
         setPosts(response.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
-      }
+      }finally {
+    setLoading(false); // Set loading back to false after the request is completed (success or error)
+    }
     };
 
     // Fetch posts when the component mounts
@@ -69,7 +74,9 @@ const Postcommentsection = () => {
   }, []);
 
 
-
+if(loading){
+  return <Spinner></Spinner>
+}
   return (
     <>
     <div className="flex justify-between items-center">

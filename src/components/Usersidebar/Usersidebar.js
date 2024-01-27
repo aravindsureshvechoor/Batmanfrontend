@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import "./Usersidebar.css";
 import { TbLogout } from "react-icons/tb";
 import { CiHome } from "react-icons/ci";
@@ -10,12 +10,23 @@ import { MdOutlineContactMail } from "react-icons/md";
 import CreatepostModal from '../Createpost/CreatepostModal';
 import {useDispatch} from 'react-redux';
 import { clearAuth } from '../../Redux/UserSlice';
+import Spinner from "../Spinner";
 // import axios from 'axios';
 // import { baseURL } from '../../api/api';
 
 
 const Usersidebar = () => {
    const [modalIsOpen, setModalIsOpen] = useState(false)
+   const [loading, setLoading] = useState(true); // Initially set loading to true
+
+    useEffect(() => {
+      const fakeAPICall = setTimeout(() => {
+        setLoading(false); // Set loading to false after the data is "loaded"
+      }, 5800); // Simulating a 2-second delay, replace with actual API call
+
+      // Cleanup function to clear the timeout in case the component unmounts
+      return () => clearTimeout(fakeAPICall);
+    }, []); 
 
  const toggleModal = () => {
     setModalIsOpen(!modalIsOpen)
@@ -34,7 +45,9 @@ const dispatch = useDispatch();
     window.location.href = '/';
   };
 
-  
+  if(loading){
+  return <Spinner></Spinner>
+}
   return (
     <>
       <body>
