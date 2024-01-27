@@ -1,8 +1,55 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import Usersidebar from '../Usersidebar/Usersidebar'
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn, MDBTypography } from 'mdb-react-ui-kit';
 import './Userprofile.css'
+import axios from 'axios';
+import { baseURL } from '../../api/api';
+import { useSelector } from 'react-redux';
+
 const Userprofile = () => {
+
+const [userdetails,setUserdetails] = useState([]);
+const [posts,setPosts] = useState([]);
+const user = useSelector((state) => state.user);
+
+useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // console.log(user.user.email,"eeeeeeeeeemmmmmmmmaaaaaaaiiiiiiiilllllll")
+        // Assuming you have an axios instance named axiosInstance
+        const response = await axios.get(`${baseURL}/api/authentication/retrieveuser/${user.user.email}/`);
+        console.log(response.data)
+        setUserdetails(response.data);
+        // console.log(userdetails,"userdetaaaaaaaaaaaaaaaaaails")
+      } catch (error) {
+        // console.error("Error fetching posts:", error);
+      }
+      
+    };
+
+    // Fetch posts when the component mounts
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchPostData = async () => {
+      try {
+        // console.log(user.user.email,"eeeeeeeeeemmmmmmmmaaaaaaaiiiiiiiilllllll")
+        // Assuming you have an axios instance named axiosInstance
+        const response = await axios.get(`${baseURL}/api/authentication/retrieveuserpost/${user.user.email}/`);
+        console.log(response.data)
+        setPosts(response.data);
+        // console.log(posts,"possssssssssssssssstssssssssss")
+      } catch (error) {
+        // console.error("Error fetching posts:", error);
+      }
+      
+    };
+
+    // Fetch posts when the component mounts
+    fetchPostData();
+  }, []);
+
   return (
     <>
         <Usersidebar/>
@@ -23,62 +70,60 @@ const Userprofile = () => {
                   </MDBBtn>
                 </div>
                 <div className="ms-3" style={{ marginTop: '130px' }}>
-                  <MDBTypography tag="h5">Andy Horwitz</MDBTypography>
-                  <MDBCardText>New York</MDBCardText>
+                  <MDBTypography tag="h5">{userdetails.first_name}&nbsp;{userdetails.last_name}</MDBTypography>
                 </div>
               </div>
               <div className="p-4 mb-6 text-black" style={{ backgroundColor: '#ffc400' }}>
                 <div className="d-flex justify-content-end text-center py-1">
                   <div>
-                    <MDBCardText className="mb-1 h5">253</MDBCardText>
+                    <MDBCardText className="mb-1 h5">{userdetails.post_count}</MDBCardText>
                     <MDBCardText className="small text-black mb-0">Photos</MDBCardText>
                   </div>
                   <div className="px-3">
-                    <MDBCardText className="mb-1 h5">1026</MDBCardText>
+                    <MDBCardText className="mb-1 h5">{userdetails.follower_count}</MDBCardText>
                     <MDBCardText className="small text-black mb-0">Followers</MDBCardText>
                   </div>
                   <div>
-                    <MDBCardText className="mb-1 h5">478</MDBCardText>
+                    <MDBCardText className="mb-1 h5">{userdetails.following_count}</MDBCardText>
                     <MDBCardText className="small text-black mb-0">Following</MDBCardText>
                   </div>
                 </div>
               </div>
               <MDBCardBody className="text-black p-4">
                 
-                {/* <div className="d-flex justify-content-between align-items-center mb-4">
-                  <MDBCardText className="lead fw-normal mb-0">Recent photos</MDBCardText>
-                  <MDBCardText className="mb-0"><a href="#!" className="text-muted"></a></MDBCardText>
-                </div> */}
-                <MDBRow>
-                  <MDBCol className="mb-2">
-                    <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp"
-                      alt="image 1" className="w-100 rounded-3" />
-                  </MDBCol>
-                  <MDBCol className="mb-2">
-                    <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(107).webp"
-                      alt="image 1" className="w-100 rounded-3" />
-                  </MDBCol>
-                </MDBRow>
-                <MDBRow className="g-2">
-                  <MDBCol className="mb-2">
-                    <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(108).webp"
-                      alt="image 1" className="w-100 rounded-3" />
-                  </MDBCol>
-                  <MDBCol className="mb-2">
-                    <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(114).webp"
-                      alt="image 1" className="w-100 rounded-3" />
-                  </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                  <MDBCol className="mb-2">
-                    <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp"
-                      alt="image 1" className="w-100 rounded-3" />
-                  </MDBCol>
-                  <MDBCol className="mb-2">
-                    <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(107).webp"
-                      alt="image 1" className="w-100 rounded-3" />
-                  </MDBCol>
-                </MDBRow>
+                
+                
+    
+    <MDBContainer>
+  {posts.map((post, index) => (
+    // Check if the current index is divisible by 2 to determine the start of a new row
+    index % 2 === 0 && (
+      <MDBRow key={index}>
+        {/* Display the current image */}
+        <MDBCol className="mb-2">
+          <MDBCardImage
+            src={`http://localhost:8000/${post.post_img}`}
+            alt={`image ${index + 1}`}
+            className="rounded-3 h-[250px] w-[450px]"
+          />
+        </MDBCol>
+
+        {/* Check if there is another image in the array for the second column */}
+        {index + 1 < posts.length && (
+          <MDBCol className="mb-2">
+            <MDBCardImage
+              src={`http://localhost:8000/${posts[index + 1].post_img}`}
+              alt={`image ${index + 2}`}
+              className="rounded-3 h-[250px] w-[450px]"
+            />
+          </MDBCol>
+        )}
+      </MDBRow>
+    )
+  ))}
+</MDBContainer>
+
+                
               </MDBCardBody>
             </MDBCard>
           </MDBCol>
