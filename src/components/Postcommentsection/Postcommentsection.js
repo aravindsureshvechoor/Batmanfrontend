@@ -3,12 +3,16 @@ import { useParams } from 'react-router-dom';
 import axiosInstance from '../../api/api';
 import { baseURL } from '../../api/api';
 import { SlLike } from "react-icons/sl";
-import Spinner from '../Spinner'
+import Spinner from '../Spinner';
+import { useSelector } from "react-redux";
+
 
 
 const Postcommentsection = () => {
 
   const [loading,setLoading] = useState(false)
+  const [posts,setPosts] = useState([]); 
+  const user = useSelector((state) => state.user);
   const params = useParams();
   const postid = params.postid
   const [comment,setComment] = useState('')
@@ -34,28 +38,10 @@ const Postcommentsection = () => {
   };
 
 
-  const [posts,setPosts] = useState([]);
+  
   const [comments,setComments] = useState([]);
 
-  // console.log(user.user.id,"##################################")
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true)
-        // Assuming you have an axios instance named axiosInstance
-        const response = await axiosInstance.get(`${baseURL}/api/posts/singlepostforcomment/${postid}/`);
-        console.log("POSTS : ", response.data)
-        setPosts(response.data);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }finally {
-    setLoading(false); // Set loading back to false after the request is completed (success or error)
-    }
-    };
-
-    // Fetch posts when the component mounts
-    fetchData();
-  }, []);
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,46 +60,114 @@ const Postcommentsection = () => {
   }, []);
 
 
+
+
+// THE GIVEN BELOW ARE IMPORTED FROM USERPOST
+
+ useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true)
+        // Assuming you have an axios instance named axiosInstance
+        const response = await axiosInstance.get(`${baseURL}/api/posts/singlepostforcomment/${postid}/`);
+        console.log("POSTS : ", response.data)
+        setPosts(response.data);
+      } catch (error) {
+        // console.error("Error fetching posts:", error);
+      }
+      finally {
+    setLoading(false); // Set loading back to false after the request is completed (success or error)
+    }
+    };
+
+    // Fetch posts when the component mounts
+    fetchData();
+  }, []);
+
+
+// IMPORTS FROM USERPOST ENDS HERE
+
+
+
+
+
+
+
+
+
+
+
 if(loading){
   return <Spinner></Spinner>
 }
   return (
     <>
     <div className="flex justify-between items-center">
-  {/* //////////////////////////////// POSTDETAILS //////////////////////////////////// */}
 
 
+  {/* ///////////////////////////////////POST SECTION //////////////////////////////////// */}
 
-     
-    <div>
+
+      <div className="w-[1000px] h-[800px] ml-[90px] mb-[50px] bg-black text-white rounded-lg">
         <div className="flex justify-between items-center">
+          <img
+            src="https://i.insider.com/648090713973bf001961daa1?width=1136&format=jpeg"
+            alt="User Profile"
+            className="w-[60px] h-[60px] ml-4 rounded-full mt-4 "
+          />
+          <span className="text-lg font-bold text-9a9a9a text-left xl:pr-[800px] mt-12 mr-20 lg:pr-[700px]">
+            {posts.author_first_name}&nbsp;{posts.author_last_name}
+          </span>
           
         </div>
-   <span className="text-lg font-bold text-9a9a9a text-left ml-14 ">
-            {posts.caption}
-        </span>
+
+        <h5 className="xl:ml-20 ml-5 xl:mt-0 mt-2  text-lg font-serif">
+          {posts.caption}
+        </h5>
+
+   
 <img className="2xl:h-[600px] h-full w-full object-cover transform scale-90" src={`http://localhost:8000/${posts.post_img}`}  alt="image description"/>
-        
-        
-        {/* <div className="flex items-center">
-        <SlLike  className="ml-14 zoom-button w-10 h-10 text-yellow-500"/>
-        <h6 className="ml-3 text-gray-400">{posts.total_likes}</h6>
-        </div> */}
+
+
+        <div className="flex justify-between">
+          <div className="flex text-xl pb-12">
+
+            {/* {user.user && posts.likes.includes(user.user.id)?
+            
+            (<a href="#">
+              
+              <SlLike  className=" zoom-button w-7 h-7 text-yellow-500 xl:ml-10 ml:4" onClick={() => handleToggleLikePost(posts.id, true)}/>
+              <h6 className="ml-11 mt-2 text-gray-400">{posts.total_likes}</h6>
+            </a>)
+            :
+
+            (<a href="#">
+              
+              <SlLike  className=" zoom-button w-7 h-7 text-gray-400 xl:ml-10 ml:4" onClick={() => handleToggleLikePost(posts.id, false)}/>
+              <h6 className="ml-11 mt-2 text-gray-400">{posts.total_likes}</h6>
+              
+            </a>)
+            } */}
+
+            
+          </div>
+
+          <span className="text-sm xl:mt-4 mt-2 mr-6 text-gray-500">
+            {posts.created_at}
+            
+          </span>
         </div>
+      </div>
+      
 
 
-    {/* //////////////////////////////// POSTDETAILS //////////////////////////////////// */}
-
-
-
-
-
+  {/* ///////////////////////////////////POST SECTION //////////////////////////////////// */}
     
 
-    {/* //////////////////////////////// COMMENTBOX //////////////////////////////////// */}
+    {/* /////////////////////////////////// COMMENTBOX ////////////////////////////////////// */}
 
 
-<div className="comment-container h-[900px] w-[800px] mt-[50px] mr-[60px]"style={{ backgroundColor: '#000000' }}>
+<div className="comment-container h-[900px] w-[650px] mt-[50px] mr-[60px]"style={{ backgroundColor: '#000000' }}>
             {/* Display Comments */}
             {comments.map(c => (
               <div key='id' className="comment">

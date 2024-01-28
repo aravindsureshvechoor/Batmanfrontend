@@ -15,8 +15,7 @@ const Userpost = () => {
 
 
   const [loading,setLoading] = useState(false)
-  const [posts,setPosts] = useState([]);
-  const [postId, setPostId] = useState(null); 
+  const [posts,setPosts] = useState([]); 
   const user = useSelector((state) => state.user);
   
 
