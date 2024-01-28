@@ -5,11 +5,19 @@ import { baseURL } from '../../api/api';
 import { SlLike } from "react-icons/sl";
 import Spinner from '../Spinner';
 import { useSelector } from "react-redux";
+import { CiHome } from "react-icons/ci";
+import { Link } from 'react-router-dom';
+
+// ...
+
+
+
 
 
 
 const Postcommentsection = () => {
 
+  
   const [loading,setLoading] = useState(false)
   const [posts,setPosts] = useState([]); 
   const user = useSelector((state) => state.user);
@@ -85,6 +93,61 @@ const Postcommentsection = () => {
   }, []);
 
 
+// this function is for the likestatemanagement
+const likePostApi = async (postId, fetchData) => {
+  try {
+    // const accessToken = localStorage.getItem('access_token');
+    let body = {}
+    const response = await axiosInstance.post(`${baseURL}/api/posts/like/${postId}/`,body);
+    if (response.status === 200) {
+      console.log('Post like toggled successfully');
+      if (fetchData) {
+        fetchData(); 
+      }
+    } else {
+      console.log(response.error);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+/////////////////////////////////////////////////////////
+
+const handleToggleLikePost = async (postid,isLiked) => {
+  try {
+    // Assuming you have a single post in the 'posts' state
+    // const post = posts;
+
+    // Update the like count for the specific post locally
+    const updatedPosts =()=> {
+      if (posts.id === postid) {
+        return {
+          ...posts,
+          likes: isLiked
+            ? posts.likes.filter((likeUserId) => likeUserId !== user.user.id)
+            : [...posts.likes, user.user.id],
+          total_likes: isLiked
+            ? posts.total_likes - 1
+            : posts.total_likes + 1,
+        };
+      }
+      return posts;
+    };
+
+    // Update the UI with the locally modified data
+    // This will make the button toggle instantly
+    setPosts(updatedPosts);
+
+    // Send the like/unlike request to the server
+    await likePostApi(postid);
+
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
 // IMPORTS FROM USERPOST ENDS HERE
 
 
@@ -102,6 +165,15 @@ if(loading){
 }
   return (
     <>
+              <Link to="/home" style={{ textDecoration: 'none' }}>
+              <CiHome
+                style={{
+                  fontSize: '45px',
+                  color: '#ffc700',
+                  cursor: 'pointer',
+                }}
+              />
+            </Link>
     <div className="flex justify-between items-center">
 
 
@@ -132,24 +204,25 @@ if(loading){
         <div className="flex justify-between">
           <div className="flex text-xl pb-12">
 
-            {/* {user.user && posts.likes.includes(user.user.id)?
+            {user.user && posts.likes && posts.likes.includes(user.user.id)?
             
-            (<a href="#">
-              
-              <SlLike  className=" zoom-button w-7 h-7 text-yellow-500 xl:ml-10 ml:4" onClick={() => handleToggleLikePost(posts.id, true)}/>
-              <h6 className="ml-11 mt-2 text-gray-400">{posts.total_likes}</h6>
-            </a>)
+            (
+              <div className='flex'>
+              <SlLike  className=" cursor-pointer zoom-button w-7 h-7 text-yellow-500 xl:ml-10 ml:4" onClick={() => handleToggleLikePost(posts.id, true)}/>
+              <h6 className="ml-2 mt-2 text-gray-400">{posts.total_likes}</h6></div>
+            )
             :
 
-            (<a href="#">
+            (
+              <div className='flex'>
+              <SlLike  className="  cursor-pointer zoom-button w-7 h-7 text-gray-400 xl:ml-10 ml:4" onClick={() => handleToggleLikePost(posts.id, false)}/>
+              <h6 className="ml-2 mt-2 text-gray-400">{posts.total_likes}</h6>
+              </div>
+            )
+            }
+           
+                
               
-              <SlLike  className=" zoom-button w-7 h-7 text-gray-400 xl:ml-10 ml:4" onClick={() => handleToggleLikePost(posts.id, false)}/>
-              <h6 className="ml-11 mt-2 text-gray-400">{posts.total_likes}</h6>
-              
-            </a>)
-            } */}
-
-            
           </div>
 
           <span className="text-sm xl:mt-4 mt-2 mr-6 text-gray-500">
@@ -227,6 +300,7 @@ if(loading){
                 value='Comment'
               />
             </div>
+            
           </div>
 
 

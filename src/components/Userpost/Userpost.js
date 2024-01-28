@@ -60,6 +60,7 @@ const likePostApi = async (postId, fetchData) => {
 };
 
 /////////////////////////////////////////////////////////
+
  const handleToggleLikePost = async (postId, isLiked) => {
   try {
     // Update the like count for the specific post locally

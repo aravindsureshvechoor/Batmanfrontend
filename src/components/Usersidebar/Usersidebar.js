@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from "react";
 import "./Usersidebar.css";
 import { TbLogout } from "react-icons/tb";
-import { CiHome } from "react-icons/ci";
+import { CiSaveDown1,CiHome } from "react-icons/ci";
 import { GiBinoculars } from "react-icons/gi";
 import { GiEgyptianProfile } from "react-icons/gi";
 import { HiOutlineSpeakerphone } from "react-icons/hi";
@@ -225,7 +225,7 @@ const dispatch = useDispatch();
                   marginBottom: "35%",
                 }}
               >
-                <SiYourtraveldottv
+                <CiSaveDown1
                   style={{
                     fontSize: "55px",
                     color: "#ffc700",
@@ -242,7 +242,7 @@ const dispatch = useDispatch();
                     height: "7vh",
                   }}
                 >
-                  Explore
+                  Saved
                 </a>
               </li>
 
