@@ -172,7 +172,7 @@ const dispatch = useDispatch();
                   }}
                 />
                 <a
-                  href="#"
+                  href="/chat"
                   style={{
                     fontSize: "24px",
                     marginTop: "1%",

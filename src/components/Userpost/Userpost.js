@@ -120,13 +120,6 @@ if(loading){
           {post.caption}
         </h5>
 
-        
-        {/* <img
-          // src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRdI-Nv-Uy-uBJJkIKQmdWhEFG6oy4lPIoBha2LOaMputUjw5-Ltnn3-SQqhymuDZtcQDaxS0wbUXf2Ko0"
-          src={`http://localhost:8000/${post.post_img}`}
-          alt="Post"
-          className="w-[900px] lg:w-[800px] xl:w-[900px] max-h-[1000px] object-cover lg:ml-[30px] ml:[0px] rounded-8 mb-3 mt-3"
-        /> */}
    
 <img className="2xl:h-[600px] h-full w-full object-cover transform scale-90" src={`http://localhost:8000/${post.post_img}`}  alt="image description"/>
 

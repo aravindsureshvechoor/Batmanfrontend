@@ -10,6 +10,7 @@ import Postcommentsection from "./components/Postcommentsection/Postcommentsecti
 import UserStatusChecker from "./components/Userstatus";
 import Spinner from "./components/Spinner";
 import Saveditems from "./components/Saveditems/Saveditems";
+import Chat from "./components/Chat/Chat";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/comment/:postid" element={<Postcommentsection/>} />
         <Route path="/spinner" element={<Spinner />} />
         <Route path="/saved" element={<Saveditems />} />
+        <Route path="/chat" element={<Chat/>} />
       </Routes>
     </Router>
   );
