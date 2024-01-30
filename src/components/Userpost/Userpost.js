@@ -25,7 +25,7 @@ const Userpost = () => {
         setLoading(true)
         // Assuming you have an axios instance named axiosInstance
         const response = await axiosInstance.get(`${baseURL}/api/posts/get/`);
-        // console.log("POSTS : ", response.data)
+        console.log("POSTS : ", response.data)
         setPosts(response.data);
       } catch (error) {
         // console.error("Error fetching posts:", error);
@@ -121,7 +121,7 @@ if(loading){
         </h5>
 
    
-<img className="2xl:h-[600px] h-full w-full object-cover transform scale-90" src={`http://localhost:8000/${post.post_img}`}  alt="image description"/>
+<img className="2xl:h-[600px] h-full w-full object-cover transform scale-90" src={`http://localhost:8000${post.post_img}`}  alt="image description"/>
 
 
         <div className="flex justify-between">
