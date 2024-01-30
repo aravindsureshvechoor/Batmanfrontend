@@ -187,6 +187,7 @@ if(loading){
             alt="User Profile"
             className="w-[60px] h-[60px] ml-4 rounded-full mt-4 "
           />
+          
           <span className="text-lg font-bold text-9a9a9a text-left xl:pr-[800px] mt-12 mr-20 lg:pr-[700px]">
             {posts.author_first_name}&nbsp;{posts.author_last_name}
           </span>

@@ -69,6 +69,7 @@ useEffect(() => {
                   </MDBBtn>
                 </div>
                 <div className="ms-3" style={{ marginTop: '130px' }}>
+                  
                   <MDBTypography tag="h5">{userdetails.first_name}&nbsp;{userdetails.last_name}</MDBTypography>
                 </div>
               </div>
@@ -100,11 +101,12 @@ useEffect(() => {
       <MDBRow key={index}>
         {/* Display the current image */}
         <MDBCol className="mb-2">
-          <MDBCardImage
+          <a href={`/comment/${post.id}`}>
+          <MDBCardImage 
             src={`http://localhost:8000${post.post_img}`}
             alt={`image ${index + 1}`}
-            className="rounded-3 h-[250px] w-[450px]"
-          />
+            className="rounded-3 h-[250px] w-[450px] cursor-pointer"
+          /></a>
         </MDBCol>
 
         {/* Check if there is another image in the array for the second column */}

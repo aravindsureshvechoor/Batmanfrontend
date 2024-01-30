@@ -120,9 +120,9 @@ if(loading){
           {post.caption}
         </h5>
 
-   
-<img className="2xl:h-[600px] h-full w-full object-cover transform scale-90" src={`http://localhost:8000${post.post_img}`}  alt="image description"/>
-
+   <a href={`/comment/${post.id}`}>
+<img className="2xl:h-[600px] h-full w-full object-cover transform scale-90 cursor-pointer" src={`http://localhost:8000${post.post_img}`}  alt="image description"/>
+</a>
 
         <div className="flex justify-between">
           <div className="flex text-xl pb-12">
