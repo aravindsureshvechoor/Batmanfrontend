@@ -1,23 +1,26 @@
 import React,{useState,useEffect} from 'react'
 import Usersidebar from '../Usersidebar/Usersidebar'
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn, MDBTypography } from 'mdb-react-ui-kit';
-import './Userprofile.css'
+import './Othersprofile.css';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { baseURL } from '../../api/api';
+import Userprofile from '../Userprofile/Userprofile';
 import { useSelector } from 'react-redux';
 
-const Userprofile = () => {
+const Othersprofile = () => {
+    const [userdetails,setUserdetails] = useState([]);
+    const [posts,setPosts] = useState([]);
+    const user = useSelector((state) => state.user);
+    const params = useParams();
+    const email = params.author_email;
+    console.log(email)
 
-const [userdetails,setUserdetails] = useState([]);
-const [posts,setPosts] = useState([]);
-const user = useSelector((state) => state.user);
-
-
-useEffect(() => {
+    useEffect(() => {
     const fetchData = async () => {
       try {
         
-        const response = await axios.get(`${baseURL}/api/authentication/retrieveuser/${user.user.email}/`);
+        const response = await axios.get(`${baseURL}/api/authentication/retrieveuser/${email}/`);
         console.log(response.data)
         setUserdetails(response.data);
         
@@ -35,7 +38,7 @@ useEffect(() => {
     const fetchPostData = async () => {
       try {
         
-        const response = await axios.get(`${baseURL}/api/authentication/retrieveuserpost/${user.user.email}/`);
+        const response = await axios.get(`${baseURL}/api/authentication/retrieveuserpost/${email}/`);
         console.log(response.data)
         setPosts(response.data);
         
@@ -48,6 +51,10 @@ useEffect(() => {
     // Fetch posts when the component mounts
     fetchPostData();
   }, []);
+
+  if (user.user && user.user.email === email){
+    return <Userprofile/>
+  }
 
   return (
     <>
@@ -65,7 +72,7 @@ useEffect(() => {
                   <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
                     alt="Generic placeholder image" className="mt-4 mb-2 img-thumbnail" fluid style={{ width: '150px', zIndex: '1' }} />
                   <MDBBtn outline color="dark" style={{height: '36px', backgroundColor:"#000000",color:"#ffc700",overflow: 'visible'}}>
-                    Edit profile
+                    Follow
                   </MDBBtn>
                 </div>
                 <div className="ms-3" style={{ marginTop: '130px' }}>
@@ -134,4 +141,4 @@ useEffect(() => {
   )
 }
 
-export default Userprofile
+export default Othersprofile

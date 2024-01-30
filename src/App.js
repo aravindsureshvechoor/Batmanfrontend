@@ -11,6 +11,7 @@ import UserStatusChecker from "./components/Userstatus";
 import Spinner from "./components/Spinner";
 import Saveditems from "./components/Saveditems/Saveditems";
 import Chat from "./components/Chat/Chat";
+import Othersprofile from "./components/Othersprofile/Othersprofile";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/admin" element={<Adminlogin />} />
         <Route path="/home" element={<Userhome />} />
         <Route path="/userprofile" element={<Userprofile/>} />
+        <Route path="/othersprofile/:author_email" element={<Othersprofile/>} />
         <Route path="/admindashboard" element={<AdminDash/>} />
         <Route path="/otp" element={<Otp/>} />
         <Route path="/comment/:postid" element={<Postcommentsection/>} />

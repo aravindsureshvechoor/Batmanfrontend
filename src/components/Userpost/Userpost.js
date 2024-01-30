@@ -108,9 +108,9 @@ if(loading){
             alt="User Profile"
             className="w-[60px] h-[60px] rounded-full mt-4 "
           />
-          <span className="text-lg font-bold text-9a9a9a text-left xl:pr-[800px] mt-4 lg:pr-[700px]">
+          <a href={`/othersprofile/${post.author_email}`} className="text-lg hover:text-yellow-400 text-gray-400 font-bold text-9a9a9a text-left xl:pr-[800px] mt-4 lg:pr-[700px]">
             {post.author_first_name}
-          </span>
+          </a>
           <a href="#" className="zoom-button text-yellow-500">
             <MdOutlineSaveAlt className="w-10 h-10" />
           </a>

@@ -198,7 +198,7 @@ if(loading){
         </h5>
 
    
-<img className="2xl:h-[600px] h-full w-full object-cover transform scale-90" src={`http://localhost:8000/${posts.post_img}`}  alt="image description"/>
+<img className="2xl:h-[600px] h-full w-full object-cover transform scale-90" src={`http://localhost:8000${posts.post_img}`}  alt="image description"/>
 
 
         <div className="flex justify-between">
