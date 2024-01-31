@@ -9,6 +9,7 @@ import { MdOutlineSaveAlt } from "react-icons/md";
 // import Icon from '@mdi/react';
 // import { mdiThumbUp } from '@mdi/js';
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const Userpost = () => {
 
@@ -58,6 +59,31 @@ const likePostApi = async (postId, fetchData) => {
     console.error(error);
   }
 };
+
+// this function is to save post to users collection
+const handleSave = async (postId) => {
+  try {
+    
+
+    const response = await axiosInstance.post(`${baseURL}/api/posts/savepost/${postId}/`);
+    console.log(postId,"iiiiiiiiiiiiiddddddddddd")
+    if (response.status === 201) {
+      toast.success("Saved");
+      console.log(response.data);
+    } else {
+      console.log(response.statusText);
+    }
+  } catch (error) {
+    console.error(error);
+    if (error.response && error.response.data && error.response.data.error === "SavedPost already exists for this user and post.") {
+      toast.info("Already saved");
+    } else {
+      // Handle other errors
+      toast.error("An error occurred");
+    }
+  }
+}
+
 
 /////////////////////////////////////////////////////////
 
@@ -112,7 +138,7 @@ if(loading){
             {post.author_first_name}
           </a>
           <a href="#" className="zoom-button text-yellow-500">
-            <MdOutlineSaveAlt className="w-10 h-10" />
+            <MdOutlineSaveAlt onClick={() => handleSave(post.id)} className="w-10 h-10" />
           </a>
         </div>
 
