@@ -20,8 +20,6 @@ const UserSlice = createSlice({
     setUser(state, action) {
       state.user = action.payload;
       state.isAuthenticated = !!action.payload;
-      // console.log("ACTION.PAYLOAD = ",action.payload);
-      // console.log("state.user = ",state.user);
     },
     clearAuth(state) {
       state.user = null;

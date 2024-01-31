@@ -1,4 +1,5 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react';
+import { useSelector } from 'react-redux';
 import Usersidebar from '../Usersidebar/Usersidebar';
 import {
   MDBContainer,
@@ -12,8 +13,96 @@ import {
   MDBTextArea,
   MDBCardHeader,
 } from "mdb-react-ui-kit";
+import ContactListApi from '../ContactListApi';
+import GetChatMessages from '../GetChatMessages';
+import CreateChatRoomApi from '../CreateChatRoomApi';
 
 const Chat = () => {
+  const { user, isAuthenticated } = useSelector((state) => state.user);
+  const [profiles, setProfiles] = useState([]);
+  const [ws, setWs] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [inputMessage, setInputMessage] = useState("");
+  const [selectedProfile, setSelectedProfile] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await ContactListApi();
+        setProfiles(result);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    if (user) {
+      fetchData();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    let messageListener;
+    if (ws) {
+      messageListener = (event) => {
+        const message = JSON.parse(event.data);
+        setMessages((prevMessages) => [...prevMessages, message]);
+      };
+      ws.addEventListener('message', messageListener);
+    }
+    return () => {
+      if (ws) {
+        ws.removeEventListener('message', messageListener);
+      }
+    };
+  }, [ws]);
+
+  const handleSendMessage = () => {
+    if (ws && inputMessage.trim() !== "") {
+      ws.send(JSON.stringify({ message: inputMessage }));
+      setInputMessage("");
+    }
+  };
+  
+  const joinChatroom = async (userId) => {
+    try {
+      const data = await CreateChatRoomApi(userId);
+      const accessToken = localStorage.getItem("access_token");
+      const websocketProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
+      
+      const wsUrl = `ws://localhost:8000/ws/chat/${data.id}/?token=${accessToken}`
+      const newChatWs = new WebSocket(wsUrl);
+      
+
+      newChatWs.onopen = async () => {
+        console.log("Chatroom WebSocket connection opened.");
+        // Fetch previous messages when the WebSocket connection is opened
+        const previousMessages = await GetChatMessages(data.id);
+        setMessages(previousMessages);
+        setProfiles((prevProfiles) => {
+          return prevProfiles.map((profile) => {
+            if (profile.id === data.id) {
+              return { ...profile};
+            }
+            return profile;
+          });
+        });
+      };
+      newChatWs.onclose = () => {
+        console.log("Chatroom WebSocket connection closed.");
+        // You can perform any necessary cleanup here when the WebSocket connection is closed.
+      };
+      newChatWs.onmessage = (event) => {
+        const message = JSON.parse(event.data);
+        console.log(message);
+        // Handle incoming messages from the chatroom WebSocket
+      };
+
+      setWs(newChatWs);
+    } catch (error) {
+      console.error(error);
+    }
+    setSelectedProfile(userId)
+  };
+  
   return (
     <>
 
@@ -27,6 +116,8 @@ const Chat = () => {
         <MDBCol md="6" lg="5" xl="4" className="mb-4 mb-md-0">
 
           <MDBCard style={{backgroundColor:"#131313"}}>
+            {profiles && profiles.length>0
+            ? profiles.map((profile) => (
             <MDBCardBody>
               <MDBTypography listUnStyled className="mb-0">
                 <li
@@ -42,148 +133,15 @@ const Chat = () => {
                         width="60"
                       />
                       <div className="pt-1">
-                        <p className="fw-bold mb-0 text-yellow-400">John Doe</p>
-                        <p className="small text-muted">
-                          Hello, Are you there?
-                        </p>
+                        <p className="fw-bold mb-0 text-yellow-400">{profile.first_name}</p>
                       </div>
-                    </div>
-                     <div className="pt-1">
-                      <p className="small text-muted mb-1">Yesterday</p>
                     </div>
                   </a>
                 </li>
-                <li className="p-2 border-bottom">
-                  <a href="#!" className="d-flex justify-content-between">
-                    <div className="d-flex flex-row">
-                      <img
-                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-1.webp"
-                        alt="avatar"
-                        className="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
-                        width="60"
-                      />
-                      <div className="pt-1">
-                        <p className="fw-bold mb-0 text-yellow-400">Danny Smith</p>
-                        <p className="small text-muted">
-                          Lorem ipsum dolor sit.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="pt-1">
-                      <p className="small text-muted mb-1">5 mins ago</p>
-                    </div>
-                  </a>
-                </li>
-                <li className="p-2 border-bottom">
-                  <a href="#!" className="d-flex justify-content-between">
-                    <div className="d-flex flex-row">
-                      <img
-                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-2.webp"
-                        alt="avatar"
-                        className="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
-                        width="60"
-                      />
-                      <div className="pt-1">
-                        <p className="fw-bold mb-0 text-yellow-400">Alex Steward</p>
-                        <p className="small text-muted">
-                          Lorem ipsum dolor sit.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="pt-1">
-                      <p className="small text-muted mb-1">Yesterday</p>
-                    </div>
-                  </a>
-                </li>
-                <li className="p-2 border-bottom">
-                  <a href="#!" className="d-flex justify-content-between">
-                    <div className="d-flex flex-row">
-                      <img
-                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-3.webp"
-                        alt="avatar"
-                        className="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
-                        width="60"
-                      />
-                      <div className="pt-1">
-                        <p className="fw-bold mb-0 text-yellow-400">Ashley Olsen</p>
-                        <p className="small text-muted">
-                          Lorem ipsum dolor sit.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="pt-1">
-                      <p className="small text-muted mb-1">Yesterday</p>
-                    </div>
-                  </a>
-                </li>
-                <li className="p-2 border-bottom">
-                  <a href="#!" className="d-flex justify-content-between">
-                    <div className="d-flex flex-row">
-                      <img
-                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-4.webp"
-                        alt="avatar"
-                        className="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
-                        width="60"
-                      />
-                      <div className="pt-1">
-                        <p className="fw-bold mb-0 text-yellow-400">Kate Moss</p>
-                        <p className="small text-muted">
-                          Lorem ipsum dolor sit.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="pt-1">
-                      <p className="small text-muted mb-1">Yesterday</p>
-                    </div>
-                  </a>
-                </li>
-                <li className="p-2 border-bottom">
-                  <a href="#!" className="d-flex justify-content-between">
-                    <div className="d-flex flex-row">
-                      <img
-                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp"
-                        alt="avatar"
-                        className="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
-                        width="60"
-                      />
-                      <div className="pt-1">
-                        <p className="fw-bold mb-0 text-yellow-400">Lara Croft</p>
-                        <p className="small text-muted">
-                          Lorem ipsum dolor sit.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="pt-1">
-                      <p className="small text-muted mb-1">Yesterday</p>
-                    </div>
-                  </a>
-                </li>
-                <li className="p-2">
-                  <a href="#!" className="d-flex justify-content-between">
-                    <div className="d-flex flex-row">
-                      <img
-                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
-                        alt="avatar"
-                        className="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
-                        width="60"
-                      />
-                      <div className="pt-1">
-                        <p className="fw-bold mb-0 text-yellow-400">Brad Pitt</p>
-                        <p className="small text-muted">
-                          Lorem ipsum dolor sit.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="pt-1">
-                      <p className="small text-muted mb-1">5 mins ago</p>
-                      <span className="text-muted float-end">
-                        <MDBIcon fas icon="check" />
-                      </span>
-                    </div>
-                  </a>
-                </li>
+                
               </MDBTypography>
-            </MDBCardBody>
+            </MDBCardBody>))
+            : null}
           </MDBCard>
         </MDBCol>
 
@@ -234,29 +192,7 @@ const Chat = () => {
                 width="60"
               />
             </li>
-            <li className="d-flex justify-content-between mb-4">
-              <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
-                alt="avatar"
-                className="rounded-circle d-flex align-self-start me-3 shadow-1-strong"
-                width="60"
-              />
-              <MDBCard style={{backgroundColor:"#131313"}}>
-                <MDBCardHeader className="d-flex justify-content-between p-3">
-                  <p className="fw-bold mb-0 text-yellow-400">Brad Pitt</p>
-                  <p className="text-muted small mb-0">
-                    <MDBIcon far icon="clock" /> 10 mins ago
-                  </p>
-                </MDBCardHeader>
-                <MDBCardBody>
-                  <p className="mb-0">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </p>
-                </MDBCardBody>
-              </MDBCard>
-            </li>
+            
             <li className=" mb-3" style={{backgroundColor:"#9a9a9a",borderRadius:"2%"}}>
               <MDBTextArea  label="Message" id="textAreaExample" rows={4} />
             </li>
