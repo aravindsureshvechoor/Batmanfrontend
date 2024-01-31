@@ -4,6 +4,7 @@ import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCar
 import './Othersprofile.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import axiosInstance from '../../api/api';
 import { baseURL } from '../../api/api';
 import Userprofile from '../Userprofile/Userprofile';
 import { useSelector } from 'react-redux';
@@ -14,6 +15,7 @@ const Othersprofile = () => {
     const user = useSelector((state) => state.user);
     const params = useParams();
     const email = params.author_email;
+    const [isFollowing, setIsFollowing] = useState(false);
     console.log(email)
 
     useEffect(() => {
@@ -32,13 +34,46 @@ const Othersprofile = () => {
 
     // Fetch posts when the component mounts
     fetchData();
+  }, [email]);
+
+
+  useEffect(() => {
+    const storedIsFollowing = localStorage.getItem('isFollowing');
+    if (storedIsFollowing !== null) {
+      setIsFollowing(JSON.parse(storedIsFollowing));
+    }
   }, []);
+  //this function is to follow or unfollow a user
+  const handleToggleFollow = async () => {
+  try {
+    // Toggle the follow state
+    setIsFollowing((prevIsFollowing) => {
+      // Update localStorage with the new follow state
+      localStorage.setItem('isFollowing', JSON.stringify(!prevIsFollowing));
+
+      // Return the new state
+      return !prevIsFollowing;
+    });
+
+    // Send the follow/unfollow request to the server
+    const response = await axiosInstance.post(`${baseURL}/api/authentication/follow/${email}/`);
+
+    if (response.status === 200) {
+      console.log(`User ${isFollowing ? 'unfollowed' : 'followed'} successfully!`);
+    } else {
+      console.error(`Failed to ${isFollowing ? 'unfollow' : 'follow'}:`, response.statusText);
+    }
+  } catch (error) {
+    console.error('An error occurred:', error.message);
+  }
+};
+
 
   useEffect(() => {
     const fetchPostData = async () => {
       try {
         
-        const response = await axios.get(`${baseURL}/api/authentication/retrieveuserpost/${email}/`);
+        const response = await axiosInstance.get(`${baseURL}/api/authentication/retrieveuserpost/${email}/`);
         console.log(response.data)
         setPosts(response.data);
         
@@ -50,7 +85,9 @@ const Othersprofile = () => {
 
     // Fetch posts when the component mounts
     fetchPostData();
-  }, []);
+  }, [email]);
+
+
 
   if (user.user && user.user.email === email){
     return <Userprofile/>
@@ -73,8 +110,13 @@ const Othersprofile = () => {
                     alt="Generic placeholder image" className="mt-4 mb-2 img-thumbnail" fluid style={{ width: '150px', zIndex: '1' }} />
 
 
-                  <MDBBtn outline color="dark" style={{height: '36px', backgroundColor:"#000000",color:"#ffc700",overflow: 'visible'}}>
-                    Follow
+                  <MDBBtn
+                    outline
+                    color="dark"
+                    style={{ height: '36px', backgroundColor: '#000000', color: '#ffc700', overflow: 'visible' }}
+                    onClick={handleToggleFollow}
+                  >
+                    {isFollowing ? 'Follow' : 'Unfollow'}
                   </MDBBtn>
 
                   
