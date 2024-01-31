@@ -65,7 +65,7 @@ const Chat = () => {
   const joinChatroom = async (userId) => {
     try {
       const data = await CreateChatRoomApi(userId);
-      const accessToken = localStorage.getItem("access_token");
+      const accessToken = localStorage.getItem("accessToken");
       const websocketProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
       
       const wsUrl = `ws://localhost:8000/ws/chat/${data.id}/?token=${accessToken}`
@@ -118,7 +118,7 @@ const Chat = () => {
           <MDBCard style={{backgroundColor:"#131313"}}>
             {profiles && profiles.length>0
             ? profiles.map((profile) => (
-            <MDBCardBody>
+            <MDBCardBody onClick={() => joinChatroom(profile.id)}>
               <MDBTypography listUnStyled className="mb-0">
                 <li
                   className="p-2 border-bottom"
@@ -147,6 +147,9 @@ const Chat = () => {
 
         <MDBCol md="6" lg="7" xl="8">
           <MDBTypography listUnStyled>
+            {messages.map((message, index) =>
+                message.sender_email === user.email ? (
+
             <li className="d-flex justify-content-between mb-4">
               <img
                 src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
@@ -158,30 +161,27 @@ const Chat = () => {
                 <MDBCardHeader className="d-flex justify-content-between p-3">
                   <p className="fw-bold mb-0 text-yellow-400">Brad Pitt</p>
                   <p className="text-muted small mb-0">
-                    <MDBIcon far icon="clock" /> 12 mins ago
+                    <MDBIcon far icon="clock" /> {message.created} ago
                   </p>
                 </MDBCardHeader>
                 <MDBCardBody>
                   <p className="mb-0">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
+                    {message.message ? message.message : message.content}
                   </p>
                 </MDBCardBody>
               </MDBCard>
-            </li>
-            <li class="d-flex justify-content-between mb-4">
+            </li>):
+            (<li class="d-flex justify-content-between mb-4">
               <MDBCard className="w-100" style={{backgroundColor:"#131313"}}>
                 <MDBCardHeader className="d-flex justify-content-between p-3">
                   <p class="fw-bold mb-0 text-yellow-400">Lara Croft</p>
                   <p class="text-muted small mb-0">
-                    <MDBIcon far icon="clock" /> 13 mins ago
+                    <MDBIcon far icon="clock" /> {message.created} ago
                   </p>
                 </MDBCardHeader>
                 <MDBCardBody>
                   <p className="mb-0"  >
-                    Sed ut perspiciatis unde omnis iste natus error sit
-                    voluptatem accusantium doloremque laudantium.
+                    {message.message ? message.message : message.content}
                   </p>
                 </MDBCardBody>
               </MDBCard>
@@ -191,12 +191,14 @@ const Chat = () => {
                 className="rounded-circle d-flex align-self-start ms-3 shadow-1-strong"
                 width="60"
               />
-            </li>
+            </li>))}
             
             <li className=" mb-3" style={{backgroundColor:"#9a9a9a",borderRadius:"2%"}}>
-              <MDBTextArea  label="Message" id="textAreaExample" rows={4} />
+              <MDBTextArea type="text"
+                    value={inputMessage}
+                    onChange={(e) => setInputMessage(e.target.value)}  label="Message" id="textAreaExample" rows={4} />
             </li>
-            <MDBBtn rounded color='none' className="float-end text-yellow-400">
+            <MDBBtn onClick={handleSendMessage} rounded color='none' className="float-end text-yellow-400">
               Send
             </MDBBtn>
           </MDBTypography>
