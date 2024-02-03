@@ -7,6 +7,7 @@ const imageBaseUrl = 'http://localhost:8000'
 const axiosInstance = axios.create({
     baseURL: baseURL,
 });
+console.log({refresh: localStorage.getItem('refreshToken')});
 
 axiosInstance.interceptors.request.use((config) => {
     const accessToken = localStorage.getItem('accessToken');
@@ -25,7 +26,7 @@ axiosInstance.interceptors.response.use(
             originalRequest._retry = true;
 
             return axiosInstance
-                .post('api/token/refresh/', {refresh: localStorage.getItem('refreshToken')})
+                .post(`${baseURL}/token/refresh/`, {refresh: localStorage.getItem('refreshToken')})
                 .then((res) => {
                     const {accessToken, refreshToken} = res.data;
 

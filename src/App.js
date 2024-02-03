@@ -12,6 +12,7 @@ import Spinner from "./components/Spinner";
 import Saveditems from "./components/Saveditems/Saveditems";
 import Chat from "./components/Chat/Chat";
 import Othersprofile from "./components/Othersprofile/Othersprofile";
+import PeopleYouMayKnow from "./components/PeopleYouMayKnow/PeopleYouMayKnow"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
@@ -34,6 +35,7 @@ function App() {
         <Route path="/spinner" element={<Spinner />} />
         <Route path="/saved" element={<Saveditems />} />
         <Route path="/chat" element={<Chat/>} />
+        <Route path="/peopleyoumayknow" element={<PeopleYouMayKnow/>} />
       </Routes>
     </Router>
   );
