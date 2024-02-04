@@ -53,14 +53,14 @@ const dispatch = useDispatch();
       <body>
         <div id="wrapper" className="xl:block hidden">
           {/* <!-- Sidebar --> */}
-          <div id="sidebar-wrapper" style={{ width: "40vh" }}>
+          <div id="sidebar-wrapper" style={{ width: "35vh" }}>
             <ul className="sidebar-nav">
               <li className="sidebar-brand">
                 {/* <a href="#" style={{ fontSize: "30px", width: "45vh" }}> */}
                   <img
                     src="https://e1.pxfuel.com/desktop-wallpaper/476/446/desktop-wallpaper-batman-logo-yellow-dark-hero-art-iphone-batman-black-logo-android.jpg"
                     alt="logo"
-                    className="w-[100px] h-[200px] pt-1 ml-[125px] pb-14 custom-scale-80"
+                    className="w-[90px] h-[200px] pt-1 ml-[110px] pb-14 custom-scale-80"
                   />
                 {/* </a> */}
               </li>
@@ -70,7 +70,7 @@ const dispatch = useDispatch();
                   alignItems: "center",
                   paddingTop: "3%",
                   paddingLeft: "5%",
-                  width: "40vh",
+                  width: "35vh",
                   marginTop: "28%",
                 }}
               >
@@ -86,7 +86,7 @@ const dispatch = useDispatch();
                   style={{
                     fontSize: "24px",
                     marginTop: "1%",
-                    width: "40vh",
+                    width: "35vh",
                     paddingTop: "5%",
                     height: "7vh",
                   }}
@@ -101,7 +101,7 @@ const dispatch = useDispatch();
                   alignItems: "center",
                   paddingTop: "3%",
                   paddingLeft: "5%",
-                  width: "40vh",
+                  width: "35vh",
                 }}
               >
                 <GiEgyptianProfile
@@ -116,7 +116,7 @@ const dispatch = useDispatch();
                   style={{
                     fontSize: "24px",
                     marginTop: "1%",
-                    width: "40vh",
+                    width: "35vh",
                     paddingTop: "5%",
                     height: "7vh",
                   }}
@@ -131,7 +131,7 @@ const dispatch = useDispatch();
                   alignItems: "center",
                   paddingTop: "3%",
                   paddingLeft: "5%",
-                  width: "40vh",
+                  width: "35vh",
                 }}
               >
                 <HiOutlineSpeakerphone
@@ -146,7 +146,7 @@ const dispatch = useDispatch();
                   style={{
                     fontSize: "24px",
                     marginTop: "1%",
-                    width: "40vh",
+                    width: "35vh",
                     paddingTop: "5%",
                     height: "7vh",
                   }}
@@ -161,7 +161,7 @@ const dispatch = useDispatch();
                   alignItems: "center",
                   paddingTop: "3%",
                   paddingLeft: "5%",
-                  width: "40vh",
+                  width: "35vh",
                 }}
               >
                 <MdOutlineContactMail
@@ -176,7 +176,7 @@ const dispatch = useDispatch();
                   style={{
                     fontSize: "24px",
                     marginTop: "1%",
-                    width: "40vh",
+                    width: "35vh",
                     paddingTop: "5%",
                     height: "7vh",
                   }}
@@ -191,7 +191,7 @@ const dispatch = useDispatch();
                   alignItems: "center",
                   paddingTop: "3%",
                   paddingLeft: "5%",
-                  width: "40vh",
+                  width: "35vh",
                 }}
               >
                 <GiBinoculars
@@ -206,7 +206,7 @@ const dispatch = useDispatch();
                   style={{
                     fontSize: "24px",
                     marginTop: "1%",
-                    width: "40vh",
+                    width: "35vh",
                     paddingTop: "5%",
                     height: "7vh",
                   }}
@@ -221,7 +221,7 @@ const dispatch = useDispatch();
                   alignItems: "center",
                   paddingTop: "3%",
                   paddingLeft: "5%",
-                  width: "40vh",
+                  width: "35vh",
                   marginBottom: "35%",
                 }}
               >
@@ -237,7 +237,7 @@ const dispatch = useDispatch();
                   style={{
                     fontSize: "24px",
                     marginTop: "1%",
-                    width: "40vh",
+                    width: "35vh",
                     paddingTop: "5%",
                     height: "7vh",
                   }}
@@ -249,7 +249,7 @@ const dispatch = useDispatch();
               <hr
                 style={{
                   backgroundColor: "#ffc700",
-                  width: "40vh",
+                  width: "35vh",
                   height: "5px",
                   border: "none",
                 }}
@@ -264,7 +264,7 @@ const dispatch = useDispatch();
                   <TbLogout
                     className="zoom-button"
                     style={{
-                      fontSize: "400%",
+                      fontSize: "350%",
                       color: "#ffc700",
                       margintLeft: "40%",
                     }}
