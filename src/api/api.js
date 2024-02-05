@@ -24,21 +24,18 @@ axiosInstance.interceptors.response.use(
 
         if (error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
-
+                console.log(localStorage.getItem('refreshToken'));
             return axiosInstance
-                .post(`${baseURL}/token/refresh/`, {refresh: localStorage.getItem('refreshToken')})
+                .post(`api/token/refresh/`, {refresh: localStorage.getItem('refreshToken')})
                 .then((res) => {
-                    const {accessToken, refreshToken} = res.data;
+                    const accessToken = res.data['access'];
 
                     localStorage.setItem('accessToken', accessToken);
-                    localStorage.setItem('refreshToken', refreshToken);
 
                     originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
                     return axiosInstance(originalRequest);
                 })
                 .catch((error) => {
-                    // localStorage.removeItem('accessToken')
-                    // localStorage.removeItem('refreshToken')
                     console.error('Token refresh error:', error);
                 });
         }
