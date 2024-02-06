@@ -15,6 +15,7 @@ const Othersprofile = () => {
     const params = useParams();
     const email = params.author_email;
     const [isFollowing, setIsFollowing] = useState(false);
+    const [followers,setFollowers] = useState([]);
     console.log(email)
 
     useEffect(() => {
@@ -26,7 +27,7 @@ const Othersprofile = () => {
         setUserdetails(response.data);
         
       } catch (error) {
-        
+        console.error(error)
       }
       
     };
@@ -35,25 +36,30 @@ const Othersprofile = () => {
     fetchData();
   }, [email]);
 
-
   useEffect(() => {
-    const storedIsFollowing = localStorage.getItem('isFollowing');
-    if (storedIsFollowing !== null) {
-      setIsFollowing(JSON.parse(storedIsFollowing));
-    }
-  }, []);
+    const fetchfollowers = async () => {
+      try{
+      const response = await axiosInstance.get(`${baseURL}/api/authentication/following/`);
+      const followerEmails = response.data.map(follower => follower.email);
+      setFollowers(followerEmails);
+      
+      const isFollowingUser = followerEmails.includes(email);
+      setIsFollowing(isFollowingUser);
+      }
+      catch (error) {
+        console.error(error)
+      }
+    };
+
+    fetchfollowers();
+  });
+
+
+  
   //this function is to follow or unfollow a user
   const handleToggleFollow = async () => {
   try {
-    // Toggle the follow state
-    setIsFollowing((prevIsFollowing) => {
-      // Update localStorage with the new follow state
-      localStorage.setItem('isFollowing', JSON.stringify(!prevIsFollowing));
-
-      // Return the new state
-      return !prevIsFollowing;
-    });
-
+    setIsFollowing(!isFollowing)
     // Send the follow/unfollow request to the server
     const response = await axiosInstance.post(`${baseURL}/api/authentication/follow/${email}/`);
 
@@ -115,7 +121,7 @@ const Othersprofile = () => {
                     style={{ height: '36px', backgroundColor: '#000000', color: '#ffc700', overflow: 'visible' }}
                     onClick={handleToggleFollow}
                   >
-                    {isFollowing ? 'Unollow' : 'Follow'}
+                    {isFollowing ? 'Unfollow' : 'Follow'}
                   </MDBBtn>
 
                   

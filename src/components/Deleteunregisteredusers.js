@@ -17,7 +17,7 @@ const DeleteUnegisteredUsers=()=>{
   };
 
   useEffect(() => {
-    const intervalId = setInterval(checkUserStatus, 240000);
+    const intervalId = setInterval(checkUserStatus, 600000);
 
     return () => clearInterval(intervalId);
   }, []);
