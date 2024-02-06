@@ -2,8 +2,7 @@ import React,{useState,useEffect} from 'react'
 import Usersidebar from '../Usersidebar/Usersidebar'
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn, MDBTypography } from 'mdb-react-ui-kit';
 import './Userprofile.css'
-import axios from 'axios';
-import { baseURL } from '../../api/api';
+import axiosInstance, { baseURL } from '../../api/api';
 import { useSelector } from 'react-redux';
 
 const Userprofile = () => {
@@ -17,7 +16,7 @@ useEffect(() => {
     const fetchData = async () => {
       try {
         
-        const response = await axios.get(`${baseURL}/api/authentication/retrieveuser/${user.user.email}/`);
+        const response = await axiosInstance.get(`${baseURL}/api/authentication/retrieveuser/${user.user.email}/`);
         console.log(response.data)
         setUserdetails(response.data);
         
@@ -35,7 +34,7 @@ useEffect(() => {
     const fetchPostData = async () => {
       try {
         
-        const response = await axios.get(`${baseURL}/api/authentication/retrieveuserpost/${user.user.email}/`);
+        const response = await axiosInstance.get(`${baseURL}/api/authentication/retrieveuserpost/${user.user.email}/`);
         console.log(response.data)
         setPosts(response.data);
         

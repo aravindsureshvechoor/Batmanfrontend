@@ -8,6 +8,7 @@ import AdminDash from "./components/Admindashboard/AdminDash";
 import Otp from "./components/Otp/Otp";
 import Postcommentsection from "./components/Postcommentsection/Postcommentsection";
 import UserStatusChecker from "./components/Userstatus";
+import DeleteUnregisteredUsers from "./components/Deleteunregisteredusers";
 import Spinner from "./components/Spinner";
 import Saveditems from "./components/Saveditems/Saveditems";
 import Chat from "./components/Chat/Chat";
@@ -22,6 +23,7 @@ function App() {
     <Router>
       <ToastContainer/>
       <UserStatusChecker/>
+      <DeleteUnregisteredUsers/>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

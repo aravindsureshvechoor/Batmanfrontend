@@ -124,17 +124,19 @@ function Signup() {
               password: password,
               gender:gender,
           }).then((response) => {
-              // console.log(response.data.email)
+              console.log(response,"ressssssspppppppooooooooonssssseeeeeeee")
               const usermail = response.data.email;
               localStorage.setItem('usermail',usermail)
               navigator('/otp');
 
           }).catch((error) =>{
+              console.log(error,"errrrrrrroooooooorrrrrrrrrrrrrrrrrrrrrr")
               if (error.code === 'ERR_BAD_REQUEST'){
                   setEmailError(error.response.data.email ? error.response.data.email : '')
                   setPasswordError(error.response.data.password ? error.response.data.password : '')
                   setFirstnameError(error.response.data.firstname ? error.response.data.firstname : '')
               }
+            
           });
       }
   }

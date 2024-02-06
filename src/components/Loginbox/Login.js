@@ -183,7 +183,7 @@ if(loading){
                 <GoogleLogin
                     onSuccess={credentialResponse => {
                       const decoded = jwtDecode(credentialResponse.credential);
-                      console.log(decoded);
+                      
 
         setLoading(true)            
         axios.post(`${baseURL}/api/authentication/googleauth/`, {
@@ -192,9 +192,6 @@ if(loading){
           token: credentialResponse.credential,
         }, { withCredentials: true })
         .then((response) => {
-          console.log('RESPOSNE DATA:',response.data.data.refresh)
-          // localStorage.setItem('accessToken', response.data.access);
-          // localStorage.setItem('refreshToken', response.data.refresh);
           dispatch(setAccessToken({accessToken:response.data.data.access,refreshToken:response.data.data.refresh}));
           dispatch(setUser(response.data.user));
           
