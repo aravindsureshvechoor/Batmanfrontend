@@ -3,7 +3,6 @@ import Usersidebar from '../Usersidebar/Usersidebar'
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn, MDBTypography } from 'mdb-react-ui-kit';
 import './Othersprofile.css';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import axiosInstance from '../../api/api';
 import { baseURL } from '../../api/api';
 import Userprofile from '../Userprofile/Userprofile';
@@ -22,7 +21,7 @@ const Othersprofile = () => {
     const fetchData = async () => {
       try {
         
-        const response = await axios.get(`${baseURL}/api/authentication/retrieveuser/${email}/`);
+        const response = await axiosInstance.get(`${baseURL}/api/authentication/retrieveuser/${email}/`);
         console.log(response.data)
         setUserdetails(response.data);
         
@@ -74,7 +73,7 @@ const Othersprofile = () => {
       try {
         
         const response = await axiosInstance.get(`${baseURL}/api/authentication/retrieveuserpost/${email}/`);
-        console.log(response.data)
+        // console.log(response.data)
         setPosts(response.data);
         
       } catch (error) {
@@ -116,7 +115,7 @@ const Othersprofile = () => {
                     style={{ height: '36px', backgroundColor: '#000000', color: '#ffc700', overflow: 'visible' }}
                     onClick={handleToggleFollow}
                   >
-                    {isFollowing ? 'Follow' : 'Unfollow'}
+                    {isFollowing ? 'Unollow' : 'Follow'}
                   </MDBBtn>
 
                   
