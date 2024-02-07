@@ -2,14 +2,16 @@ import React,{useState,useEffect} from 'react'
 import axiosInstance, { baseURL } from '../../api/api';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
+import { useSelector,useDispatch } from 'react-redux';
+import { clearAuth } from '../../Redux/UserSlice';
 
 const Adminuserdash = () => {
 
-
+    const user = useSelector((state)=>state.user);
+    const dispatch = useDispatch()
     const blockUser = async (userId) => {
       try {
+        dispatch(clearAuth());
         // Replace 'yourApiEndpoint' with the actual API endpoint for blocking a user
         await axiosInstance.post(`${baseURL}/api/blockuser/${userId}/`);
         console.log(`User ${userId} blocked successfully.`);

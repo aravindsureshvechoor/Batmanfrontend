@@ -27,6 +27,7 @@ const UserSlice = createSlice({
       state.refreshToken = null;
       state.isAuthenticated = false;
     },
+    
   },
 });
 
