@@ -3,7 +3,7 @@ import { baseURL } from "../api/api";
 
 const ContactListApi = async () => {
     try{
-        const response = await axiosInstance.get(`${baseURL}/api/authentication/userdetailsforadmin/`);
+        const response = await axiosInstance.get(`${baseURL}/api/chat/contactlist/`);
         if (response.status === 200 ){
             return response.data
         }
