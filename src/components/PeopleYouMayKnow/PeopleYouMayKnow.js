@@ -1,6 +1,21 @@
-import React from 'react'
+import React,{useEffect} from 'react'
+import axiosInstance from '../../api/api';
+import { baseURL } from '../../api/api';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn } from 'mdb-react-ui-kit';
 const PeopleYouMayKnow = () => {
+
+    useEffect(()=>{
+      const fetchuserdata = async () => {
+        try{
+        const response = await axiosInstance.get(`${baseURL}/api/authentication/peopleyoumayknow/`);
+      console.log((response.data),"userdaaaattttttttaaaaaaaa")}
+        catch (error){
+          console.error(error)
+        }
+      }
+      fetchuserdata();
+    },[]);
+
   return (
     <>
      

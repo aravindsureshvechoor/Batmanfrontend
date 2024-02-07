@@ -59,11 +59,19 @@ const Othersprofile = () => {
   //this function is to follow or unfollow a user
   const handleToggleFollow = async () => {
   try {
-    setIsFollowing(!isFollowing)
+    
     // Send the follow/unfollow request to the server
     const response = await axiosInstance.post(`${baseURL}/api/authentication/follow/${email}/`);
 
     if (response.status === 200) {
+      setIsFollowing(!isFollowing)
+      if(isFollowing){
+        userdetails.follower_count-=1
+      }
+      else{
+        userdetails.follower_count+=1
+      }
+    
       console.log(`User ${isFollowing ? 'unfollowed' : 'followed'} successfully!`);
     } else {
       console.error(`Failed to ${isFollowing ? 'unfollow' : 'follow'}:`, response.statusText);
