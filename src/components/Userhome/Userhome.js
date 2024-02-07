@@ -15,7 +15,6 @@ const Userhome = () => {
       <Userpost />
     </div>
     <div className="ml-12">
-      <h5 className="mt-5 ml-20 text-yellow-400">People You May Know</h5>
       <PeopleYouMayKnow />
     </div>
   </div>

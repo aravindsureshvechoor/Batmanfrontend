@@ -1,24 +1,49 @@
-import React,{useEffect} from 'react'
+import React,{useEffect, useState} from 'react'
 import axiosInstance from '../../api/api';
 import { baseURL } from '../../api/api';
+import Spinner from '../Spinner';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn } from 'mdb-react-ui-kit';
 const PeopleYouMayKnow = () => {
 
+    const [userdata,setUserdata] = useState([])
+    const [followStatus, setFollowStatus] = useState({});
+    
+
     useEffect(()=>{
       const fetchuserdata = async () => {
+        
         try{
         const response = await axiosInstance.get(`${baseURL}/api/authentication/peopleyoumayknow/`);
-      console.log((response.data),"userdaaaattttttttaaaaaaaa")}
+        setUserdata(response.data)
+      }
         catch (error){
           console.error(error)
         }
+        
       }
       fetchuserdata();
     },[]);
 
+    const followuser = async (email)=>{
+      setFollowStatus(prevStatus => ({
+      ...prevStatus,
+      [email]: !prevStatus[email]
+    }));
+      try{
+        await axiosInstance.post(`${baseURL}/api/authentication/follow/${email}/`)
+      }
+      catch (error){
+        console.error(error)
+      }
+    }
+
+
+
+
   return (
     <>
-     
+    <h5 className="mt-5 ml-20 text-yellow-400">People You May Know</h5>
+     { userdata.map(user=>(
       <MDBContainer>
         <MDBRow className='w-[900px]'>
           <MDBCol md="9" lg="7" xl="5" className="mt-2">
@@ -33,11 +58,15 @@ const PeopleYouMayKnow = () => {
                       fluid />
                   </div>
                   <div className="flex-grow-1 ms-3">
-                    <MDBCardTitle>Danny McLoan</MDBCardTitle>
-                    
+                    <a href={`/othersprofile/${user.email}`} className='text-yellow-400'>
+                    <MDBCardTitle>{user.first_name}&nbsp;{user.last_name}</MDBCardTitle>
+                    </a>
                     <div className="d-flex pt-1">
   
-                      <MDBBtn className="flex-grow-1">Follow</MDBBtn>
+                      <MDBBtn onClick={()=>followuser(user.email)} className="flex-grow-1">
+                        {/* {isfollowing?'Following' : 'Follow'} */}
+                        {followStatus[user.email] ? 'Following' : 'Follow'}
+                        </MDBBtn>
                     </div>
                   </div>
                 </div>
@@ -45,7 +74,7 @@ const PeopleYouMayKnow = () => {
             </MDBCard>
           </MDBCol>
         </MDBRow>
-      </MDBContainer>
+      </MDBContainer>))}
     </>
   )
 }
