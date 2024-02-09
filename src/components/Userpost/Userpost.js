@@ -4,7 +4,8 @@ import "./Userpost.css";
 import { SlLike } from "react-icons/sl";
 import { TfiComment } from "react-icons/tfi";
 import Spinner from '../Spinner';
-import { MdOutlineSaveAlt } from "react-icons/md";
+import { FiSave } from "react-icons/fi";
+
 // import { CiShare1 } from "react-icons/ci";
 // import Icon from '@mdi/react';
 // import { mdiThumbUp } from '@mdi/js';
@@ -138,7 +139,7 @@ if(loading){
             {post.author_first_name}
           </a>
           <a href="#" className="zoom-button text-yellow-500">
-            <MdOutlineSaveAlt onClick={() => handleSave(post.id)} className="w-10 h-10" />
+            <FiSave onClick={() => handleSave(post.id)} className="w-10 h-10" />
           </a>
         </div>
 

@@ -1,11 +1,12 @@
 import React,{useState,useEffect} from "react";
 import "./Usersidebar.css";
 import { TbLogout } from "react-icons/tb";
-import { CiSaveDown1,CiHome } from "react-icons/ci";
-import { GiBinoculars } from "react-icons/gi";
-import { GiEgyptianProfile } from "react-icons/gi";
+import { CiHome } from "react-icons/ci";
+import { IoMdSave } from "react-icons/io";
+import { CiSearch } from "react-icons/ci";
+import { CiUser } from "react-icons/ci";
 import { HiOutlineSpeakerphone } from "react-icons/hi";
-import { SiYourtraveldottv } from "react-icons/si";
+import Notification from "../NotificationModal/Notification";
 import { MdOutlineContactMail } from "react-icons/md";
 import CreatepostModal from '../Createpost/CreatepostModal';
 import {useDispatch} from 'react-redux';
@@ -13,11 +14,24 @@ import { clearAuth } from '../../Redux/UserSlice';
 import Spinner from "../Spinner";
 // import axios from 'axios';
 // import { baseURL } from '../../api/api';
+import {
+  MDBBtn,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,     
+  MDBModalBody,
+  MDBModalFooter,
+} from 'mdb-react-ui-kit';
 
 
 const Usersidebar = () => {
    const [modalIsOpen, setModalIsOpen] = useState(false)
    const [loading, setLoading] = useState(true); // Initially set loading to true
+
+   const [basicModal, setBasicModal] = useState(false);
+   const toggleOpen = () => setBasicModal(!basicModal);
 
     useEffect(() => {
       const fakeAPICall = setTimeout(() => {
@@ -104,7 +118,7 @@ const dispatch = useDispatch();
                   width: "35vh",
                 }}
               >
-                <GiEgyptianProfile
+                <CiUser
                   style={{
                     fontSize: "55px",
                     color: "#ffc700",
@@ -142,6 +156,7 @@ const dispatch = useDispatch();
                   }}
                 />
                 <a
+                 onClick={toggleOpen}
                   href="#"
                   style={{
                     fontSize: "24px",
@@ -154,6 +169,49 @@ const dispatch = useDispatch();
                   Notifications
                 </a>
               </li>
+
+                  <>
+      {/* <MDBBtn onClick={toggleOpen}>LAUNCH DEMO MODAL</MDBBtn> */}
+      <MDBModal open={basicModal} setOpen={setBasicModal} tabIndex='-1'>
+        <MDBModalDialog>
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>Modal title</MDBModalTitle>
+              <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
+            </MDBModalHeader>
+            <MDBModalBody>Modal body text goes here.</MDBModalBody>
+
+            <MDBModalFooter>
+              <MDBBtn color='secondary' onClick={toggleOpen}>
+                Close
+              </MDBBtn>
+              <MDBBtn>Save changes</MDBBtn>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
+    </>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
               <li
                 style={{
@@ -194,7 +252,7 @@ const dispatch = useDispatch();
                   width: "35vh",
                 }}
               >
-                <GiBinoculars
+                <CiSearch
                   style={{
                     fontSize: "55px",
                     color: "#ffc700",
@@ -225,7 +283,7 @@ const dispatch = useDispatch();
                   marginBottom: "35%",
                 }}
               >
-                <CiSaveDown1
+                <IoMdSave
                   style={{
                     fontSize: "55px",
                     color: "#ffc700",

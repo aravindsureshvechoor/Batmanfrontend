@@ -4,7 +4,7 @@ const Spinner = () => {
   return (
     <>
     
-    <div class='flex flex-col items-center justify-center h-screen bg-black'>
+    <div class='flex flex-col items-center justify-center h-screen w-screen bg-black'>
   <div>
     <img
       src="https://e1.pxfuel.com/desktop-wallpaper/476/446/desktop-wallpaper-batman-logo-yellow-dark-hero-art-iphone-batman-black-logo-android.jpg"
