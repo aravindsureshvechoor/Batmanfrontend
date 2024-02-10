@@ -98,7 +98,6 @@ const CreatepostModal = ({ isOpen, toggle }) => {
       </div>
       {/* Buttons */}
       <div className="buttons flex">
-        {/* <div className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 ml-auto" style={{ background: '#131313', color: '#ffc700' }} onClick={toggle}>Cancel</div> */}
         <div onClick={handleSubmit} className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500" style={{ background: '#ffc700', color: '#131313' }}>Post</div>
       </div>
     </div>

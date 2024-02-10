@@ -14,6 +14,7 @@ import Saveditems from "./components/Saveditems/Saveditems";
 import Chat from "./components/Chat/Chat";
 import Othersprofile from "./components/Othersprofile/Othersprofile";
 import PeopleYouMayKnow from "./components/PeopleYouMayKnow/PeopleYouMayKnow"
+import Savedposts from "./components/Savedposts/Savedposts";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
@@ -38,6 +39,9 @@ function App() {
         <Route path="/saved" element={<Saveditems />} />
         <Route path="/chat" element={<Chat/>} />
         <Route path="/peopleyoumayknow" element={<PeopleYouMayKnow/>} />
+         <Route path="/savedposts" element={<Savedposts/>} />
+
+        Savedposts
        
         
       </Routes>

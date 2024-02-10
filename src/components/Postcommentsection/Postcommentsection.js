@@ -166,13 +166,14 @@ if(loading){
   return (
     <>
               <Link to="/home" style={{ textDecoration: 'none' }}>
-              <CiHome
+              {/* <CiHome
                 style={{
                   fontSize: '45px',
                   color: '#ffc700',
                   cursor: 'pointer',
                 }}
-              />
+              /> */}
+              <h6 className='text-gray-400 hover:text-yellow-400'>Go Home</h6>
             </Link>
     <div className="flex justify-between items-center">
 
@@ -187,10 +188,14 @@ if(loading){
             alt="User Profile"
             className="w-[60px] h-[60px] ml-4 rounded-full mt-4 "
           />
-          
-          <span className="text-lg font-bold text-9a9a9a text-left xl:pr-[800px] mt-12 mr-20 lg:pr-[700px]">
-            {posts.author_first_name}&nbsp;{posts.author_last_name}
-          </span>
+          {posts.author_email === user.user.email ? (
+      <span className="text-lg font-bold text-9a9a9a text-left xl:pr-[800px] mt-12 ml-4 lg:pr-[700px]">
+        <a className='text-gray-400 hover:text-yellow-400' href={`/userprofile/${posts.author_email}`}>{posts.author_first_name}&nbsp;{posts.author_last_name}</a>
+      </span>
+    ):(<span className="text-lg font-bold text-9a9a9a text-left xl:pr-[800px] mt-12 ml-4 lg:pr-[700px]">
+        <a className='text-gray-400 hover:text-yellow-400' href={`/othersprofile/${posts.author_email}`}>{posts.author_first_name}&nbsp;{posts.author_last_name}</a>
+      </span>)}
+
           
         </div>
 

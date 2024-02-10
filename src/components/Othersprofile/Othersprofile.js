@@ -165,23 +165,27 @@ const Othersprofile = () => {
     index % 2 === 0 && (
       <MDBRow key={index}>
         {/* Display the current image */}
-        <MDBCol className="mb-2">
-          <MDBCardImage
+         <MDBCol className="mb-2">
+        <a href={`/comment/${post.id}`}>
+          <MDBCardImage 
             src={`http://localhost:8000${post.post_img}`}
             alt={`image ${index + 1}`}
-            className="rounded-3 h-[250px] w-[450px]"
+            className="rounded-3 h-[250px] w-[450px] cursor-pointer"
           />
-        </MDBCol>
+        </a>
+      </MDBCol>
 
         {/* Check if there is another image in the array for the second column */}
         {index + 1 < posts.length && (
           <MDBCol className="mb-2">
+          <a href={`/comment/${posts[index + 1].id}`}>
             <MDBCardImage
-              src={`http://localhost:8000/${posts[index + 1].post_img}`}
+              src={`http://localhost:8000${posts[index + 1].post_img}`}
               alt={`image ${index + 2}`}
-              className="rounded-3 h-[250px] w-[450px]"
+              className="rounded-3 h-[250px] w-[450px] cursor-pointer"
             />
-          </MDBCol>
+          </a>
+        </MDBCol>
         )}
       </MDBRow>
     )

@@ -171,7 +171,7 @@ if(loading){
           </div>
 
           <span className="text-sm xl:mt-4 mt-2 text-gray-500">
-            {post.created_at}
+            Date Posted :&nbsp;{new Date(post.created_at).toLocaleDateString()}
             
           </span>
         </div>
