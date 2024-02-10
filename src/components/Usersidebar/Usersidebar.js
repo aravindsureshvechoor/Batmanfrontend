@@ -407,7 +407,7 @@ const onClick = async (note) => {
                   }}
                 />
                 <a
-                  href="#"
+                  href="/savedposts"
                   style={{
                     fontSize: "24px",
                     marginTop: "1%",
