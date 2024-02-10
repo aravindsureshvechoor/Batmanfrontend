@@ -6,49 +6,34 @@ import { IoMdSave } from "react-icons/io";
 import { CiSearch } from "react-icons/ci";
 import { CiUser } from "react-icons/ci";
 import { HiOutlineSpeakerphone } from "react-icons/hi";
-import Notification from "../NotificationModal/Notification";
 import { MdOutlineContactMail } from "react-icons/md";
 import CreatepostModal from '../Createpost/CreatepostModal';
-import {useDispatch} from 'react-redux';
+import {useDispatch,useSelector} from 'react-redux';
 import { clearAuth } from '../../Redux/UserSlice';
 import Spinner from "../Spinner";
-// import axios from 'axios';
-// import { baseURL } from '../../api/api';
-import {
-  MDBBtn,
-  MDBModal,
-  MDBModalDialog,
-  MDBModalContent,
-  MDBModalHeader,
-  MDBModalTitle,     
-  MDBModalBody,
-  MDBModalFooter,
-} from 'mdb-react-ui-kit';
+import Modal from 'react-bootstrap/Modal';
+import getNotificationsApi from '../getnotificationsAPI'
+import notificationseenApi from '../notificationseenAPI'
+import { useNavigate } from "react-router-dom";
 
 
 const Usersidebar = () => {
    const [modalIsOpen, setModalIsOpen] = useState(false)
-   const [loading, setLoading] = useState(true); // Initially set loading to true
-
-   const [basicModal, setBasicModal] = useState(false);
-   const toggleOpen = () => setBasicModal(!basicModal);
-
+   const [loading, setLoading] = useState(true);
+   const user = useSelector((state) => state.user);
+   const [lgShow, setLgShow] = useState(false);
+   const navigate = useNavigate();
     useEffect(() => {
       const fakeAPICall = setTimeout(() => {
-        setLoading(false); // Set loading to false after the data is "loaded"
-      }, 5800); // Simulating a 2-second delay, replace with actual API call
+        setLoading(false); 
+      }, 5800); 
 
-      // Cleanup function to clear the timeout in case the component unmounts
       return () => clearTimeout(fakeAPICall);
     }, []); 
 
  const toggleModal = () => {
     setModalIsOpen(!modalIsOpen)
  }
-
-
-
-// const navigate = useNavigate()
 
 const dispatch = useDispatch();
 
@@ -58,6 +43,123 @@ const dispatch = useDispatch();
     localStorage.removeItem('refreshToken');
     window.location.href = '/';
   };
+
+  // N  O  T  I  F  I  C  A  T  I  O  N       A  P  I 
+  const [notification, setNotification] = useState([]);
+  const [isNotificationVisible, setNotificationVisible] = useState(false);
+  const toggleNotification = () => {
+                                      setNotificationVisible(!isNotificationVisible);
+                                    };
+  const removeNotification = (notificationIdToRemove) => {
+    setNotification((prevNotifications) =>
+      prevNotifications.filter(
+        (notification) => notification.id !== notificationIdToRemove
+      )
+    );
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getNotificationsApi();
+        setNotification(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    if (user) {
+      fetchData();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      const accessToken = localStorage.getItem("accessToken");
+      const websocketProtocol =
+        window.location.protocol === "https:" ? "wss://" : "ws://";
+      const wsURL = `ws://localhost:8000/ws/notification/?token=${accessToken}`
+      const socket = new WebSocket(wsURL);
+      console.log(wsURL);
+
+      socket.onopen = () => {
+        console.log("WebSocket connection established");
+      };
+
+      socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+
+        if (data.type === "notification") {
+          // Update the notification state with the new notification
+          setNotification((prevNotifications) => [
+            ...prevNotifications,
+            data.payload,
+          ]);
+        } 
+      };
+
+      socket.onclose = (event) => {
+        console.log("WebSocket connection closed", event);
+      };
+      return () => {
+        socket.close();
+      };
+    }
+  }, [user]);
+
+  const getNotificationMessage = (notification) => {
+    const { notification_type, post, comment } = notification;
+
+    if (post) {
+      if (notification_type === "like") {
+        return "liked your post";
+      } else if (notification_type === "comment") {
+        return "commented on your post";
+      } else if (notification_type === "post") {
+        return "created a new post";
+      } else if (notification_type === "blocked") {
+        return "blocked you post";
+      }
+    } else if (comment) {
+      if (notification_type === "comment") {
+        return "replied to your comment";
+      }
+    }
+
+    return "has started following you";
+  };
+const onClick = async (note) => {
+    try {
+      await notificationseenApi(note.id);
+      removeNotification(note.id);
+      toggleNotification();
+
+      if (note.from_user) {
+        if (note.notification_type === "like" && note.post) {
+          // Redirect to the liked post page
+          navigate(`/comment/${note.post}`);
+        } else if (note.notification_type === "comment" && note.post) {
+          // Redirect to the commented post page
+          navigate(`/comment/${note.post}`);
+        } else if (note.notification_type === "post" && note.post) {
+          // Redirect to the new post page
+          navigate(`/comment/${note.post}`);
+        } else if (note.notification_type === "blocked") {
+          // Redirect to a special "blocked" page
+          // navigate(`/blocked`);
+        } else {
+          // Default redirection (e.g., profile or a general landing page)
+          navigate(`/othersprofile/${note.from_user.email}`);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleClose = (e) => {
+    if (e.target.id === "wrapper") toggleNotification();
+  };
+  // N  O  T  I  F  I  C  A  T  I  O  N  E  N  D  S  H  E  R  E
 
   if(loading){
   return <Spinner></Spinner>
@@ -138,7 +240,7 @@ const dispatch = useDispatch();
                   Profile
                 </a>
               </li>
-
+{/* NOTIFICATION AND ITS MODALS STARTS HERE  */}
               <li
                 style={{
                   display: "flex",
@@ -156,7 +258,7 @@ const dispatch = useDispatch();
                   }}
                 />
                 <a
-                 onClick={toggleOpen}
+                 onClick={() => setLgShow(true)}
                   href="#"
                   style={{
                     fontSize: "24px",
@@ -171,45 +273,59 @@ const dispatch = useDispatch();
               </li>
 
                   <>
-      {/* <MDBBtn onClick={toggleOpen}>LAUNCH DEMO MODAL</MDBBtn> */}
-      <MDBModal open={basicModal} setOpen={setBasicModal} tabIndex='-1'>
-        <MDBModalDialog>
-          <MDBModalContent>
-            <MDBModalHeader>
-              <MDBModalTitle>Modal title</MDBModalTitle>
-              <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
-            </MDBModalHeader>
-            <MDBModalBody>Modal body text goes here.</MDBModalBody>
+      <Modal
+        size="lg"
+        show={lgShow}
+        onHide={() => setLgShow(false)}
+        aria-labelledby="example-modal-sizes-title-lg"
+      >
+        <Modal.Header className="bg-yellow-400 h-5 text-black"  closeButton>
+          <Modal.Title id="example-modal-sizes-title-lg">
+            Notifications
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="bg-black text-yellow-400" >
 
-            <MDBModalFooter>
-              <MDBBtn color='secondary' onClick={toggleOpen}>
-                Close
-              </MDBBtn>
-              <MDBBtn>Save changes</MDBBtn>
-            </MDBModalFooter>
-          </MDBModalContent>
-        </MDBModalDialog>
-      </MDBModal>
+
+
+<ul
+          className="absolute left-auto right-0 z-[10] float-left m-0 mt-10 min-w-max list-none overflow-hidden rounded-lg border-none bg-black text-[#ffc700] bg-clip-padding text-left text-base shadow-lg [&[data-te-dropdown-show]]:block"
+          aria-labelledby="dropdownMenuButton1"
+          data-te-dropdown-menu-ref
+        >
+          {notification && notification.length > 0 ? (
+            notification.map((note, index) => (
+              <li key={index}>
+                <p
+                  className="mt-4 w-[700px] cursor-pointer"
+                  onClick={() => onClick(note)}
+                  data-te-dropdown-item-ref
+                >
+                  {note.notification_type === "blocked"
+                    ? "Admin blocked your post"
+                    : `${note.from_user.first_name} ${
+                        note.from_user.last_name
+                      } ${getNotificationMessage(note)}`}
+                </p>
+              </li>
+            ))
+          ) : (
+            <li>
+              <p className="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm public hover:bg-neutral-100 active:no-underline">
+                No notifications
+              </p>
+            </li>
+          )}
+        </ul>
+
+
+
+
+        </Modal.Body>
+      </Modal>
     </>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+{/* NOTIFICATION AND ITS MODALS ENDS HERE  */}
 
 
 

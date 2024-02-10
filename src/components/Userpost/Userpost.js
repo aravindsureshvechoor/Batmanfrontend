@@ -5,10 +5,6 @@ import { SlLike } from "react-icons/sl";
 import { TfiComment } from "react-icons/tfi";
 import Spinner from '../Spinner';
 import { FiSave } from "react-icons/fi";
-
-// import { CiShare1 } from "react-icons/ci";
-// import Icon from '@mdi/react';
-// import { mdiThumbUp } from '@mdi/js';
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -45,7 +41,6 @@ const Userpost = () => {
 // this function is for the likestatemanagement
 const likePostApi = async (postId, fetchData) => {
   try {
-    // const accessToken = localStorage.getItem('access_token');
     let body = {}
     const response = await axiosInstance.post(`${baseURL}/api/posts/like/${postId}/`,body);
     if (response.status === 200) {
@@ -67,7 +62,6 @@ const handleSave = async (postId) => {
     
 
     const response = await axiosInstance.post(`${baseURL}/api/posts/savepost/${postId}/`);
-    console.log(postId,"iiiiiiiiiiiiiddddddddddd")
     if (response.status === 201) {
       toast.success("Saved");
       console.log(response.data);
@@ -173,7 +167,6 @@ if(loading){
 
             <a href={`/comment/${post.id}`} className=" zoom-button xl:ml-8 ml-0">
               <TfiComment className=" w-7 h-7 text-gray-400 ml-5 " />
-              {/* <h6 className="ml-6 mt-2  text-gray-400 ">0</h6> */}
             </a>
           </div>
 
