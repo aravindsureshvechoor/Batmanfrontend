@@ -297,7 +297,7 @@ const onClick = async (note) => {
             notification.map((note, index) => (
               <li key={index}>
                 <p
-                  className="mt-4 w-[700px] cursor-pointer"
+                  className="mt-4 w-[770px] cursor-pointer"
                   onClick={() => onClick(note)}
                   data-te-dropdown-item-ref
                 >

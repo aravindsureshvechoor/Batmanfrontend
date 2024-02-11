@@ -231,10 +231,13 @@ if(loading){
               
           </div>
 
-          <span className="text-sm xl:mt-4 mt-2 mr-6 text-gray-500">
-            {posts.created_at}
+          <span className="text-sm xl:mt-4 mt-2 text-gray-500">
+            Date Posted :&nbsp;{new Date(posts.created_at).toLocaleDateString()}
             
           </span>
+          {(user.user && posts.author_email && posts.author_email !== user.user.email)?(
+          <a className="text-gray-500 mt-6 mr-2 cursor-pointer hover:text-gray-500 transition-transform duration-300 transform hover:scale-110">Report this post ?</a>):
+          (<a className="text-gray-500 mt-6 mr-2 cursor-pointer hover:text-gray-500 transition-transform duration-300 transform hover:scale-110">Delete this post ?</a>)}
         </div>
       </div>
       

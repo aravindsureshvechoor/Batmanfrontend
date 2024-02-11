@@ -39,11 +39,8 @@ function App() {
         <Route path="/saved" element={<Saveditems />} />
         <Route path="/chat" element={<Chat/>} />
         <Route path="/peopleyoumayknow" element={<PeopleYouMayKnow/>} />
-         <Route path="/savedposts" element={<Savedposts/>} />
-
-        Savedposts
-       
-        
+        <Route path="/savedposts" element={<Savedposts/>} />
+   
       </Routes>
     </Router>
   );
