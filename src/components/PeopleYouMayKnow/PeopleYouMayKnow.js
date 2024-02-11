@@ -53,7 +53,7 @@ const PeopleYouMayKnow = () => {
                   <div className="flex-shrink-0">
                     <MDBCardImage
                       style={{ width: '70px', borderRadius: '10px' }}
-                      src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp'
+                      src={`http://localhost:8000${user.profile_image}`}
                       alt='Generic placeholder image'
                       fluid />
                   </div>

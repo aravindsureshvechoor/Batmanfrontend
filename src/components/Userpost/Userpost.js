@@ -15,8 +15,6 @@ const Userpost = () => {
   const [loading,setLoading] = useState(false)
   const [posts,setPosts] = useState([]); 
   const user = useSelector((state) => state.user);
-  
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -125,7 +123,7 @@ if(loading){
       <div className="w-[300px] sm:w-[660px] lg:w-[900px] xl:w-[1000px]  xl:ml-[400px] ml-20  pb-5 mt-5 bg-black text-white px-[10px]  m-[10px] rounded-lg xl:h-[800px] sm:h-[650px] lg:h-[750px] h-[400px] ">
         <div className="flex justify-between items-center">
           <img
-            src="https://i.insider.com/648090713973bf001961daa1?width=1136&format=jpeg"
+            src={`http://localhost:8000${post.author_profile_image}`}
             alt="User Profile"
             className="w-[60px] h-[60px] rounded-full mt-4 "
           />
