@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import Usersidebar from '../Usersidebar/Usersidebar'
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn, MDBTypography } from 'mdb-react-ui-kit';
 import './Userprofile.css'
+import EditprofileModal from '../Editprofile/Editprofile';
 import axiosInstance, { baseURL } from '../../api/api';
 import { useSelector } from 'react-redux';
 
@@ -10,6 +11,13 @@ const Userprofile = () => {
 const [userdetails,setUserdetails] = useState([]);
 const [posts,setPosts] = useState([]);
 const user = useSelector((state) => state.user);
+
+// editprofilemodal states and funcitons
+const [modalIsOpen, setModalIsOpen] = useState(false)
+    const toggleModal = () => {
+    setModalIsOpen(!modalIsOpen)
+ }
+//  editprofilemodalandfuncitonsendshere
 
 
 useEffect(() => {
@@ -63,9 +71,14 @@ useEffect(() => {
                 <div className="ms-4 mt-5 d-flex flex-column" style={{ width: '150px' }}>
                   <MDBCardImage src={`http://localhost:8000${userdetails.profile_image}`}
                     alt="Generic placeholder image" className="mt-4 mb-2 img-thumbnail" fluid style={{ width: '150px', zIndex: '1' }} />
-                  <MDBBtn outline color="dark" style={{height: '36px', backgroundColor:"#000000",color:"#ffc700",overflow: 'visible'}}>
-                    Edit profile
+
+
+                  <MDBBtn outline color="dark" onClick={toggleModal} style={{cursor:"pointer",height: '36px', backgroundColor:"#000000",color:"#ffc700",overflow: 'visible'}}>
+                    Edit Profile
                   </MDBBtn>
+                  <EditprofileModal isOpen={modalIsOpen} toggle={toggleModal} />
+
+
                 </div>
                 <div className="ms-3" style={{ marginTop: '130px' }}>
                   
