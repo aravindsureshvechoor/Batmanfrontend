@@ -8,6 +8,7 @@ import { FiSave } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Deletepostmodal from "../Deletepostmodal/Deletepostmodal";
+import Reportpostmodal from "../Reportpostmodal/Reportpostmodal";
 const Userpost = () => {
 
 
@@ -16,29 +17,35 @@ const Userpost = () => {
   const [posts,setPosts] = useState([]); 
   const user = useSelector((state) => state.user);
 
+// deletepostmodal states and functions
   const [modalIsOpen, setModalIsOpen] = useState(false)
     const toggleModal = () => {
     setModalIsOpen(!modalIsOpen)
  }
+// deletepostmodal states and functions ends here
+
+// Reportpostmodal states and functions
+const [reportmodalIsOpen, setReportModalIsOpen] = useState(false)
+    const toggleReportModal = () => {
+    setReportModalIsOpen(!reportmodalIsOpen)
+    }
+// Reportpostmodal states and functions ends here
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true)
-        // Assuming you have an axios instance named axiosInstance
         const response = await axiosInstance.get(`${baseURL}/api/posts/get/`);
         console.log("POSTS : ", response.data)
         setPosts(response.data);
       } catch (error) {
-        // console.error("Error fetching posts:", error);
+        console.error("Error fetching posts:", error);
       }
       finally {
-    setLoading(false); // Set loading back to false after the request is completed (success or error)
+    setLoading(false); 
     }
     };
-
-    // Fetch posts when the component mounts
     fetchData();
   }, []);
 
@@ -181,7 +188,10 @@ if(loading){
             
           </span>
           {(user.user && post.author_email && post.author_email !== user.user.email) ? (
-  <a className="text-gray-500 mt-6 mr-2 cursor-pointer hover:text-gray-500 transition-transform duration-300 transform hover:scale-110">Report this post ?</a>
+            <>
+  <a onClick={toggleReportModal} className="text-gray-500 mt-6 mr-2 cursor-pointer hover:text-gray-500 transition-transform duration-300 transform hover:scale-110">Report this post ?</a>
+  <Reportpostmodal isOpen={reportmodalIsOpen} toggle={toggleReportModal} postId={post.id}/>
+  </>
 ) : (
   <>
     <a onClick={toggleModal} className="text-gray-500 mt-6 mr-2 cursor-pointer hover:text-gray-500 transition-transform duration-300 transform hover:scale-110">Delete this post ?</a>
