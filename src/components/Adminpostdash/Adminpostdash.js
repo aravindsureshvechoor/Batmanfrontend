@@ -35,6 +35,7 @@ const unblockPost = async (postId) => {
       try {
         // Replace 'yourUserAPIEndpoint' with the actual endpoint for user details
         const response = await axiosInstance.get(`${baseURL}/api/posts/getreportedposts/`);
+        console.log(response.data)
         setPosData(response.data);
       } catch (error) {
         console.error("Error fetching user details:", error);

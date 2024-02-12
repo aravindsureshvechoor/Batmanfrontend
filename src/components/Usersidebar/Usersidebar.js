@@ -19,17 +19,11 @@ import { useNavigate } from "react-router-dom";
 
 const Usersidebar = () => {
    const [modalIsOpen, setModalIsOpen] = useState(false)
-   const [loading, setLoading] = useState(true);
+   const [loading, setLoading] = useState(false);
    const user = useSelector((state) => state.user);
    const [lgShow, setLgShow] = useState(false);
    const navigate = useNavigate();
-    useEffect(() => {
-      const fakeAPICall = setTimeout(() => {
-        setLoading(false); 
-      }, 5800); 
 
-      return () => clearTimeout(fakeAPICall);
-    }, []); 
 
  const toggleModal = () => {
     setModalIsOpen(!modalIsOpen)

@@ -96,6 +96,7 @@ const handleSave = async (postId) => {
 
  const handleToggleLikePost = async (postId, isLiked) => {
   try {
+    await likePostApi(postId);
     // Update the like count for the specific post locally
     const updatedPosts = posts.map((post) => {
       if (post.id === postId) {
@@ -117,7 +118,7 @@ const handleSave = async (postId) => {
     setPosts(updatedPosts);
 
     // Send the like/unlike request to the server
-    await likePostApi(postId);
+    // await likePostApi(postId);
 
   } catch (error) {
     console.error(error);
