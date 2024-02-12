@@ -2,6 +2,7 @@ import "./App.css";
 import Login from "./components/Loginbox/Login";
 import Signup from "./components/Signupbox/Signup";
 import Adminlogin from "./components/Adminloginbox/Adminlogin";
+import AdminPostManage from "./components/AdminPostManage/AdminPostManage";
 import Userhome from "./components/Userhome/Userhome";
 import Userprofile from "./components/Userprofile/Userprofile";
 import AdminDash from "./components/Admindashboard/AdminDash";
@@ -40,6 +41,7 @@ function App() {
         <Route path="/chat" element={<Chat/>} />
         <Route path="/peopleyoumayknow" element={<PeopleYouMayKnow/>} />
         <Route path="/savedposts" element={<Savedposts/>} />
+        <Route path="/postmanage" element={<AdminPostManage/>} />
    
       </Routes>
     </Router>
