@@ -56,7 +56,7 @@ const handleSubmit = async () => {
     setFirstname('');
     setLastname('');
     setSelectedFileName('');
-    window.location.href = '/home';
+    window.location.href = '/userprofile';
   } catch (error) {
     // Handle errors
     console.error('Error:', error);

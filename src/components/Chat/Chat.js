@@ -111,7 +111,7 @@ const Chat = () => {
 
 
 
-<MDBContainer fluid className="py-5 px-5 mt-12" style={{ marginLeft:'23%', backgroundColor: "#000000" , height:"100vh",width:"120vh" }}>
+<MDBContainer fluid className="py-5 px-5 mt-12" style={{ marginLeft:'23%', backgroundColor: "#000000" , height:"screen",width:"120vh" }}>
       <MDBRow>
         <MDBCol md="6" lg="5" xl="4" className="mb-4 mb-md-0">
 
@@ -127,7 +127,7 @@ const Chat = () => {
                   <a href="#!" className="d-flex justify-content-between">
                     <div className="d-flex flex-row">
                       <img
-                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp"
+                        src={`http://localhost:8000${profile.profile_image}`}
                         alt="avatar"
                         className="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
                         width="60"
@@ -150,18 +150,12 @@ const Chat = () => {
             {messages.map((message, index) =>
                 message.sender_email === user.email ? (
 
-            <li className="d-flex justify-content-between mb-4">
-              <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
-                alt="avatar"
-                className="rounded-circle d-flex align-self-start me-3 shadow-1-strong"
-                width="60"
-              />
-              <MDBCard style={{backgroundColor:"#131313"}}>
+            <li className="d-flex mb-4">
+              <MDBCard style={{backgroundColor:"#131313",width:"100vh"}}>
                 <MDBCardHeader className="d-flex justify-content-between p-3">
-                  <p className="fw-bold mb-0 text-yellow-400">Brad Pitt</p>
+                  <p className="fw-bold mb-0 text-yellow-400">You</p>
                   <p className="text-muted small mb-0">
-                    <MDBIcon far icon="clock" /> {message.created} ago
+                    <MDBIcon className='ml-2' far icon="clock" /> {message.created} ago
                   </p>
                 </MDBCardHeader>
                 <MDBCardBody>
@@ -174,7 +168,7 @@ const Chat = () => {
             (<li class="d-flex justify-content-between mb-4">
               <MDBCard className="w-100" style={{backgroundColor:"#131313"}}>
                 <MDBCardHeader className="d-flex justify-content-between p-3">
-                  <p class="fw-bold mb-0 text-yellow-400">Lara Croft</p>
+                  <p class="fw-bold mb-0 text-yellow-400">{message.sender_first_name}</p>
                   <p class="text-muted small mb-0">
                     <MDBIcon far icon="clock" /> {message.created} ago
                   </p>
@@ -186,7 +180,7 @@ const Chat = () => {
                 </MDBCardBody>
               </MDBCard>
               <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp"
+                src={`http://localhost:8000${message.sender_profile_image}`}
                 alt="avatar"
                 className="rounded-circle d-flex align-self-start ms-3 shadow-1-strong"
                 width="60"
