@@ -57,7 +57,7 @@ console.log("Post Data : ", postdata)
         <tr>
             <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-black uppercase">Post ID</th>
             <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-black uppercase">Author</th>
-            <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-black uppercase">No.of Reports</th>
+            {/* <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-black uppercase">No.of Reports</th> */}
             <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-black uppercase">Action</th>
         </tr>
     </thead>
@@ -66,7 +66,7 @@ console.log("Post Data : ", postdata)
         <tr style={{backgroundColor:"#000000"}}>
             <td class="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">{post.id}</td>
             <td class="px-6 py-4 text-sm text-white whitespace-nowrap">{post.author_email}</td>
-            <td class="px-6 py-4 text-sm text-white whitespace-nowrap">{post.reports_count}</td>
+            {/* <td class="px-6 py-4 text-sm text-white whitespace-nowrap">{post.reports_count}</td> */}
             <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
 
         { post.is_blocked?
