@@ -22,6 +22,7 @@ const Usersidebar = () => {
    const [loading, setLoading] = useState(false);
    const user = useSelector((state) => state.user);
    const [lgShow, setLgShow] = useState(false);
+   const[searchlgShow,setSearchLgShow] = useState(false);
    const navigate = useNavigate();
 
 
@@ -129,19 +130,13 @@ const onClick = async (note) => {
 
       if (note.from_user) {
         if (note.notification_type === "like" && note.post) {
-          // Redirect to the liked post page
           navigate(`/comment/${note.post}`);
         } else if (note.notification_type === "comment" && note.post) {
-          // Redirect to the commented post page
           navigate(`/comment/${note.post}`);
         } else if (note.notification_type === "post" && note.post) {
-          // Redirect to the new post page
           navigate(`/comment/${note.post}`);
         } else if (note.notification_type === "blocked") {
-          // Redirect to a special "blocked" page
-          // navigate(`/blocked`);
         } else {
-          // Default redirection (e.g., profile or a general landing page)
           navigate(`/othersprofile/${note.from_user.email}`);
         }
       }
@@ -166,13 +161,11 @@ const onClick = async (note) => {
           <div id="sidebar-wrapper" style={{ width: "35vh" }}>
             <ul className="sidebar-nav">
               <li className="sidebar-brand">
-                {/* <a href="#" style={{ fontSize: "30px", width: "45vh" }}> */}
                   <img
                     src="https://e1.pxfuel.com/desktop-wallpaper/476/446/desktop-wallpaper-batman-logo-yellow-dark-hero-art-iphone-batman-black-logo-android.jpg"
                     alt="logo"
                     className="w-[90px] h-[200px] pt-1 ml-[110px] pb-14 custom-scale-80"
                   />
-                {/* </a> */}
               </li>
               <li
                 style={{
@@ -352,7 +345,9 @@ const onClick = async (note) => {
                   Messages
                 </a>
               </li>
+              
 
+{/* S E A R C H  A N D  I T S  M O D A L  S T A R T S  H E R E  */}
               <li
                 style={{
                   display: "flex",
@@ -371,6 +366,7 @@ const onClick = async (note) => {
                 />
                 <a
                   href="#"
+                  onClick={() => setSearchLgShow(true)}
                   style={{
                     fontSize: "24px",
                     marginTop: "1%",
@@ -382,6 +378,45 @@ const onClick = async (note) => {
                   Search
                 </a>
               </li>
+              
+      <Modal
+        size="md"
+        show={searchlgShow}
+        onHide={() => setSearchLgShow(false)}
+        aria-labelledby="example-modal-sizes-title-lg"
+      >
+        <Modal.Header className="bg-yellow-400 h-5 text-black"  closeButton>
+          <Modal.Title id="example-modal-sizes-title-lg">
+            Search a user
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{ background: '#131313'}} className=" text-yellow-400" >
+
+
+
+<div className="text-gray-300 p-4 shadow-lg max-w-2xl" style={{ background: '#131313', color: '#ffc700' }}>
+  <div>
+    <input
+      type="text"
+      placeholder="Search"
+      className="border border-indigo-500 p-1 px-4 font-semibold text-gray-200 ml-2 bg-indigo-500"
+      style={{ background: '#ffffff', color: '#131313' }}
+    />
+    &nbsp;&nbsp;
+    <button
+      className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500"
+
+      style={{ background: '#0056b3', color: '#000000' }}
+    >
+      Search
+    </button>
+    &nbsp;&nbsp;
+  </div>
+</div>
+        </Modal.Body>
+      </Modal>
+    
+{/* S E A R C H  A N D  I T S  M O D A L  S T A R T S  H E R E  */}
 
               <li
                 style={{
@@ -438,7 +473,7 @@ const onClick = async (note) => {
                     }}
                   />
                 </a>
-                <a href="#" style={{ marginTop: "16%", paddingLeft: "3%" }} onClick={() => { logout(); window.location.href = '/'; }}>
+                <a href="#" style={{ marginTop: "16%", paddingLeft: "3%" }} onClick={() => { logout()}}>
                   <h6 style={{ paddingTop: "9%", fontSize: "20px" }}>Logout</h6>
                 </a>
               </div>

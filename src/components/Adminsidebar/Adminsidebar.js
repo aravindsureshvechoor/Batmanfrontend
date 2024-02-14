@@ -16,7 +16,6 @@ const dispatch = useDispatch();
     dispatch(clearAdminAuth());
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    // Perform other logout-related tasks, e.g., navigating the user to the login page
     window.location.href = '/admin';
   };
 
@@ -29,13 +28,11 @@ const dispatch = useDispatch();
           <div id="sidebar-wrapper" style={{ width: "40vh" }}>
             <ul className="sidebar-nav">
               <li className="sidebar-brand">
-                {/* <a href="#" style={{ fontSize: "30px", width: "45vh" }}> */}
                   <img
                     src="https://e1.pxfuel.com/desktop-wallpaper/476/446/desktop-wallpaper-batman-logo-yellow-dark-hero-art-iphone-batman-black-logo-android.jpg"
                     alt="logo"
                     className="w-[100px] h-[200px] pt-1 ml-[125px] pb-14 custom-scale-80"
                   />
-                {/* </a> */}
               </li>
               <li
                 style={{

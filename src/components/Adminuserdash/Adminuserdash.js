@@ -12,10 +12,8 @@ const Adminuserdash = () => {
     const blockUser = async (userId) => {
       try {
         dispatch(clearAuth());
-        // Replace 'yourApiEndpoint' with the actual API endpoint for blocking a user
         await axiosInstance.post(`${baseURL}/api/blockuser/${userId}/`);
         console.log(`User ${userId} blocked successfully.`);
-        // Add any additional logic you want to perform after blocking the user
         toast.success(`User ${userId} blocked successfully`);
       } catch (error) {
         console.error('Error blocking user:', error);
