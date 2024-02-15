@@ -40,7 +40,6 @@ const Usersidebar = () => {
    const handleSearchquery = async () =>{
     try{
       const response = await axios.get(`${baseURL}/api/authentication/usersearch/?query=${searchquery}`);
-      console.log(response.data,"(((((((((((((((((search result ))))))))))))))")
       setSearchresult(response.data)
     }
     catch(error){

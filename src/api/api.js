@@ -46,38 +46,6 @@ axiosInstance.interceptors.response.use(
     }
 );
 
-// axiosInstance.interceptors.request.use(
-
-//   async function(config) {
-    
-//     const user = useSelector((state)=> state.user)
-//     const dispatch = useDispatch()
-//     const email = user.user.email
-//     try {
-//       const response = await axios.get(`${baseURL}/api/authentication/userstatus/${email}/`);
-//       const status = response.data;
-//       if (status && status.BLOCKED) {
-//         console.log('User is blocked. Logging out...');
-//         dispatch(clearAuth());
-//         localStorage.removeItem('accessToken');
-//         localStorage.removeItem('refreshToken');
-//         window.location.href = '/';
-//       } else if (status && status.NOTBLOCKED) {
-//         console.log('User is not blocked.');
-//       } else {
-//         console.warn('Unexpected response format:', status);
-//       }
-//     } catch (error) {
-//       console.error('Error occurred while checking user status:', error);
-//     }
-    
-//     return config;
-//   },
-//   function(error) {
-//     // Handle request errors
-//     return Promise.reject(error);
-//   }
-// );
 
 export default axiosInstance;
 export {baseURL, imageBaseUrl};
