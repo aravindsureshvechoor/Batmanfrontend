@@ -186,7 +186,21 @@ const [reportmodalIsOpen, setReportModalIsOpen] = useState(false)
     }
 // Reportpostmodal states and functions ends here
 
+// comment edit and delete api's
+const handledeletecomment=(commentId)=>{
+  axiosInstance.delete(`${baseURL}/api/posts/deletecomment/${commentId}/`)
+  .then((response)=>{
+    window.location.href = `/comment/${postid}`;
+      console.log(response.data);
+  })
+  .catch((error) => {
+      console.error('Error deleting comment:', error);
+    });
+}
 
+// const handleeditcomment=(commentId)=>{
+//   axiosInstance.put(`${baseURL}/api/posts/editcomment/${commentId}/`)
+// }
 
 
 
@@ -316,7 +330,25 @@ if(loading){
                     </div>
                   </div>
                   
-                  <p className="text-yellow-600 mt-2 text-lg ml-10">{c.body}</p>
+                  <p className="text-yellow-600 mt-2 text-lg ml-10 flex">{c.body}
+
+                  {c.user_email === user.user.email && (
+                    <>
+                      <RiDeleteBin6Line
+                        onClick={() => {
+                          if (window.confirm('Are you sure you want to delete this comment?')) {
+                            handledeletecomment(c.id);
+                          }
+                        }}
+  className="cursor-pointer h-6 w-6 ml-6 zoom-button text-gray-400"
+/>
+
+                      <FiEdit3 className="cursor-pointer h-6 w-6 ml-2 zoom-button text-gray-400"/>
+                    </>
+                  )}
+
+                  </p>
+                  
                 </div>
               </div>))}
             

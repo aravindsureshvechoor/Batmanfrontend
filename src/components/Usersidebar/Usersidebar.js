@@ -266,6 +266,7 @@ const onClick = async (note) => {
                     marginTop: "1%",
                   }}
                 />
+                
                 <a
                  onClick={() => setLgShow(true)}
                   href="#"
@@ -275,13 +276,20 @@ const onClick = async (note) => {
                     width: "35vh",
                     paddingTop: "5%",
                     height: "7vh",
+                    display:'flex'
                   }}
                 >
-                  Notifications
+                  <span>Notifications</span>
+                  {notification.length > 0 && (
+                    <>
+                      <h4 className="text-yellow-400">+{notification.length}</h4>
+                    </>
+                  )}
                 </a>
+                
               </li>
-
                   <>
+
       <Modal
         size="lg"
         show={lgShow}
