@@ -8,11 +8,6 @@ import { useSelector } from "react-redux";
 import { CiHome } from "react-icons/ci";
 import { Link } from 'react-router-dom';
 
-// ...
-
-
-
-
 
 
 const Postcommentsection = () => {
@@ -190,7 +185,7 @@ if(loading){
           />
           {posts.author_email === user.user.email ? (
       <span className="text-lg font-bold text-9a9a9a text-left xl:pr-[800px] mt-12 ml-4 lg:pr-[700px]">
-        <a className='text-gray-400 hover:text-yellow-400' href={`/userprofile/${posts.author_email}`}>{posts.author_first_name}&nbsp;{posts.author_last_name}</a>
+        <a className='text-gray-400 hover:text-yellow-400' href={`/othersprofile/${posts.author_email}`}>{posts.author_first_name}&nbsp;{posts.author_last_name}</a>
       </span>
     ):(<span className="text-lg font-bold text-9a9a9a text-left xl:pr-[800px] mt-12 ml-4 lg:pr-[700px]">
         <a className='text-gray-400 hover:text-yellow-400' href={`/othersprofile/${posts.author_email}`}>{posts.author_first_name}&nbsp;{posts.author_last_name}</a>

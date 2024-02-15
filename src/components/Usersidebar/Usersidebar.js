@@ -2,11 +2,11 @@ import React,{useState,useEffect} from "react";
 import "./Usersidebar.css";
 import { TbLogout } from "react-icons/tb";
 import { CiHome } from "react-icons/ci";
-import { IoMdSave } from "react-icons/io";
+import { BiCollection } from "react-icons/bi";
 import { CiSearch } from "react-icons/ci";
 import { CiUser } from "react-icons/ci";
-import { HiOutlineSpeakerphone } from "react-icons/hi";
-import { MdOutlineContactMail } from "react-icons/md";
+import { IoIosNotificationsOutline } from "react-icons/io";
+import { FiMessageSquare } from "react-icons/fi";
 import CreatepostModal from '../Createpost/CreatepostModal';
 import {useDispatch,useSelector} from 'react-redux';
 import { clearAuth } from '../../Redux/UserSlice';
@@ -259,7 +259,7 @@ const onClick = async (note) => {
                   width: "35vh",
                 }}
               >
-                <HiOutlineSpeakerphone
+                <IoIosNotificationsOutline
                   style={{
                     fontSize: "55px",
                     color: "#ffc700",
@@ -345,9 +345,9 @@ const onClick = async (note) => {
                   width: "35vh",
                 }}
               >
-                <MdOutlineContactMail
+                <FiMessageSquare
                   style={{
-                    fontSize: "55px",
+                    fontSize: "50px",
                     color: "#ffc700",
                     marginTop: "1%",
                   }}
@@ -359,6 +359,7 @@ const onClick = async (note) => {
                     marginTop: "1%",
                     width: "35vh",
                     paddingTop: "5%",
+                    marginLeft:'1%',
                     height: "7vh",
                   }}
                 >
@@ -484,7 +485,7 @@ const onClick = async (note) => {
                   marginBottom: "35%",
                 }}
               >
-                <IoMdSave
+                <BiCollection
                   style={{
                     fontSize: "55px",
                     color: "#ffc700",
