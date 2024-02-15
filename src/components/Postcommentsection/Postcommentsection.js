@@ -7,6 +7,10 @@ import Spinner from '../Spinner';
 import { useSelector } from "react-redux";
 import { CiHome } from "react-icons/ci";
 import { Link } from 'react-router-dom';
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { FiEdit3 } from "react-icons/fi";
+import Deletepostmodal from "../Deletepostmodal/Deletepostmodal";
+import Reportpostmodal from "../Reportpostmodal/Reportpostmodal";
 
 
 
@@ -145,11 +149,42 @@ const handleToggleLikePost = async (postid,isLiked) => {
 
 // IMPORTS FROM USERPOST ENDS HERE
 
+//  deletepostmodal states and functions
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+    const toggleModal = () => {
+    setModalIsOpen(!modalIsOpen)
+ }
+// deletepostmodal states and functions ends here
 
 
+ // editpost functions and states
+  const [posteditmode,setPosteditmode] = useState(false)
+  const [postcaption,setPostcaption] = useState('')
+
+  const openeditbox = () =>{
+    setPosteditmode(!posteditmode)
+  };
+
+  const handeEditCaption = (postId) => {
+  axiosInstance.put(`${baseURL}/api/posts/update/${postId}/`, { caption: postcaption })
+    .then((response) => {
+      // setPosteditmode(!posteditmode);
+      window.location.href = `/comment/${postid}`;
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.error('Error updating caption:', error);
+    });
+};
+// editpost functions and states ends here
 
 
-
+// Reportpostmodal states and functions
+const [reportmodalIsOpen, setReportModalIsOpen] = useState(false)
+    const toggleReportModal = () => {
+    setReportModalIsOpen(!reportmodalIsOpen)
+    }
+// Reportpostmodal states and functions ends here
 
 
 
@@ -194,9 +229,21 @@ if(loading){
           
         </div>
 
-        <h5 className="xl:ml-20 ml-5 xl:mt-0 mt-2  text-lg font-serif">
-          {posts.caption}
-        </h5>
+        {!posteditmode ? (
+  <h5 className="xl:ml-20 ml-5 xl:mt-0 mt-2 text-lg font-serif">
+    {posts.caption}
+  </h5>
+) : (
+  <>
+  <input
+    type="text"
+    placeholder={posts.caption}
+    value={postcaption}
+    onChange={(e) => setPostcaption(e.target.value)}
+    className="xl:ml-20 ml-5 xl:mt-0 mt-2 text-lg text-black font-serif"
+  />
+  <button onClick={() => handeEditCaption(posts.id)} className='bg-yellow-400 text-black px-2 ml-3'>Save</button></>
+)}
 
    
 <img className="2xl:h-[600px] h-full w-full object-cover transform scale-90" src={`http://localhost:8000${posts.post_img}`}  alt="image description"/>
@@ -226,13 +273,26 @@ if(loading){
               
           </div>
 
-          <span className="text-sm xl:mt-4 mt-2 text-gray-500">
-            Date Posted :&nbsp;{new Date(posts.created_at).toLocaleDateString()}
-            
+          <span className="text-sm xl:mt-4 mt-2 text-gray-500 mr-12">
+            Date Posted :&nbsp;{new Date(posts.created_at).toLocaleDateString()} 
           </span>
-          {(user.user && posts.author_email && posts.author_email !== user.user.email)?(
-          <a className="text-gray-500 mt-6 mr-2 cursor-pointer hover:text-gray-500 transition-transform duration-300 transform hover:scale-110">Report this post ?</a>):
-          (<a className="text-gray-500 mt-6 mr-2 cursor-pointer hover:text-gray-500 transition-transform duration-300 transform hover:scale-110">Delete this post ?</a>)}
+          
+      {(user.user && posts.author_email && posts.author_email !== user.user.email) ? (
+            <>
+  <a onClick={toggleReportModal} className="text-gray-500 mt-6 mr-2 cursor-pointer hover:text-gray-500 transition-transform duration-300 transform hover:scale-110">Report this post ?</a>
+  <Reportpostmodal isOpen={reportmodalIsOpen} toggle={toggleReportModal} postId={posts.id}/>
+  </>
+) : (
+  <>
+    <div className="flex gap-2 mr-10">
+    <RiDeleteBin6Line className="cursor-pointer h-6 w-6 zoom-button text-gray-400" onClick={toggleModal}/>
+    <Deletepostmodal isOpen={modalIsOpen} toggle={toggleModal} postId={posts.id}/>
+    <FiEdit3 onClick={openeditbox} className="cursor-pointer h-6 w-6 zoom-button text-gray-400"/>
+</div>
+
+  </>
+  
+)}
         </div>
       </div>
       
@@ -257,29 +317,7 @@ if(loading){
                   </div>
                   
                   <p className="text-yellow-600 mt-2 text-lg ml-10">{c.body}</p>
-                  
-                  
-                  {/* <button className="text-right text-blue-500">Reply</button> */}
                 </div>
-
-                {/* Display Replies
-                {comment.replies && (
-                  <div className="replies ml-6">
-                    {comment.replies.map((reply) => (
-                      <div key={reply.id} className="reply">
-                        <div className="reply-content">
-                          <div className="reply-user">
-                            <div>
-                              <h3 className="font-bold">{reply.user}</h3>
-                              
-                            </div>
-                          </div>
-                          <p className="text-gray-600 mt-2">{reply.content}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )} */}
               </div>))}
             
 

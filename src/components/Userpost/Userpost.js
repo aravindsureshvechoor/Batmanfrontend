@@ -7,29 +7,15 @@ import Spinner from '../Spinner';
 import { FiSave } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import Deletepostmodal from "../Deletepostmodal/Deletepostmodal";
-import Reportpostmodal from "../Reportpostmodal/Reportpostmodal";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { FiEdit3 } from "react-icons/fi";
 const Userpost = () => {
 
 
 
   const [loading,setLoading] = useState(false)
   const [posts,setPosts] = useState([]); 
-  const user = useSelector((state) => state.user);
-
-// deletepostmodal states and functions
-  const [modalIsOpen, setModalIsOpen] = useState(false)
-    const toggleModal = () => {
-    setModalIsOpen(!modalIsOpen)
- }
-// deletepostmodal states and functions ends here
-
-// Reportpostmodal states and functions
-const [reportmodalIsOpen, setReportModalIsOpen] = useState(false)
-    const toggleReportModal = () => {
-    setReportModalIsOpen(!reportmodalIsOpen)
-    }
-// Reportpostmodal states and functions ends here
+  const user = useSelector((state) => state.user); 
 
 
   useEffect(() => {
@@ -113,12 +99,7 @@ const handleSave = async (postId) => {
       return post;
     });
 
-    // Update the UI with the locally modified data
-    // This will make the button toggle instantly
     setPosts(updatedPosts);
-
-    // Send the like/unlike request to the server
-    // await likePostApi(postId);
 
   } catch (error) {
     console.error(error);
@@ -150,10 +131,11 @@ if(loading){
             <FiSave onClick={() => handleSave(post.id)} className="w-10 h-10" />
           </a>
         </div>
+      <h5 className="xl:ml-20 ml-5 xl:mt-0 mt-2 text-lg font-serif">
+        {post.caption}
+      </h5>
 
-        <h5 className="xl:ml-20 ml-5 xl:mt-0 mt-2  text-lg font-serif">
-          {post.caption}
-        </h5>
+
 
    <a href={`/comment/${post.id}`}>
 <img className="2xl:h-[600px] h-full w-full object-cover transform scale-90 cursor-pointer" src={`http://localhost:8000${post.post_img}`}  alt="image description"/>
@@ -184,21 +166,10 @@ if(loading){
             </a>
           </div>
 
-          <span className="text-sm xl:mt-4 mt-2 text-gray-500">
+          <span className="text-sm xl:mt-4 mt-2 text-gray-500 mr-12 ">
             Date Posted :&nbsp;{new Date(post.created_at).toLocaleDateString()}
             
           </span>
-          {(user.user && post.author_email && post.author_email !== user.user.email) ? (
-            <>
-  <a onClick={toggleReportModal} className="text-gray-500 mt-6 mr-2 cursor-pointer hover:text-gray-500 transition-transform duration-300 transform hover:scale-110">Report this post ?</a>
-  <Reportpostmodal isOpen={reportmodalIsOpen} toggle={toggleReportModal} postId={post.id}/>
-  </>
-) : (
-  <>
-    <a onClick={toggleModal} className="text-gray-500 mt-6 mr-2 cursor-pointer hover:text-gray-500 transition-transform duration-300 transform hover:scale-110">Delete this post ?</a>
-    <Deletepostmodal isOpen={modalIsOpen} toggle={toggleModal} postId={post.id}/>
-  </>
-)}
 
         </div>
       </div>
