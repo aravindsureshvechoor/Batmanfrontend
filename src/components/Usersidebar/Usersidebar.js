@@ -435,31 +435,39 @@ const onClick = async (note) => {
   </div>
 </div>
 {/* USER DETAILS */}
-{ searchresult.map(user =>(
-<MDBContainer>
-        <MDBRow className='w-[900px]'>
-          <MDBCol md="9" lg="7" xl="5" className="mt-2">
-            <MDBCard style={{ borderRadius: '15px' }}>
-              <MDBCardBody className="h-[100px] bg-black">
-                <div className="d-flex text-gray-400">
-                  <div className="flex-shrink-0">
-                    <MDBCardImage 
-                      style={{ width: '70px', borderRadius: '10px' }}
-                      src={`http://localhost:8000${user.profile_image}`}
-                      alt='Generic placeholder image'
-                      fluid />
-                  </div>
-                  <div className="flex-grow-1 ms-3 mt-4">
-                    <a href={`/othersprofile/${user.email}`} className='text-yellow-400'>
-                    <MDBCardTitle>{user.first_name}&nbsp;{user.last_name}</MDBCardTitle>
-                    </a>
-                  </div>
+
+
+{searchresult.length < 1 ? (
+  <h6 className="text-gray-400 ml-[90px]">Nothing to show</h6>
+) : (
+  searchresult.map(user => (
+    <MDBContainer key={user.id}> {/* Ensure to include a unique key for each element in the array */}
+      <MDBRow className='w-[900px]'>
+        <MDBCol md="9" lg="7" xl="5" className="mt-2">
+          <MDBCard style={{ borderRadius: '15px' }}>
+            <MDBCardBody className="h-[100px] bg-black">
+              <div className="d-flex text-gray-400">
+                <div className="flex-shrink-0">
+                  <MDBCardImage 
+                    style={{ width: '70px', borderRadius: '10px' }}
+                    src={`http://localhost:8000${user.profile_image}`}
+                    alt='Generic placeholder image'
+                    fluid />
                 </div>
-              </MDBCardBody>
-            </MDBCard>
-          </MDBCol>
-        </MDBRow>
-      </MDBContainer>))}
+                <div className="flex-grow-1 ms-3 mt-4">
+                  <a href={`/othersprofile/${user.email}`} className='text-yellow-400'>
+                    <MDBCardTitle>{user.first_name}&nbsp;{user.last_name}</MDBCardTitle>
+                  </a>
+                </div>
+              </div>
+            </MDBCardBody>
+          </MDBCard>
+        </MDBCol>
+      </MDBRow>
+    </MDBContainer>
+  ))
+)}
+
 {/* USER DETAILS ENDS HERE */}
         </Modal.Body>
       </Modal>
