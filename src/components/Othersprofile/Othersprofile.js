@@ -32,7 +32,6 @@ const Othersprofile = () => {
       
     };
 
-    // Fetch posts when the component mounts
     fetchData();
   }, [email]);
 
@@ -55,12 +54,9 @@ const Othersprofile = () => {
   });
 
 
-  
-  //this function is to follow or unfollow a user
   const handleToggleFollow = async () => {
   try {
     
-    // Send the follow/unfollow request to the server
     const response = await axiosInstance.post(`${baseURL}/api/authentication/follow/${email}/`);
 
     if (response.status === 200) {
@@ -87,7 +83,6 @@ const Othersprofile = () => {
       try {
         
         const response = await axiosInstance.get(`${baseURL}/api/authentication/retrieveuserpost/${email}/`);
-        // console.log(response.data)
         setPosts(response.data);
         
       } catch (error) {
@@ -95,8 +90,6 @@ const Othersprofile = () => {
       }
       
     };
-
-    // Fetch posts when the component mounts
     fetchPostData();
   }, [email]);
 
@@ -161,10 +154,8 @@ const Othersprofile = () => {
     
     <MDBContainer>
   {posts.map((post, index) => (
-    // Check if the current index is divisible by 2 to determine the start of a new row
     index % 2 === 0 && (
       <MDBRow key={index}>
-        {/* Display the current image */}
          <MDBCol className="mb-2">
         <a href={`/comment/${post.id}`}>
           <MDBCardImage 
@@ -174,8 +165,6 @@ const Othersprofile = () => {
           />
         </a>
       </MDBCol>
-
-        {/* Check if there is another image in the array for the second column */}
         {index + 1 < posts.length && (
           <MDBCol className="mb-2">
           <a href={`/comment/${posts[index + 1].id}`}>

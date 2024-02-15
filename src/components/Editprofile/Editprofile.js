@@ -24,41 +24,29 @@ const EditprofileModal = ({ isOpen, toggle }) => {
 
     const handleFileChange = (event) => {
     const file = event.target.files[0];
-
-    // Update selected file
     setSelectedFile(file);
-
-    // Update selected file name
     setSelectedFileName(file ? file.name : '');
-
-    // Now you can do something with the selected file, like saving it to local storage
     console.log('Selected file:', file);
 };
 
 const handleSubmit = async () => {
   try {
     const formData = new FormData();
-    formData.append('profile_image', selectedFile); // Assuming 'selectedFile' is the file state
-    formData.append('first_name', first_name); // Assuming 'caption' is the caption state
+    formData.append('profile_image', selectedFile); 
+    formData.append('first_name', first_name); 
     formData.append('last_name', last_name);
 
-    // Make a POST request using Axios
     const accessToken = localStorage.getItem('accessToken');
 
     const response = await axiosInstance.put(`${baseURL}/api/authentication/userupdate/`, formData);
 
-
-    // Handle the response from the server
     console.log('Response from server:', response.data);
     toast.success("Saved Successfully")
-    // Optionally, you can perform additional actions after a successful submission
-    // For example, clear the form or redirect the user
     setFirstname('');
     setLastname('');
     setSelectedFileName('');
     window.location.href = '/userprofile';
   } catch (error) {
-    // Handle errors
     console.error('Error:', error);
   }
 };

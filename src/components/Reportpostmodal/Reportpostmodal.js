@@ -2,7 +2,6 @@ import React from 'react'
 import { Modal, ModalBody,ModalHeader } from 'reactstrap'
 import axiosInstance, { baseURL } from '../../api/api';
 import { toast } from 'react-toastify';
-import { useState } from 'react'
 
 const Reportpostmodal = ({ isOpen,toggle,postId}) => {
  
@@ -10,12 +9,10 @@ const Reportpostmodal = ({ isOpen,toggle,postId}) => {
   const handleSubmitReport = async () => {
   try {
     const response = await axiosInstance.post(`${baseURL}/api/posts/reportpost/${postId}/`);
-    // Handle the response from the server
     toggle();
     console.log('Response from server:', response.data);
     toast.success("Reported Successfully")
   } catch (error) {
-    // Handle errors
     console.error('Error:', error);
     toast.error("Something Wrong")
   }

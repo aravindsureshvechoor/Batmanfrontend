@@ -9,7 +9,7 @@ const GetChatMessages = async (roomId) => {
       return response.data;
     } else {
       console.error(response.error);
-      console.log(response.data); // Move this line inside the else block
+      console.log(response.data); 
     }
   } catch (error) {
     console.error(error);

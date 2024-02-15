@@ -5,7 +5,6 @@ import { baseURL } from '../../api/api';
 import { SlLike } from "react-icons/sl";
 import Spinner from '../Spinner';
 import { useSelector } from "react-redux";
-import { CiHome } from "react-icons/ci";
 import { Link } from 'react-router-dom';
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiEdit3 } from "react-icons/fi";
@@ -34,12 +33,10 @@ const Postcommentsection = () => {
         body: comment,
       });
 
-      // Handle the response if needed
       console.log('Response from the server:', response.data);
       setComment('');
       window.location.href = `/comment/${postid}`;
     } catch (error) {
-      // Handle errors
       console.error('Error making POST request:', error);
     }
   };
@@ -53,7 +50,6 @@ const Postcommentsection = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Assuming you have an axios instance named axiosInstance
         const response = await axiosInstance.get(`${baseURL}/api/posts/retrievecomments/${postid}/`);
         console.log("COMMENTS : ", response.data)
         setComments(response.data);
@@ -61,8 +57,6 @@ const Postcommentsection = () => {
         console.error("Error fetching comments:", error);
       }
     };
-
-    // Fetch posts when the component mounts
     fetchData();
   }, []);
 
@@ -75,19 +69,15 @@ const Postcommentsection = () => {
     const fetchData = async () => {
       try {
         setLoading(true)
-        // Assuming you have an axios instance named axiosInstance
         const response = await axiosInstance.get(`${baseURL}/api/posts/singlepostforcomment/${postid}/`);
         console.log("POSTS : ", response.data)
         setPosts(response.data);
       } catch (error) {
-        // console.error("Error fetching posts:", error);
       }
       finally {
-    setLoading(false); // Set loading back to false after the request is completed (success or error)
+    setLoading(false); 
     }
     };
-
-    // Fetch posts when the component mounts
     fetchData();
   }, []);
 
@@ -95,7 +85,6 @@ const Postcommentsection = () => {
 // this function is for the likestatemanagement
 const likePostApi = async (postId, fetchData) => {
   try {
-    // const accessToken = localStorage.getItem('access_token');
     let body = {}
     const response = await axiosInstance.post(`${baseURL}/api/posts/like/${postId}/`,body);
     if (response.status === 200) {
@@ -115,10 +104,6 @@ const likePostApi = async (postId, fetchData) => {
 
 const handleToggleLikePost = async (postid,isLiked) => {
   try {
-    // Assuming you have a single post in the 'posts' state
-    // const post = posts;
-
-    // Update the like count for the specific post locally
     const updatedPosts =()=> {
       if (posts.id === postid) {
         return {
@@ -133,12 +118,7 @@ const handleToggleLikePost = async (postid,isLiked) => {
       }
       return posts;
     };
-
-    // Update the UI with the locally modified data
-    // This will make the button toggle instantly
     setPosts(updatedPosts);
-
-    // Send the like/unlike request to the server
     await likePostApi(postid);
 
   } catch (error) {
@@ -168,7 +148,6 @@ const handleToggleLikePost = async (postid,isLiked) => {
   const handeEditCaption = (postId) => {
   axiosInstance.put(`${baseURL}/api/posts/update/${postId}/`, { caption: postcaption })
     .then((response) => {
-      // setPosteditmode(!posteditmode);
       window.location.href = `/comment/${postid}`;
       console.log(response.data);
     })
@@ -198,25 +177,12 @@ const handledeletecomment=(commentId)=>{
     });
 }
 
-// const handleeditcomment=(commentId)=>{
-//   axiosInstance.put(`${baseURL}/api/posts/editcomment/${commentId}/`)
-// }
-
-
-
 if(loading){
   return <Spinner></Spinner>
 }
   return (
     <>
               <Link to="/home" style={{ textDecoration: 'none' }}>
-              {/* <CiHome
-                style={{
-                  fontSize: '45px',
-                  color: '#ffc700',
-                  cursor: 'pointer',
-                }}
-              /> */}
               <h6 className='text-gray-400 hover:text-yellow-400'>Go Home</h6>
             </Link>
     <div className="flex justify-between items-center">

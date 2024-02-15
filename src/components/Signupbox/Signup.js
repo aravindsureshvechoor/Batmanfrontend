@@ -9,8 +9,6 @@ import {
   MDBCol,
   MDBCard,
   MDBCardBody,
-  MDBInput,
-  MDBIcon
 }
 from 'mdb-react-ui-kit';
 import { baseURL } from '../../api/api';
@@ -34,7 +32,6 @@ function Signup() {
     const [genderError, setGenderError] = useState('');
 
     const handleSignInClick = () => {
-    // Use the navigate function to go to the '/' route
     navigator('/');
   };
 
@@ -64,9 +61,7 @@ function Signup() {
     };
     
 
-    // Email validation function
     const isValidEmail = (email) => {
-      // You can use a regular expression or any other method for email validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailRegex.test(email);
     };

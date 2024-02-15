@@ -15,14 +15,8 @@ const CreatepostModal = ({ isOpen, toggle }) => {
 
     const handleFileChange = (event) => {
     const file = event.target.files[0];
-
-    // Update selected file
     setSelectedFile(file);
-
-    // Update selected file name
     setSelectedFileName(file ? file.name : '');
-
-    // Now you can do something with the selected file, like saving it to local storage
     console.log('Selected file:', file);
 };
 
@@ -31,25 +25,16 @@ const CreatepostModal = ({ isOpen, toggle }) => {
   const handleSubmit = async () => {
   try {
     const formData = new FormData();
-    formData.append('post_img', selectedFile); // Assuming 'selectedFile' is the file state
-    formData.append('caption', caption); // Assuming 'caption' is the caption state
+    formData.append('post_img', selectedFile); 
+    formData.append('caption', caption); 
 
-    // Make a POST request using Axios
     const accessToken = localStorage.getItem('accessToken');
-
     const response = await axiosInstance.post(`${baseURL}/api/posts/create/`, formData);
-
-
-    // Handle the response from the server
     console.log('Response from server:', response.data);
-
-    // Optionally, you can perform additional actions after a successful submission
-    // For example, clear the form or redirect the user
     setCaption('');
     setSelectedFileName('');
     window.location.href = '/home';
   } catch (error) {
-    // Handle errors
     console.error('Error:', error);
   }
 };

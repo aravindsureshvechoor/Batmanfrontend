@@ -11,7 +11,6 @@ const UserStatusChecker = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Check if user and user.user are not null before accessing the 'email' property
     if (user.user) {
       setUserEmail(user.user.email);
     }
@@ -48,7 +47,7 @@ const UserStatusChecker = () => {
     return () => clearInterval(intervalId);
   }, [userEmail, dispatch]);
 
-  return null; // or any UI components if needed
+  return null;
 };
 
 export default UserStatusChecker;

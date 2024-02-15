@@ -2,7 +2,6 @@ import React from "react";
 import Usersidebar from "../Usersidebar/Usersidebar";
 import Userpost from "../Userpost/Userpost";
 import PeopleYouMayKnow from "../PeopleYouMayKnow/PeopleYouMayKnow"
-// import Spinner from "../Spinner";
 
 const Userhome = () => {
 

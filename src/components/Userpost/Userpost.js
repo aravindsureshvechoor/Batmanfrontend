@@ -7,8 +7,7 @@ import Spinner from '../Spinner';
 import { FiSave } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { FiEdit3 } from "react-icons/fi";
+
 const Userpost = () => {
 
 

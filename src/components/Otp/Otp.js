@@ -7,8 +7,6 @@ import { toast } from 'react-toastify';
 const Otp = () => {
 const navigate = useNavigate()
 const email = localStorage.getItem('usermail');
-
-console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&',email)
 const [Otp,setOtp] = useState('')
 const changeOtp = (event) => {
    
@@ -19,12 +17,9 @@ const changeOtp = (event) => {
         event.preventDefault();
 
         try {
-            // Make the Axios POST request
             const response = await axios.post(`${baseURL}/api/authentication/verifyotp/`,{Otp,email});
             toast.success(response.data.detail)
             console.log(response.data);
-            
-            // Handle successful response (e.g., redirect or show a success message)
             localStorage.removeItem('usermail');
             navigate('/')
 
@@ -32,7 +27,6 @@ const changeOtp = (event) => {
             console.log(error.response.data);
             toast.error(error.response.data.detail)
             navigate('/')
-            // Handle error (e.g., display an error message to the user)
         }
     };
 

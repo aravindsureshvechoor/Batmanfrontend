@@ -38,7 +38,6 @@ function UserLogin() {
   const [passwordError, setPasswordError] = useState('');
 
   const handleSignUpClick = () => {
-    // Use the navigate function to go to the '/signup' route
     navigator('/signup');
   };
 
@@ -55,9 +54,7 @@ function UserLogin() {
     };
     
 
-    // Email validation function
     const isValidEmail = (email) => {
-      // You can use a regular expression or any other method for email validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailRegex.test(email);
     };
@@ -88,21 +85,15 @@ const handleLogin = (event) => {
         }, { withCredentials: true })
         .then((response) => {
           console.log('RESPOSNE DATA:',response.data)
-          // localStorage.setItem('accessToken', response.data.access);
-          // localStorage.setItem('refreshToken', response.data.refresh);
           setLoading(false)
           dispatch(setAccessToken({accessToken:response.data.data.access,refreshToken:response.data.data.refresh}));
           dispatch(setUser(response.data.user));
-          
-
-          // Redirect to the desired page after successful login
           toast.success('Login Successful');
           navigator('/home');
         })
         .catch((error) => {
           console.log(error.response.data)
           if (error.response.status === 'ERR_BAD_REQUEST') {
-            // Unauthorized: Invalid credentials
               toast.error(error.response.data.password)
           } 
           else if (error.response.data && error.response.data.Blocked) {
@@ -123,7 +114,7 @@ const handleLogin = (event) => {
           }
         })
         .finally(() => {
-          setLoading(false); // Set loading back to false after the request is completed (success or error)
+          setLoading(false); 
         });
     }
     };
@@ -147,7 +138,6 @@ if(loading){
                     alt="logo"
                     className="w-[80px] h-[160px]"
                   />
-            {/* <span className='text-gray-400 text-sm text mb-22'>Batman</span> */}
           </div>
 
             <h2 style={{fontSize:'25px'}} className="fw-bold mb-2 text-uppercase">Login</h2>
@@ -196,22 +186,19 @@ if(loading){
           dispatch(setUser(response.data.user));
           
           setLoading(false)
-          // Redirect to the desired page after successful login
           toast.success('Login Successful');
           navigator('/home');
         })
         .catch((error) => {
           if (error.code === 'ERR_BAD_REQUEST') {
-            // Unauthorized: Invalid credentials
             console.log(error.response.data)
               setEmailError(error.response.data.password || 'Bad Credentials!!!');
           } else {
-            // Other errors
             console.error('Login error:', error);
           }
         })
         .finally(() => {
-      setLoading(false); // Set loading back to false after the request is completed (success or error)
+      setLoading(false); 
       });
         
         

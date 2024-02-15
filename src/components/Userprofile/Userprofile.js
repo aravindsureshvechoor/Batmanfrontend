@@ -111,7 +111,6 @@ useEffect(() => {
   // Check if the current index is divisible by 2 to determine the start of a new row
   index % 2 === 0 && (
     <MDBRow key={index}>
-      {/* Display the current image */}
       <MDBCol className="mb-2">
         <a href={`/comment/${post.id}`}>
           <MDBCardImage 

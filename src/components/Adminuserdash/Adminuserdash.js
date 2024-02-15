@@ -22,10 +22,8 @@ const Adminuserdash = () => {
 
 const unblockUser = async (userId) => {
       try {
-        // Replace 'yourApiEndpoint' with the actual API endpoint for unblocking a user
         await axiosInstance.post(`${baseURL}/api/unblockuser/${userId}/`);
         console.log(`unblocked successfully.`);
-        // Add any additional logic you want to perform after unblocking the user
         toast.success(`unblocked successfully`);
       } catch (error) {
         console.error('Error unblocking user:', error);
@@ -37,15 +35,12 @@ const unblockUser = async (userId) => {
     useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // Replace 'yourUserAPIEndpoint' with the actual endpoint for user details
         const response = await axiosInstance.get(`${baseURL}/api/authentication/userdetailsforadmin/`);
         setUserData(response.data);
       } catch (error) {
         console.error("Error fetching user details:", error);
       }
     };
-
-    // Fetch user details when the component mounts
     fetchUserData();
   }, []);
 
@@ -62,9 +57,6 @@ console.log("User Data : ", userdata)
             <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-black uppercase">First Name</th>
             <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-black uppercase">Last Name</th>
             <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-black uppercase">Email</th>
-
-            {/* <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-black uppercase">Status</th> */}
-
             <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-black uppercase">Action</th>
         </tr>
     </thead>
@@ -75,9 +67,6 @@ console.log("User Data : ", userdata)
             <td class="px-6 py-4 text-sm text-white whitespace-nowrap">{user.first_name}</td>
             <td class="px-6 py-4 text-sm text-white whitespace-nowrap">{user.last_name}</td>
             <td class="px-6 py-4 text-sm text-white whitespace-nowrap">{user.email}</td>
-
-            {/* <td class="px-6 py-4 text-sm text-white whitespace-nowrap">{user.is_blocked}</td> */}
-
             <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
 
         { user.is_blocked?

@@ -74,7 +74,6 @@ const Chat = () => {
 
       newChatWs.onopen = async () => {
         console.log("Chatroom WebSocket connection opened.");
-        // Fetch previous messages when the WebSocket connection is opened
         const previousMessages = await GetChatMessages(data.id);
         setMessages(previousMessages);
         setProfiles((prevProfiles) => {
@@ -88,12 +87,10 @@ const Chat = () => {
       };
       newChatWs.onclose = () => {
         console.log("Chatroom WebSocket connection closed.");
-        // You can perform any necessary cleanup here when the WebSocket connection is closed.
       };
       newChatWs.onmessage = (event) => {
         const message = JSON.parse(event.data);
         console.log(message);
-        // Handle incoming messages from the chatroom WebSocket
       };
 
       setWs(newChatWs);

@@ -22,7 +22,7 @@ const DeleteUnegisteredUsers=()=>{
     return () => clearInterval(intervalId);
   }, []);
 
-  return null; // or any UI components if needed
+  return null; 
 };
 
 export default DeleteUnegisteredUsers;

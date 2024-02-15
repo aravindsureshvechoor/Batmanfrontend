@@ -1,13 +1,11 @@
-import React,{useState} from 'react'
-import { Modal, ModalBody,ModalHeader } from 'reactstrap'
-import axiosInstance, { baseURL } from '../../api/api';
-import { toast } from 'react-toastify';
+import React from 'react'
+import { Modal, ModalBody } from 'reactstrap'
+
 
 const Searchusermodal = ({ isOpen,toggle}) => {
   return (
     <>
     <Modal isOpen={isOpen} toggle={toggle}>
-  {/* <ModalHeader toggle={toggle} style={{ background: '#131313', color: '#ffc700' }}>Report this post?</ModalHeader> */}
   <ModalBody style={{background:"#131313"}}>
     <div className="editor mx-auto w-10/12 flex flex-col text-gray-300 p-4 shadow-lg max-w-2xl" style={{ background: '#131313', color: '#ffc700' }}>
   <div>

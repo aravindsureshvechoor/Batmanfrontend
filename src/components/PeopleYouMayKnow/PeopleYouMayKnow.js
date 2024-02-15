@@ -64,7 +64,6 @@ const PeopleYouMayKnow = () => {
                     <div className="d-flex pt-1">
   
                       <MDBBtn onClick={()=>followuser(user.email)} className="flex-grow-1">
-                        {/* {isfollowing?'Following' : 'Follow'} */}
                         {followStatus[user.email] ? 'Following' : 'Follow'}
                         </MDBBtn>
                     </div>
