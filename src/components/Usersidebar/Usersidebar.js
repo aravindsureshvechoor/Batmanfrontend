@@ -15,6 +15,9 @@ import Modal from 'react-bootstrap/Modal';
 import getNotificationsApi from '../getnotificationsAPI'
 import notificationseenApi from '../notificationseenAPI'
 import { useNavigate } from "react-router-dom";
+import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn } from 'mdb-react-ui-kit';
+import axios from "axios";
+import { baseURL } from "../../api/api";
 
 
 const Usersidebar = () => {
@@ -25,7 +28,27 @@ const Usersidebar = () => {
    const[searchlgShow,setSearchLgShow] = useState(false);
    const navigate = useNavigate();
 
+  // this portion deals with the state and search configuration , U S E R  S E A R C H
+   const [searchquery,setSearchquery] = useState('');
+   const [searchresult,setSearchresult] = useState([])
 
+   const changeSearchquery = (event) => {
+    const searchqueryvalue = event.target.value;
+    setSearchquery(searchqueryvalue);
+   }
+
+   const handleSearchquery = async () =>{
+    try{
+      const response = await axios.get(`${baseURL}/api/authentication/usersearch/?query=${searchquery}`);
+      console.log(response.data,"(((((((((((((((((search result ))))))))))))))")
+      setSearchresult(response.data)
+    }
+    catch(error){
+      console.error(error);
+    }
+   }
+
+  // user search and its configs ends here
  const toggleModal = () => {
     setModalIsOpen(!modalIsOpen)
  }
@@ -314,8 +337,6 @@ const onClick = async (note) => {
 
 {/* NOTIFICATION AND ITS MODALS ENDS HERE  */}
 
-
-
               <li
                 style={{
                   display: "flex",
@@ -399,13 +420,14 @@ const onClick = async (note) => {
     <input
       type="text"
       placeholder="Search"
+      value={searchquery} onChange={changeSearchquery}
       className="border border-indigo-500 p-1 px-4 font-semibold text-gray-200 ml-2 bg-indigo-500"
       style={{ background: '#ffffff', color: '#131313' }}
     />
     &nbsp;&nbsp;
     <button
       className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500"
-
+      onClick={handleSearchquery}
       style={{ background: '#0056b3', color: '#000000' }}
     >
       Search
@@ -413,10 +435,37 @@ const onClick = async (note) => {
     &nbsp;&nbsp;
   </div>
 </div>
+{/* USER DETAILS */}
+{ searchresult.map(user =>(
+<MDBContainer>
+        <MDBRow className='w-[900px]'>
+          <MDBCol md="9" lg="7" xl="5" className="mt-2">
+            <MDBCard style={{ borderRadius: '15px' }}>
+              <MDBCardBody className="h-[100px] bg-black">
+                <div className="d-flex text-gray-400">
+                  <div className="flex-shrink-0">
+                    <MDBCardImage 
+                      style={{ width: '70px', borderRadius: '10px' }}
+                      src={`http://localhost:8000${user.profile_image}`}
+                      alt='Generic placeholder image'
+                      fluid />
+                  </div>
+                  <div className="flex-grow-1 ms-3 mt-4">
+                    <a href={`/othersprofile/${user.email}`} className='text-yellow-400'>
+                    <MDBCardTitle>{user.first_name}&nbsp;{user.last_name}</MDBCardTitle>
+                    </a>
+                  </div>
+                </div>
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>))}
+{/* USER DETAILS ENDS HERE */}
         </Modal.Body>
       </Modal>
     
-{/* S E A R C H  A N D  I T S  M O D A L  S T A R T S  H E R E  */}
+{/* S E A R C H  A N D  I T S  M O D A L  E N D S  H E R E  */}
 
               <li
                 style={{
