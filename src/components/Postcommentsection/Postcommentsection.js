@@ -165,7 +165,7 @@ const [reportmodalIsOpen, setReportModalIsOpen] = useState(false)
     }
 // Reportpostmodal states and functions ends here
 
-// comment edit and delete api's
+// comment delete api and state config
 const handledeletecomment=(commentId)=>{
   axiosInstance.delete(`${baseURL}/api/posts/deletecomment/${commentId}/`)
   .then((response)=>{
@@ -176,6 +176,30 @@ const handledeletecomment=(commentId)=>{
       console.error('Error deleting comment:', error);
     });
 }
+// comment delete api and state config ends here
+
+// comment edit api and state config starts here
+const [editStates, setEditStates] = useState({});
+const [editedcomment,setEditedcomment] = useState('')
+
+  const toggleEditComment = (commentId) => {
+    setEditStates(prevStates => ({
+      ...prevStates,
+      [commentId]: !prevStates[commentId],
+    }));
+  };
+
+  const handleEditComment = (commentId,postid) => {
+  axiosInstance.put(`${baseURL}/api/posts/editcomment/${commentId}/`, { body: editedcomment })
+    .then((response) => {
+      window.location.href = `/comment/${postid}`;
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.error('Error updating comment:', error);
+    });
+};
+// comment edit api and state config ends here
 
 if(loading){
   return <Spinner></Spinner>
@@ -296,24 +320,38 @@ if(loading){
                     </div>
                   </div>
                   
-                  <p className="text-yellow-600 mt-2 text-lg ml-10 flex">{c.body}
+                  <p className="text-yellow-600 mt-2 text-lg ml-10 flex">
+  {editStates[c.id] ? (
+    <>
+    <input
+      type='text'
+      placeholder={c.body}
+      value={editedcomment}
+      onChange={(e) => setEditedcomment(e.target.value)}
+    />
+    <button onClick={() => handleEditComment(c.id,c.post_id)} className='ml-2 text-black bg-yellow-400 px-2'>Save</button></>
+  ) : (
+    c.body
+  )}
 
-                  {c.user_email === user.user.email && (
-                    <>
-                      <RiDeleteBin6Line
-                        onClick={() => {
-                          if (window.confirm('Are you sure you want to delete this comment?')) {
-                            handledeletecomment(c.id);
-                          }
-                        }}
-  className="cursor-pointer h-6 w-6 ml-6 zoom-button text-gray-400"
-/>
+  {c.user_email === user.user.email && (
+    <>
+      <RiDeleteBin6Line
+        onClick={() => {
+          if (window.confirm('Are you sure you want to delete this comment?')) {
+            handledeletecomment(c.id);
+          }
+        }}
+        className="cursor-pointer h-6 w-6 ml-6 zoom-button text-gray-400"
+      />
+      <FiEdit3
+        onClick={() => toggleEditComment(c.id)} // Toggle edit state when edit button is clicked
+        className="cursor-pointer h-6 w-6 ml-2 zoom-button text-gray-400"
+      />
+    </>
+  )}
+</p>
 
-                      <FiEdit3 className="cursor-pointer h-6 w-6 ml-2 zoom-button text-gray-400"/>
-                    </>
-                  )}
-
-                  </p>
                   
                 </div>
               </div>))}
