@@ -44,7 +44,6 @@ body {
   margin-right: -250px;
 }
 
-/* Sidebar Styles */
 
 .sidebar-nav {
   position: absolute;
@@ -64,7 +63,7 @@ body {
 }
 
 .zoom-button:hover {
-  transform: scale(1.3); /* adjust this value to change the zoom amount */
+  transform: scale(1.3); 
 }
 
 .sidebar-nav li a {
