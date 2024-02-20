@@ -37,13 +37,11 @@ function Signup() {
 
     const changeFirstname = (event) => {
       setFirstname(event.target.value);
-      console.log("-----"+firstname)
       setFirstnameError('');
     }
 
     const changeLastname = (event) =>{
       setLastname(event.target.value);
-      console.log("-----"+lastname)
       setLastnameError('');
     }
 
@@ -51,7 +49,6 @@ function Signup() {
     const changeEmail = (event) => {
       const emailValue = event.target.value;
       setEmail(emailValue);
-      console.log("-----"+email)
     
       if (!isValidEmail(emailValue)) {
         setEmailError('Please enter a valid email address');
@@ -68,7 +65,6 @@ function Signup() {
   
     const changePassword = (event) => {
       setPassword(event.target.value);
-      console.log("---"+password)
       setPasswordError('');
     }
 
@@ -76,13 +72,11 @@ function Signup() {
 
     const changeConfirmPassword = (event) => {
       setConfirmPassword(event.target.value);
-      console.log("-----"+confirmPassword)
       setPasswordError('');
     }
 
     const changeGender = (event) => {
       setGender(event.target.value);
-      console.log("-------"+gender)
       setGenderError('');
     }
   
@@ -119,13 +113,11 @@ function Signup() {
               password: password,
               gender:gender,
           }).then((response) => {
-              console.log(response,"ressssssspppppppooooooooonssssseeeeeeee")
               const usermail = response.data.email;
               localStorage.setItem('usermail',usermail)
               navigator('/otp');
 
           }).catch((error) =>{
-              console.log(error,"errrrrrrroooooooorrrrrrrrrrrrrrrrrrrrrr")
               if (error.code === 'ERR_BAD_REQUEST'){
                   setEmailError(error.response.data.email ? error.response.data.email : '')
                   setPasswordError(error.response.data.password ? error.response.data.password : '')

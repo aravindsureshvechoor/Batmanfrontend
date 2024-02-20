@@ -13,7 +13,6 @@ const Adminuserdash = () => {
       try {
         dispatch(clearAuth());
         await axiosInstance.post(`${baseURL}/api/blockuser/${userId}/`);
-        console.log(`User ${userId} blocked successfully.`);
         toast.success(`User ${userId} blocked successfully`);
       } catch (error) {
         console.error('Error blocking user:', error);
@@ -23,7 +22,6 @@ const Adminuserdash = () => {
 const unblockUser = async (userId) => {
       try {
         await axiosInstance.post(`${baseURL}/api/unblockuser/${userId}/`);
-        console.log(`unblocked successfully.`);
         toast.success(`unblocked successfully`);
       } catch (error) {
         console.error('Error unblocking user:', error);
@@ -44,7 +42,6 @@ const unblockUser = async (userId) => {
     fetchUserData();
   }, []);
 
-console.log("User Data : ", userdata)
 
 
   return (

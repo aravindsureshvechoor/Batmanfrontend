@@ -42,7 +42,7 @@ const UserStatusChecker = () => {
   };
 
   useEffect(() => {
-    const intervalId = setInterval(checkUserStatus, 60000);
+    const intervalId = setInterval(checkUserStatus, 10000);
 
     return () => clearInterval(intervalId);
   }, [userEmail, dispatch]);

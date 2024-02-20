@@ -73,7 +73,6 @@ const Chat = () => {
       
 
       newChatWs.onopen = async () => {
-        console.log("Chatroom WebSocket connection opened.");
         const previousMessages = await GetChatMessages(data.id);
         setMessages(previousMessages);
         setProfiles((prevProfiles) => {
@@ -90,7 +89,6 @@ const Chat = () => {
       };
       newChatWs.onmessage = (event) => {
         const message = JSON.parse(event.data);
-        console.log(message);
       };
 
       setWs(newChatWs);

@@ -22,7 +22,6 @@ const Userpost = () => {
       try {
         setLoading(true)
         const response = await axiosInstance.get(`${baseURL}/api/posts/get/`);
-        console.log("POSTS : ", response.data)
         setPosts(response.data);
       } catch (error) {
         console.error("Error fetching posts:", error);

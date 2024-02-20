@@ -10,7 +10,6 @@ const getNotificationsApi = async () => {
     } else {
         console.log(response.error)
     }
-    console.log(response.data);
   } catch (error) {
     console.error(error);
   }

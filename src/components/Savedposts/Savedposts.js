@@ -14,7 +14,6 @@ const Savedposts = () => {
       try {
         
         const response = await axiosInstance.get(`${baseURL}/api/posts/retrievesavedposts/`);
-        console.log(response.data)
         setPosts(response.data);
         
       } catch (error) {

@@ -26,21 +26,27 @@ const EditprofileModal = ({ isOpen, toggle }) => {
     const file = event.target.files[0];
     setSelectedFile(file);
     setSelectedFileName(file ? file.name : '');
-    console.log('Selected file:', file);
 };
 
 const handleSubmit = async () => {
   try {
     const formData = new FormData();
-    formData.append('profile_image', selectedFile); 
-    formData.append('first_name', first_name); 
-    formData.append('last_name', last_name);
+    
+    // Append fields only if they are not empty
+    if (selectedFile) {
+      formData.append('profile_image', selectedFile); 
+    }
+    if (first_name) {
+      formData.append('first_name', first_name); 
+    }
+    if (last_name) {
+      formData.append('last_name', last_name);
+    }
 
     const accessToken = localStorage.getItem('accessToken');
 
     const response = await axiosInstance.put(`${baseURL}/api/authentication/userupdate/`, formData);
 
-    console.log('Response from server:', response.data);
     toast.success("Saved Successfully")
     setFirstname('');
     setLastname('');
@@ -50,6 +56,7 @@ const handleSubmit = async () => {
     console.error('Error:', error);
   }
 };
+
     
   return (
      <Modal isOpen={isOpen} toggle={toggle}>
@@ -65,7 +72,8 @@ const handleSubmit = async () => {
       <div className="icons flex text-gray-500 m-2">
          
     <div>
-      <label htmlFor="fileInput">
+     
+      <label htmlFor="fileInput" className='flex'>
         <svg
           className="mr-2 cursor-pointer hover:text-gray-700 border rounded-full p-1 h-7"
           xmlns="http://www.w3.org/2000/svg"
@@ -81,7 +89,9 @@ const handleSubmit = async () => {
             d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
           />
         </svg>
+        <span className='text-gray-400'>Change DP</span>
       </label>
+       
       <input
         id="fileInput"
         type="file"

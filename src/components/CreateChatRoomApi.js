@@ -10,7 +10,6 @@ const CreateChatRoomApi = async (userID) => {
       return response.data;
     } else {
       console.error(response.error);
-      console.log(response.data); 
     }
   } catch (error) {
     console.error(error);

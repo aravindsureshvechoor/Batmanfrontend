@@ -17,7 +17,6 @@ const CreatepostModal = ({ isOpen, toggle }) => {
     const file = event.target.files[0];
     setSelectedFile(file);
     setSelectedFileName(file ? file.name : '');
-    console.log('Selected file:', file);
 };
 
 
@@ -30,7 +29,6 @@ const CreatepostModal = ({ isOpen, toggle }) => {
 
     const accessToken = localStorage.getItem('accessToken');
     const response = await axiosInstance.post(`${baseURL}/api/posts/create/`, formData);
-    console.log('Response from server:', response.data);
     setCaption('');
     setSelectedFileName('');
     window.location.href = '/home';

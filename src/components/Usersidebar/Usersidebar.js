@@ -96,7 +96,6 @@ const dispatch = useDispatch();
         window.location.protocol === "https:" ? "wss://" : "ws://";
       const wsURL = `ws://localhost:8000/ws/notification/?token=${accessToken}`
       const socket = new WebSocket(wsURL);
-      console.log(wsURL);
 
       socket.onopen = () => {
         console.log("WebSocket connection established");

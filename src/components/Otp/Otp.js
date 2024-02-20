@@ -19,12 +19,10 @@ const changeOtp = (event) => {
         try {
             const response = await axios.post(`${baseURL}/api/authentication/verifyotp/`,{Otp,email});
             toast.success(response.data.detail)
-            console.log(response.data);
             localStorage.removeItem('usermail');
             navigate('/')
 
         } catch (error) {
-            console.log(error.response.data);
             toast.error(error.response.data.detail)
             navigate('/')
         }

@@ -8,7 +8,6 @@ const Deletepostmodal = ({ isOpen,toggle,postId}) => {
   const handleSubmit = async () => {
   try {
     const response = await axiosInstance.delete(`${baseURL}/api/posts/delete/${postId}/`);
-    console.log('Response from server:', response.data);
     window.location.href = '/home';
   } catch (error) {
     console.error('Error:', error);

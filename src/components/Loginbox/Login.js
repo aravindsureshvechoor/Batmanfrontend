@@ -44,7 +44,6 @@ function UserLogin() {
   const changeEmail = (event) => {
       const emailValue = event.target.value;
       setEmail(emailValue);
-      console.log("-----"+email)
     
       if (!isValidEmail(emailValue)) {
         setEmailError('Please enter a valid email address');
@@ -84,7 +83,6 @@ const handleLogin = (event) => {
           password: password,
         }, { withCredentials: true })
         .then((response) => {
-          console.log('RESPOSNE DATA:',response.data)
           setLoading(false)
           dispatch(setAccessToken({accessToken:response.data.data.access,refreshToken:response.data.data.refresh}));
           dispatch(setUser(response.data.user));
@@ -92,7 +90,6 @@ const handleLogin = (event) => {
           navigator('/home');
         })
         .catch((error) => {
-          console.log(error.response.data)
           if (error.response.status === 'ERR_BAD_REQUEST') {
               toast.error(error.response.data.password)
           } 
@@ -164,7 +161,7 @@ if(loading){
 </div>
 {passwordError && <p className="error-message">{passwordError}</p>}
 
-              <p style={{marginTop:'2%'}}className="small mb-2 pb-lg-2" ><a style={{fontSize:'18px'}} class="text-white-50" href="#!">Forgot password?</a></p>
+              {/* <p style={{marginTop:'2%'}}className="small mb-2 pb-lg-2" ><a style={{fontSize:'18px'}} class="text-white-50" href="#!">Forgot password?</a></p> */}
               <MDBBtn outline onClick={handleLogin} className='mb-2 mt-2 px-10' style={{backgroundColor:"#FFC700",color:'#000000', border:"none",marginTop:'3%'}} size='lg'>
                 Login
               </MDBBtn>
@@ -191,7 +188,6 @@ if(loading){
         })
         .catch((error) => {
           if (error.code === 'ERR_BAD_REQUEST') {
-            console.log(error.response.data)
               setEmailError(error.response.data.password || 'Bad Credentials!!!');
           } else {
             console.error('Login error:', error);

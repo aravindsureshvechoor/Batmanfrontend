@@ -25,7 +25,6 @@ useEffect(() => {
       try {
         
         const response = await axiosInstance.get(`${baseURL}/api/authentication/retrieveuser/${user.user.email}/`);
-        console.log(response.data)
         setUserdetails(response.data);
         
       } catch (error) {
@@ -43,7 +42,6 @@ useEffect(() => {
       try {
         
         const response = await axiosInstance.get(`${baseURL}/api/authentication/retrieveuserpost/${user.user.email}/`);
-        console.log(response.data)
         setPosts(response.data);
         
       } catch (error) {

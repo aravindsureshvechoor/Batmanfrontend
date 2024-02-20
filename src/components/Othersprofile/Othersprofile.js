@@ -16,14 +16,12 @@ const Othersprofile = () => {
     const email = params.author_email;
     const [isFollowing, setIsFollowing] = useState(false);
     const [followers,setFollowers] = useState([]);
-    console.log(email)
 
     useEffect(() => {
     const fetchData = async () => {
       try {
         
         const response = await axiosInstance.get(`${baseURL}/api/authentication/retrieveuser/${email}/`);
-        console.log(response.data)
         setUserdetails(response.data);
         
       } catch (error) {
@@ -51,7 +49,7 @@ const Othersprofile = () => {
     };
 
     fetchfollowers();
-  });
+  },[]);
 
 
   const handleToggleFollow = async () => {
@@ -68,7 +66,6 @@ const Othersprofile = () => {
         userdetails.follower_count+=1
       }
     
-      console.log(`User ${isFollowing ? 'unfollowed' : 'followed'} successfully!`);
     } else {
       console.error(`Failed to ${isFollowing ? 'unfollow' : 'follow'}:`, response.statusText);
     }

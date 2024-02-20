@@ -11,7 +11,6 @@ const Adminpostdash = () => {
     const blockPost = async (postId) => {
       try {
         await axiosInstance.post(`${baseURL}/api/posts/postblock/${postId}/`);
-        console.log(`Post blocked successfully.`);
         toast.success(`Post blocked successfully`);
       } catch (error) {
         console.error('Error blocking post:', error);
@@ -21,7 +20,6 @@ const Adminpostdash = () => {
 const unblockPost = async (postId) => {
       try {
         await axiosInstance.post(`${baseURL}/api/posts/postunblock/${postId}/`);
-        console.log(`unblocked successfully.`);
         toast.success(`Unblocked successfully`);
       } catch (error) {
         console.error('Error unblocking post:', error);
@@ -33,20 +31,17 @@ const unblockPost = async (postId) => {
     useEffect(() => {
     const fetchPostData = async () => {
       try {
-        // Replace 'yourUserAPIEndpoint' with the actual endpoint for user details
         const response = await axiosInstance.get(`${baseURL}/api/posts/getreportedposts/`);
-        console.log(response.data)
         setPosData(response.data);
       } catch (error) {
         console.error("Error fetching user details:", error);
       }
     };
 
-    // Fetch user details when the component mounts
+    
     fetchPostData();
   }, []);
 
-console.log("Post Data : ", postdata)
 
 
   return (

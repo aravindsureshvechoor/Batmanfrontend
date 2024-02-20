@@ -10,7 +10,6 @@ const Reportpostmodal = ({ isOpen,toggle,postId}) => {
   try {
     const response = await axiosInstance.post(`${baseURL}/api/posts/reportpost/${postId}/`);
     toggle();
-    console.log('Response from server:', response.data);
     toast.success("Reported Successfully")
   } catch (error) {
     console.error('Error:', error);

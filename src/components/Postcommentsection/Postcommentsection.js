@@ -33,7 +33,6 @@ const Postcommentsection = () => {
         body: comment,
       });
 
-      console.log('Response from the server:', response.data);
       setComment('');
       window.location.href = `/comment/${postid}`;
     } catch (error) {
@@ -51,7 +50,6 @@ const Postcommentsection = () => {
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get(`${baseURL}/api/posts/retrievecomments/${postid}/`);
-        console.log("COMMENTS : ", response.data)
         setComments(response.data);
       } catch (error) {
         console.error("Error fetching comments:", error);
@@ -70,7 +68,6 @@ const Postcommentsection = () => {
       try {
         setLoading(true)
         const response = await axiosInstance.get(`${baseURL}/api/posts/singlepostforcomment/${postid}/`);
-        console.log("POSTS : ", response.data)
         setPosts(response.data);
       } catch (error) {
       }
@@ -149,7 +146,6 @@ const handleToggleLikePost = async (postid,isLiked) => {
   axiosInstance.put(`${baseURL}/api/posts/update/${postId}/`, { caption: postcaption })
     .then((response) => {
       window.location.href = `/comment/${postid}`;
-      console.log(response.data);
     })
     .catch((error) => {
       console.error('Error updating caption:', error);
@@ -170,7 +166,6 @@ const handledeletecomment=(commentId)=>{
   axiosInstance.delete(`${baseURL}/api/posts/deletecomment/${commentId}/`)
   .then((response)=>{
     window.location.href = `/comment/${postid}`;
-      console.log(response.data);
   })
   .catch((error) => {
       console.error('Error deleting comment:', error);
@@ -193,7 +188,6 @@ const [editedcomment,setEditedcomment] = useState('')
   axiosInstance.put(`${baseURL}/api/posts/editcomment/${commentId}/`, { body: editedcomment })
     .then((response) => {
       window.location.href = `/comment/${postid}`;
-      console.log(response.data);
     })
     .catch((error) => {
       console.error('Error updating comment:', error);
@@ -324,6 +318,7 @@ if(loading){
   {editStates[c.id] ? (
     <>
     <input
+      className='text-black'
       type='text'
       placeholder={c.body}
       value={editedcomment}
