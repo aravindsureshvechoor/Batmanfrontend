@@ -166,7 +166,7 @@ if(loading){
                 Login
               </MDBBtn>
 
-               <GoogleOAuthProvider clientId="863926768719-05krrpimr8g0ietobt4rfgh03fmi88ri.apps.googleusercontent.com">
+               <GoogleOAuthProvider clientId="742791233604-qkun9gaqhaj103b9f44465uthr83ci40.apps.googleusercontent.com">
                 <GoogleLogin
                     onSuccess={credentialResponse => {
                       const decoded = jwtDecode(credentialResponse.credential);
