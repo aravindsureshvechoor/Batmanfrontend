@@ -1,9 +1,7 @@
 import axios from 'axios';
-import { useSelector,useDispatch } from 'react-redux';
-import { clearAuth } from '../Redux/UserSlice';
 
-const baseURL = 'http://localhost:8000';
-const imageBaseUrl = 'http://localhost:8000'
+const baseURL = 'https://www.batmanbackend.aravindsuresh.online';
+const imageBaseUrl = 'https://www.batmanbackend.aravindsuresh.online'
 
 
 const axiosInstance = axios.create({

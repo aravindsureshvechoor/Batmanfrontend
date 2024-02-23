@@ -4,7 +4,7 @@ import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCar
 import './Othersprofile.css';
 import { useParams } from 'react-router-dom';
 import axiosInstance from '../../api/api';
-import { baseURL } from '../../api/api';
+import { baseURL,imageBaseUrl } from '../../api/api';
 import Userprofile from '../Userprofile/Userprofile';
 import { useSelector } from 'react-redux';
 
@@ -109,7 +109,7 @@ const Othersprofile = () => {
             <MDBCard className='bg-black 2xl:ml-32'>
               <div className="rounded-top text-gray-350 d-flex flex-row" style={{ backgroundColor: '#000', height: '200px' }}>
                 <div className="ms-4 mt-5 d-flex flex-column" style={{ width: '150px' }}>
-                  <MDBCardImage src={`http://localhost:8000${userdetails.profile_image}`}
+                  <MDBCardImage src={`${imageBaseUrl}${userdetails.profile_image}`}
                     alt="Generic placeholder image" className="mt-4 mb-2 img-thumbnail" fluid style={{ width: '150px', zIndex: '1' }} />
 
 

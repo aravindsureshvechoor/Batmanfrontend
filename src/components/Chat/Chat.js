@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { useSelector } from 'react-redux';
 import Usersidebar from '../Usersidebar/Usersidebar';
+import { imageBaseUrl } from '../../api/api';
 import {
   MDBContainer,
   MDBRow,
@@ -68,7 +69,8 @@ const Chat = () => {
       const accessToken = localStorage.getItem("accessToken");
       const websocketProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
       
-      const wsUrl = `ws://localhost:8000/ws/chat/${data.id}/?token=${accessToken}`
+      // const wsUrl = `ws://localhost:8000/ws/chat/${data.id}/?token=${accessToken}`
+      const wsUrl = `wss://www.batmanbackend.aravindsuresh.online/ws/chat/${data.id}/?token=${accessToken}`
       const newChatWs = new WebSocket(wsUrl);
       
 
@@ -122,7 +124,7 @@ const Chat = () => {
                   <a href="#!" className="d-flex justify-content-between">
                     <div className="d-flex flex-row">
                       <img
-                        src={`http://localhost:8000${profile.profile_image}`}
+                        src={`${imageBaseUrl}${profile.profile_image}`}
                         alt="avatar"
                         className="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
                         width="60"
@@ -175,7 +177,7 @@ const Chat = () => {
                 </MDBCardBody>
               </MDBCard>
               <img
-                src={`http://localhost:8000${message.sender_profile_image}`}
+                src={`${imageBaseUrl}${message.sender_profile_image}`}
                 alt="avatar"
                 className="rounded-circle d-flex align-self-start ms-3 shadow-1-strong"
                 width="60"

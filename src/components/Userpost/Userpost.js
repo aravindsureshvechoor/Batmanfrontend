@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import axiosInstance, { baseURL } from '../../api/api';
+import axiosInstance, { baseURL,imageBaseUrl } from '../../api/api';
 import "./Userpost.css";
 import { SlLike } from "react-icons/sl";
 import { TfiComment } from "react-icons/tfi";
@@ -7,7 +7,6 @@ import Spinner from '../Spinner';
 import { FiSave } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-
 const Userpost = () => {
 
 
@@ -118,7 +117,7 @@ if(loading){
       <div className="w-[300px] sm:w-[660px] lg:w-[900px] xl:w-[1000px]  xl:ml-[400px] ml-20  pb-5 mt-5 bg-black text-white px-[10px]  m-[10px] rounded-lg xl:h-[800px] sm:h-[650px] lg:h-[750px] h-[400px] ">
         <div className="flex justify-between items-center">
           <img
-            src={`http://localhost:8000${post.author_profile_image}`}
+            src={`${imageBaseUrl}${post.author_profile_image}`}
             alt="User Profile"
             className="w-[60px] h-[60px] rounded-full mt-4 "
           />
@@ -136,7 +135,7 @@ if(loading){
 
 
    <a href={`/comment/${post.id}`}>
-<img className="2xl:h-[600px] h-full w-full object-cover transform scale-90 cursor-pointer" src={`http://localhost:8000${post.post_img}`}  alt="image description"/>
+<img className="2xl:h-[600px] h-full w-full object-cover transform scale-90 cursor-pointer" src={`${imageBaseUrl}${post.post_img}`}  alt="image description"/>
 </a>
 
         <div className="flex justify-between">

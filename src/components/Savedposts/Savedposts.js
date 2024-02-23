@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import axiosInstance from '../../api/api';
-import { baseURL } from '../../api/api';
+import { baseURL,imageBaseUrl } from '../../api/api';
 import Usersidebar from '../Usersidebar/Usersidebar';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn, MDBTypography } from 'mdb-react-ui-kit';
 
@@ -37,7 +37,7 @@ const Savedposts = () => {
          <MDBCol className="mb-2 ml-20 pt-12">
         <a href={`/comment/${post.post.id}`}>
           <MDBCardImage 
-            src={`http://localhost:8000${post.post.post_img}`}
+            src={`${imageBaseUrl}${post.post.post_img}`}
             alt={`image ${index + 1}`}
             className="rounded-3 h-[250px] w-[450px] cursor-pointer"
           />
@@ -48,7 +48,7 @@ const Savedposts = () => {
           <MDBCol className="mb-2 mr-40 pt-12">
           <a href={`/comment/${posts[index + 1].post.id}`}>
             <MDBCardImage
-              src={`http://localhost:8000${posts[index + 1].post.post_img}`}
+              src={`${imageBaseUrl}${posts[index + 1].post.post_img}`}
               alt={`image ${index + 2}`}
               className="rounded-3 h-[250px] w-[450px] cursor-pointer"
             />

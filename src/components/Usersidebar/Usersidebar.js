@@ -17,7 +17,7 @@ import notificationseenApi from '../notificationseenAPI'
 import { useNavigate } from "react-router-dom";
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn } from 'mdb-react-ui-kit';
 import axios from "axios";
-import { baseURL } from "../../api/api";
+import { baseURL,imageBaseUrl } from "../../api/api";
 
 
 const Usersidebar = () => {
@@ -94,7 +94,8 @@ const dispatch = useDispatch();
       const accessToken = localStorage.getItem("accessToken");
       const websocketProtocol =
         window.location.protocol === "https:" ? "wss://" : "ws://";
-      const wsURL = `ws://localhost:8000/ws/notification/?token=${accessToken}`
+      // const wsURL = `ws://localhost:8000/ws/notification/?token=${accessToken}`
+      const wsURL = `wss://www.batmanbackend.aravindsuresh.online/ws/notification/?token=${accessToken}`
       const socket = new WebSocket(wsURL);
 
       socket.onopen = () => {
@@ -458,7 +459,7 @@ const onClick = async (note) => {
                 <div className="flex-shrink-0">
                   <MDBCardImage 
                     style={{ width: '70px', borderRadius: '10px' }}
-                    src={`http://localhost:8000${user.profile_image}`}
+                    src={`${imageBaseUrl}${user.profile_image}`}
                     alt='Generic placeholder image'
                     fluid />
                 </div>

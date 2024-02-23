@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import axiosInstance from '../../api/api';
-import { baseURL } from '../../api/api';
+import { baseURL,imageBaseUrl } from '../../api/api';
 import Spinner from '../Spinner';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn } from 'mdb-react-ui-kit';
 const PeopleYouMayKnow = () => {
@@ -53,7 +53,7 @@ const PeopleYouMayKnow = () => {
                   <div className="flex-shrink-0">
                     <MDBCardImage
                       style={{ width: '70px', borderRadius: '10px' }}
-                      src={`http://localhost:8000${user.profile_image}`}
+                      src={`${imageBaseUrl}${user.profile_image}`}
                       alt='Generic placeholder image'
                       fluid />
                   </div>

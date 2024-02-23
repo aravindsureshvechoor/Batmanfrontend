@@ -3,7 +3,7 @@ import Usersidebar from '../Usersidebar/Usersidebar'
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn, MDBTypography } from 'mdb-react-ui-kit';
 import './Userprofile.css'
 import EditprofileModal from '../Editprofile/Editprofile';
-import axiosInstance, { baseURL } from '../../api/api';
+import axiosInstance, { baseURL,imageBaseUrl } from '../../api/api';
 import { useSelector } from 'react-redux';
 
 const Userprofile = () => {
@@ -67,7 +67,7 @@ useEffect(() => {
             <MDBCard className='bg-black 2xl:ml-32'>
               <div className="rounded-top text-gray-350 d-flex flex-row" style={{ backgroundColor: '#000', height: '200px' }}>
                 <div className="ms-4 mt-5 d-flex flex-column" style={{ width: '150px' }}>
-                  <MDBCardImage src={`http://localhost:8000${userdetails.profile_image}`}
+                  <MDBCardImage src={`${imageBaseUrl}${userdetails.profile_image}`}
                     alt="Generic placeholder image" className="mt-4 mb-2 img-thumbnail" fluid style={{ width: '150px', zIndex: '1' }} />
 
 
@@ -112,7 +112,7 @@ useEffect(() => {
       <MDBCol className="mb-2">
         <a href={`/comment/${post.id}`}>
           <MDBCardImage 
-            src={`http://localhost:8000${post.post_img}`}
+            src={`${imageBaseUrl}${post.post_img}`}
             alt={`image ${index + 1}`}
             className="rounded-3 h-[250px] w-[450px] cursor-pointer"
           />
@@ -124,7 +124,7 @@ useEffect(() => {
         <MDBCol className="mb-2">
           <a href={`/comment/${posts[index + 1].id}`}>
             <MDBCardImage
-              src={`http://localhost:8000${posts[index + 1].post_img}`}
+              src={`${imageBaseUrl}${posts[index + 1].post_img}`}
               alt={`image ${index + 2}`}
               className="rounded-3 h-[250px] w-[450px] cursor-pointer"
             />

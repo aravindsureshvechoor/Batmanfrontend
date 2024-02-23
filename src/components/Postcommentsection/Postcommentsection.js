@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { useParams } from 'react-router-dom';
 import axiosInstance from '../../api/api';
-import { baseURL } from '../../api/api';
+import { baseURL,imageBaseUrl } from '../../api/api';
 import { SlLike } from "react-icons/sl";
 import Spinner from '../Spinner';
 import { useSelector } from "react-redux";
@@ -244,7 +244,7 @@ if(loading){
 )}
 
    
-<img className="2xl:h-[600px] h-full w-full object-cover transform scale-90" src={`http://localhost:8000${posts.post_img}`}  alt="image description"/>
+<img className="2xl:h-[600px] h-full w-full object-cover transform scale-90" src={`${imageBaseUrl}${posts.post_img}`}  alt="image description"/>
 
 
         <div className="flex justify-between">
