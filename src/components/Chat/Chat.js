@@ -25,6 +25,7 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
   const [selectedProfile, setSelectedProfile] = useState(null);
+  const [joinedchatroom,setJoinedchatroom] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,6 +77,7 @@ const Chat = () => {
 
       newChatWs.onopen = async () => {
         const previousMessages = await GetChatMessages(data.id);
+        setJoinedchatroom(true);
         setMessages(previousMessages);
         setProfiles((prevProfiles) => {
           return prevProfiles.map((profile) => {
@@ -110,6 +112,7 @@ const Chat = () => {
 
 <MDBContainer fluid className="py-5 px-5 mt-12" style={{ marginLeft:'23%', backgroundColor: "#000000" , height:"screen",width:"120vh" }}>
       <MDBRow>
+
         <MDBCol md="6" lg="5" xl="4" className="mb-4 mb-md-0">
 
           <MDBCard style={{backgroundColor:"#131313"}}>
@@ -141,8 +144,8 @@ const Chat = () => {
             : null}
           </MDBCard>
         </MDBCol>
-
-        <MDBCol md="6" lg="7" xl="8">
+{joinedchatroom?
+        (<MDBCol md="6" lg="7" xl="8">
           <MDBTypography listUnStyled>
             {messages.map((message, index) =>
                 message.sender_email === user.email ? (
@@ -193,7 +196,7 @@ const Chat = () => {
               Send
             </MDBBtn>
           </MDBTypography>
-        </MDBCol>
+        </MDBCol>):null}
       </MDBRow>
     </MDBContainer>
 
