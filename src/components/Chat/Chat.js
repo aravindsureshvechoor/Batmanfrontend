@@ -164,6 +164,12 @@ const Chat = () => {
                   </p>
                 </MDBCardBody>
               </MDBCard>
+              <img
+                src={`${imageBaseUrl}${message.sender_profile_image}`}
+                alt="avatar"
+                className="rounded-circle d-flex align-self-start ms-3 shadow-1-strong"
+                width="60"
+              />
             </li>):
             (<li class="d-flex justify-content-between mb-4">
               <MDBCard className="w-100" style={{backgroundColor:"#131313"}}>
